@@ -1,0 +1,170 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Servicios - Fundación">
+    <main class="container mx-auto px-4 py-8">
+        <!-- Esterilización -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Esterilización</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Beneficios</h3>
+                    <ul class="list-disc pl-5">
+                        <li>Previene enfermedades reproductivas</li>
+                        <li>Reduce el riesgo de cáncer</li>
+                        <li>Control de población animal</li>
+                        <li>Mejor calidad de vida</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Requisitos</h3>
+                    <ul class="list-disc pl-5">
+                        <li>Mascota en ayuno de 8 horas</li>
+                        <li>Edad mínima: 6 meses</li>
+                        <li>Buen estado de salud</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="mt-6 bg-primary text-white px-6 py-2 rounded-lg"
+                >Agendar Cita</button
+            >
+        </section>
+
+        <!-- Veterinaria -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Veterinaria</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Servicios Disponibles
+                    </h3>
+                    <ul class="list-disc pl-5">
+                        <li>Consultas generales</li>
+                        <li>Vacunación</li>
+                        <li>Desparasitación</li>
+                        <li>Emergencias</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Horarios</h3>
+                    <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    <p>Sábados: 9:00 - 14:00</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Sistema de Citas</h3>
+                    <button class="bg-primary text-white px-6 py-2 rounded-lg"
+                        >Reservar Cita</button
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Tienda -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Tienda</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Productos Disponibles
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Productos aquí -->
+                        <div class="p-4 border rounded">
+                            <h4>Alimento</h4>
+                            <p>Varios tipos disponibles</p>
+                        </div>
+                        <div class="p-4 border rounded">
+                            <h4>Accesorios</h4>
+                            <p>Collares, correas, etc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Contacto para Compras
+                    </h3>
+                    <button class="bg-primary text-white px-6 py-2 rounded-lg"
+                        >Contactar</button
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Voluntariado -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Voluntariado</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Programas Disponibles
+                    </h3>
+                    <ul class="list-disc pl-5">
+                        <li>Cuidado de animales</li>
+                        <li>Apoyo en eventos</li>
+                        <li>Campañas de adopción</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Requisitos</h3>
+                    <ul class="list-disc pl-5">
+                        <li>Mayor de 18 años</li>
+                        <li>Compromiso mínimo de 3 meses</li>
+                        <li>Disponibilidad de 4 horas semanales</li>
+                    </ul>
+                    <button
+                        class="mt-4 bg-primary text-white px-6 py-2 rounded-lg"
+                        >Inscribirse</button
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Donaciones -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">
+                Donaciones en Especie
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Necesidades Actuales
+                    </h3>
+                    <ul class="list-disc pl-5">
+                        <li>Alimento para perros y gatos</li>
+                        <li>Materiales de limpieza</li>
+                        <li>Medicamentos</li>
+                        <li>Cobijas y camas</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">
+                        Puntos de Recepción
+                    </h3>
+                    <p>Dirección principal: [Tu dirección]</p>
+                    <p>Horario de recepción: Lunes a Viernes 9:00 - 17:00</p>
+                    <button
+                        class="mt-4 bg-primary text-white px-6 py-2 rounded-lg"
+                        >Coordinar Donación</button
+                    >
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    .text-primary {
+        color: #4a90e2;
+    }
+    .bg-primary {
+        background-color: #4a90e2;
+    }
+    button {
+        transition: all 0.3s ease;
+    }
+    button:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+</style>

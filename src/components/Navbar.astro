@@ -1,0 +1,111 @@
+<header class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-lg">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <div class="flex-shrink-0 flex items-center">
+                <a href="/" class="flex items-center gap-2">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-8 w-8 text-amber-600"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M12 2c2.21 0 4 1.79 4 4 0 .89-.29 1.71-.78 2.38 1.14.71 2.03 1.74 2.55 3.01.8-1.12 1.23-2.47 1.23-3.89 0-3.87-3.13-7-7-7m0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2M3.5 7c.83 0 1.5.67 1.5 1.5S4.33 10 3.5 10 2 9.33 2 8.5 2.67 7 3.5 7m17 0c.83 0 1.5.67 1.5 1.5S21.33 10 20.5 10 19 9.33 19 8.5 19.67 7 20.5 7M6 11c1.11 0 2 .89 2 2 0 .52-.2 1-.53 1.36.31.09.63.14.97.14h7.12c.34 0 .66-.05.97-.14C16.2 14 16 13.52 16 13c0-1.11.89-2 2-2h.5c1.38 0 2.5 1.12 2.5 2.5 0 3.38-2.75 6.13-6.13 6.13h-7.75C3.75 19.63 1 16.87 1 13.5 1 12.12 2.12 11 3.5 11H4z"
+                        ></path>
+                    </svg>
+                    <h1
+                        class="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent"
+                    >
+                        Fundación
+                    </h1>
+                </a>
+            </div>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                {
+                    [
+                        { href: "/", text: "Inicio" },
+                        { href: "/adopta", text: "Adopta" },
+                        { href: "/ayudanos", text: "Ayúdanos" },
+                        { href: "/servicios", text: "Servicios" },
+                        { href: "/contacto", text: "Contacto" },
+                    ].map((link) => (
+                        <a
+                            href={link.href}
+                            class="relative inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-600 hover:text-amber-600 transition-colors duration-200"
+                        >
+                            {link.text}
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transform scale-x-0 transition-transform duration-200 hover:scale-x-100" />
+                        </a>
+                    ))
+                }
+                <button
+                    class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+                >
+                    Donar
+                </button>
+            </div>
+
+            <!-- Botón móvil mejorado -->
+            <div class="flex items-center sm:hidden">
+                <button
+                    type="button"
+                    id="mobile-menu-button"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-amber-600 hover:text-amber-700 hover:bg-amber-50 transition-colors duration-200"
+                    aria-label="Menú principal"
+                >
+                    <svg
+                        class="block h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú móvil mejorado -->
+        <div
+            class="sm:hidden hidden transition-all duration-200 ease-in-out"
+            id="mobile-menu"
+        >
+            <div class="pt-2 pb-3 space-y-1">
+                {
+                    [
+                        { href: "/", text: "Inicio" },
+                        { href: "/adopta", text: "Adopta" },
+                        { href: "/ayudanos", text: "Ayúdanos" },
+                        { href: "/servicios", text: "Servicios" },
+                        { href: "/contacto", text: "Contacto" },
+                    ].map((link) => (
+                        <a
+                            href={link.href}
+                            class="block pl-3 pr-4 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors duration-200"
+                        >
+                            {link.text}
+                        </a>
+                    ))
+                }
+                <button
+                    class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                >
+                    Donar
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    mobileMenuButton?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+    });
+</script>

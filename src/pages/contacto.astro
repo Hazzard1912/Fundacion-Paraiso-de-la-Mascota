@@ -1,0 +1,173 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contacto - Fundación">
+    <main class="container mx-auto px-4 py-8">
+        <!-- Sección de Contacto Principal -->
+        <section class="mb-12">
+            <h1 class="text-4xl font-bold text-center mb-8">Contacto</h1>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Formulario de Contacto -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4">
+                        Formulario de Contacto
+                    </h2>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block mb-1">Nombre</label>
+                            <input
+                                type="text"
+                                class="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label class="block mb-1">Email</label>
+                            <input
+                                type="email"
+                                class="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label class="block mb-1">Mensaje</label>
+                            <textarea
+                                class="w-full p-2 border rounded h-32"
+                                required></textarea>
+                        </div>
+                        <button
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                        >
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Información de Contacto -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold mb-4">
+                        Información de Contacto
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-2">
+                            <!-- <Icon name="mdi:location" class="w-6 h-6" /> -->
+                            <p>Dirección de la Fundación #123, Ciudad</p>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <!-- <Icon name="mdi:phone" class="w-6 h-6" /> -->
+                            <p>+34 123 456 789</p>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <!-- <Icon name="mdi:email" class="w-6 h-6" /> -->
+                            <p>contacto@fundacion.org</p>
+                        </div>
+                    </div>
+
+                    <!-- Redes Sociales -->
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold mb-3">Síguenos en</h3>
+                        <div class="flex gap-4">
+                            <a
+                                href="#"
+                                class="text-blue-600 hover:text-blue-800"
+                            >
+                                <!-- <Icon name="mdi:facebook" class="w-8 h-8" /> -->
+                            </a>
+                            <a
+                                href="#"
+                                class="text-blue-400 hover:text-blue-600"
+                            >
+                                <!-- <Icon name="mdi:twitter" class="w-8 h-8" /> -->
+                            </a>
+                            <a
+                                href="#"
+                                class="text-pink-600 hover:text-pink-800"
+                            >
+                                <!-- <Icon name="mdi:instagram" class="w-8 h-8" /> -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-4">Ubicación</h2>
+            <div class="h-[400px] bg-gray-100 rounded-lg">
+                <!-- Reemplazar con tu embed de Google Maps -->
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=your-map-embed-url"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                >
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Información Adicional -->
+        <section class="grid md:grid-cols-2 gap-8">
+            <!-- Horarios y Transporte -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">
+                        Horarios de Atención
+                    </h3>
+                    <ul class="space-y-2">
+                        <li>Lunes a Viernes: 9:00 - 18:00</li>
+                        <li>Sábados: 10:00 - 14:00</li>
+                        <li>Domingos: Cerrado</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">Cómo Llegar</h3>
+                    <ul class="space-y-2">
+                        <li>Metro: Línea 1, Estación Central</li>
+                        <li>Autobús: Líneas 14, 27, 35</li>
+                        <li>Parking disponible en el edificio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQs y Necesidades -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">
+                        Preguntas Frecuentes
+                    </h3>
+                    <div class="space-y-4">
+                        <details class="bg-white p-4 rounded-lg">
+                            <summary class="cursor-pointer"
+                                >¿Cómo puedo donar?</summary
+                            >
+                            <p class="mt-2">Información sobre donaciones...</p>
+                        </details>
+                        <details class="bg-white p-4 rounded-lg">
+                            <summary class="cursor-pointer"
+                                >¿Qué necesitan actualmente?</summary
+                            >
+                            <p class="mt-2">Lista de necesidades actuales...</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-3">
+                        Puntos de Recepción
+                    </h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Sede Central: Dirección #123</li>
+                        <li>Centro Comunitario: Dirección #456</li>
+                        <li>Punto de Voluntariado: Dirección #789</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
