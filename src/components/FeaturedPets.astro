@@ -1,42 +1,9 @@
 ---
-const featuredPets = [
-    {
-        name: "Luna",
-        age: "2 años",
-        size: "Mediana",
-        image: "https://images.unsplash.com/photo-1543466835-00a7907e9de1",
-        description:
-            "Luna es muy cariñosa y juguetona. Le encantan los niños y se lleva bien con otros perros.",
-        id: "luna",
-    },
-    {
-        name: "Max",
-        age: "1 año",
-        size: "Grande",
-        image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb",
-        description:
-            "Max es un perro muy energético y leal. Perfecto para familias activas.",
-        id: "max",
-    },
-    {
-        name: "Milo",
-        age: "3 años",
-        size: "Pequeño",
-        image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba",
-        description:
-            "Milo es un gato tranquilo y cariñoso. Ideal para hogares tranquilos.",
-        id: "milo",
-    },
-    {
-        name: "Bella",
-        age: "4 años",
-        size: "Mediana",
-        image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb",
-        description:
-            "Bella es una perrita muy dulce y protectora. Le encanta jugar y correr.",
-        id: "bella",
-    },
-];
+import MascotaCard from "./MascotaCard.astro";
+
+import { pets } from "../data/pets";
+
+const featuredPets = pets.slice(0, 3);
 ---
 
 <section class="py-20 px-4 bg-gradient-to-b from-amber-50 to-white">
@@ -54,50 +21,21 @@ const featuredPets = [
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {
                 featuredPets.map((pet) => (
-                    <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <div class="aspect-square relative overflow-hidden">
-                            <img
-                                src={pet.image}
-                                alt={pet.name}
-                                class="absolute inset-0 w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                            />
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-amber-900">
-                                        {pet.name}
-                                    </h3>
-                                    <p class="text-gray-500">{pet.age}</p>
-                                </div>
-                                <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">
-                                    {pet.size}
-                                </span>
-                            </div>
-                            <p class="text-gray-600 mb-6">{pet.description}</p>
-                            <div class="flex gap-4">
-                                <a
-                                    href={`/adopta/${pet.id}`}
-                                    class="flex-1 bg-amber-600 text-white text-center py-2 px-4 rounded-lg hover:bg-amber-700 transition-colors"
-                                >
-                                    Adoptar
-                                </a>
-                                <a
-                                    href={`/apadrina/${pet.id}`}
-                                    class="flex-1 border border-amber-600 text-amber-600 text-center py-2 px-4 rounded-lg hover:bg-amber-50 transition-colors"
-                                >
-                                    Apadrinar
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                    <MascotaCard 
+                        id={pet.id}
+                        nombre={pet.name}
+                        imagen={pet.images[0]}
+                        edad={pet.edad}
+                        tamaño={pet.tamaño}
+                        descripcion={pet.description}
+                    />
                 ))
             }
         </div>
 
         <div class="text-center mt-12">
             <a
-                href="/adopta"
+                href="/mascotas"
                 class="group inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 transition-colors"
             >
                 Ver todas las mascotas disponibles
@@ -115,3 +53,4 @@ const featuredPets = [
         </div>
     </div>
 </section>
+<script src="../scripts/shareUtils.js"></script>

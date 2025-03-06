@@ -1,0 +1,233 @@
+---
+interface Props {
+    nombreMascota: string;
+    fotoMascota: string;
+}
+
+const { nombreMascota, fotoMascota } = Astro.props;
+
+const montosSugeridos = [
+    { valor: 30000, etiqueta: "$30.000" },
+    { valor: 50000, etiqueta: "$50.000" },
+    { valor: 80000, etiqueta: "$80.000" },
+    { valor: 100000, etiqueta: "$100.000" },
+    { valor: "otro", etiqueta: "Otro valor" }
+];
+---
+
+<div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-amber-800 text-white p-6 flex justify-between items-center">
+        <h3 class="text-xl font-bold">
+            Formulario de Apadrinamiento
+        </h3>
+        <div class="bg-amber-700 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+            </svg>
+        </div>
+    </div>
+    
+    <div class="p-8 bg-gradient-to-b from-amber-50/50 to-white">
+        <div class="mb-8 flex items-center gap-4 bg-amber-50 p-4 rounded-lg border border-amber-100">
+            <img
+                src={fotoMascota}
+                alt={nombreMascota}
+                class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-lg"
+            />
+            <div>
+                <h4 class="font-medium text-amber-900">Apadrinar a {nombreMascota}</h4>
+                <p class="text-sm text-gray-600">
+                    Tu generosidad cambiará su vida mientras espera una familia definitiva
+                </p>
+            </div>
+        </div>
+        
+        <form class="space-y-6" method="POST" action="#success">
+            <div class="space-y-4">
+                <div class="group">
+                    <label
+                        class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
+                    >
+                        Nombre completo <span class="text-amber-600">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="nombre"
+                        required
+                        class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 transition-all duration-200 placeholder:text-gray-400"
+                        placeholder="Tu nombre completo"
+                    />
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="group">
+                        <label
+                            class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
+                        >
+                            Teléfono <span class="text-amber-600">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </span>
+                            <input
+                                type="tel"
+                                name="telefono"
+                                required
+                                class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10 pr-3 transition-all duration-200"
+                                placeholder="000-000-0000"
+                            />
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label
+                            class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
+                        >
+                            Email <span class="text-amber-600">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                            <input
+                                type="email"
+                                name="email"
+                                required
+                                class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10 pr-3 transition-all duration-200"
+                                placeholder="ejemplo@email.com"
+                            />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group">
+                    <label
+                        class="block text-sm font-medium text-amber-800 mb-3"
+                    >
+                        ¿Con cuánto deseas apadrinar mensualmente? <span class="text-amber-600">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {montosSugeridos.map(monto => (
+                            <label class="cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    name="monto" 
+                                    value={monto.valor} 
+                                    class="peer sr-only" 
+                                    required
+                                />
+                                <div class="text-center border border-amber-200 rounded-lg py-2 peer-checked:bg-amber-600 peer-checked:text-white peer-checked:border-amber-600 hover:bg-amber-50 transition-colors">
+                                    {monto.etiqueta}
+                                </div>
+                            </label>
+                        ))}
+                    </div>
+                    <div id="otro-valor-container" class="mt-3 hidden">
+                        <input
+                            type="number"
+                            name="otro-monto"
+                            placeholder="Ingresa el monto deseado"
+                            class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2 px-3"
+                            min="10000"
+                        />
+                    </div>
+                </div>
+                
+                <div class="group">
+                    <label
+                        class="block text-sm font-medium text-amber-800 mb-1"
+                    >
+                        Frecuencia de tu aporte <span class="text-amber-600">*</span>
+                    </label>
+                    <div class="relative">
+                        <select
+                            name="frecuencia"
+                            required
+                            class="appearance-none w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 pr-8 bg-white transition-all duration-200 cursor-pointer"
+                        >
+                            <option value="mensual">Mensual</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="semestral">Semestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-600">
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <label
+                        class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
+                    >
+                        ¿Quieres dejarnos algún mensaje?
+                    </label>
+                    <textarea
+                        rows="2"
+                        name="mensaje"
+                        class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 transition-all duration-200 resize-none"
+                        placeholder="Mensaje opcional..."></textarea>
+                </div>
+            </div>
+
+            <div>
+                <label class="flex items-start gap-2 cursor-pointer">
+                    <input type="checkbox" required class="mt-1 rounded text-amber-600 focus:ring-amber-500">
+                    <span class="text-sm text-gray-600">
+                        Declaro que soy mayor de edad y acepto ser contactado para formalizar el proceso de apadrinamiento.
+                    </span>
+                </label>
+            </div>
+
+            <div class="pt-4">
+                <button
+                    type="submit"
+                    class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                        ></path>
+                    </svg>
+                    Enviar solicitud de apadrinamiento
+                </button>
+            </div>
+            
+            <p class="text-xs text-gray-500 text-center mt-4">
+                Nos pondremos en contacto contigo en un plazo máximo de 48 horas para formalizar el apadrinamiento.
+            </p>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Manejo del campo "Otro valor"
+    document.addEventListener('DOMContentLoaded', () => {
+        const montoRadios = document.querySelectorAll('input[name="monto"]');
+        const otroValorContainer = document.getElementById('otro-valor-container');
+        const otroInput = document.querySelector('input[name="otro-monto"]');
+        
+        montoRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'otro') {
+                    otroValorContainer.classList.remove('hidden');
+                    otroInput.required = true;
+                } else {
+                    otroValorContainer.classList.add('hidden');
+                    otroInput.required = false;
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,324 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { pets } from "../../data/pets";
+import "photoswipe/style.css";
+
+export async function getStaticPaths() {
+    return pets.map((pet) => ({
+        params: { name: pet.id },
+        props: { pet },
+    }));
+}
+
+const { pet } = Astro.props;
+
+// Para el demo, duplicamos las imágenes para tener una galería más completa
+// En producción, se usarían imágenes reales diferentes
+const gallery =
+    pet.images.length > 1
+        ? pet.images
+        : [...Array(5)].map((_, i) => pet.images[0]);
+---
+
+<Layout title={`${pet.name} - Adopción - Paraíso de la mascota Cali`}>
+    <main class="bg-amber-50/50 min-h-screen pb-16">
+        <!-- Hero con imagen principal -->
+        <div class="h-[60vh] relative overflow-hidden">
+            <img
+                src={pet.images[0]}
+                alt={pet.name}
+                class="w-full h-full object-cover"
+            />
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
+            >
+            </div>
+            <div
+                class="absolute bottom-0 left-0 right-0 p-8 text-white max-w-6xl mx-auto"
+            >
+                <h1 class="text-5xl font-bold mb-4">{pet.name}</h1>
+                <div class="flex flex-wrap gap-3">
+                    <span
+                        class="px-4 py-2 bg-amber-500/90 backdrop-blur-sm rounded-full text-sm font-medium"
+                    >
+                        {pet.especie}
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
+                    >
+                        {pet.tamaño}
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
+                    >
+                        {pet.edad}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="max-w-6xl mx-auto px-4 py-12">
+
+            <!-- Botón Volver -->
+            <a
+                href="/mascotas"
+                class="bg-white/90 backdrop-blur-sm text-amber-900 px-4 py-2 rounded-full shadow-lg hover:bg-amber-100 transition-colors flex items-center gap-2 w-max mb-8"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                Volver a mascotas
+            </a>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Columna izquierda: Información -->
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <h2 class="text-2xl font-bold text-amber-900 mb-6">
+                            Sobre {pet.name}
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            {pet.description}
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-amber-50 p-4 rounded-xl">
+                                <span class="text-amber-900 font-medium"
+                                    >Edad:</span
+                                >
+                                <p class="text-gray-600">{pet.edad}</p>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-xl">
+                                <span class="text-amber-900 font-medium"
+                                    >Sexo:</span
+                                >
+                                <p class="text-gray-600">{pet.sexo}</p>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-xl">
+                                <span class="text-amber-900 font-medium"
+                                    >Tamaño:</span
+                                >
+                                <p class="text-gray-600">{pet.tamaño}</p>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-xl">
+                                <span class="text-amber-900 font-medium"
+                                    >Especie:</span
+                                >
+                                <p class="text-gray-600">{pet.especie}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="flex flex-col gap-4">
+                        <a
+                            href={`/mascotas/${pet.id}/adoptar`}
+                            class="bg-amber-600 text-white text-center py-4 px-6 rounded-xl font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                ></path>
+                            </svg>
+                            Adoptar a {pet.name}
+                        </a>
+                        <a
+                            href={`/mascotas/${pet.id}/apadrinar`}
+                            class="border-2 border-amber-600 text-amber-600 text-center py-4 px-6 rounded-xl font-semibold hover:bg-amber-50 transition-colors"
+                        >
+                            Apadrinar a {pet.name}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna derecha: Galería -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold text-amber-900 mb-6">
+                        Galería de fotos
+                    </h2>
+                    <div class="gallery-container">
+                        <div class="pswp-gallery" id="pet-gallery">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                {
+                                    gallery.map((img, index) => (
+                                        <a
+                                            href={img}
+                                            data-pswp-width="1500"
+                                            data-pswp-height="1000"
+                                            data-cropped="true"
+                                            class={`gallery-item block rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow ${
+                                                index === 0
+                                                    ? "md:col-span-2 md:row-span-2"
+                                                    : ""
+                                            }`}
+                                        >
+                                            <img
+                                                src={img}
+                                                alt={`${pet.name} - Foto ${index + 1}`}
+                                                class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300"
+                                                loading="lazy"
+                                            />
+                                        </a>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de más información -->
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg">
+                <h2 class="text-2xl font-bold text-amber-900 mb-6">
+                    ¿Por qué adoptar a {pet.name}?
+                </h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="bg-amber-100 p-3 rounded-full mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-amber-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-amber-900 mb-2">
+                            Amor incondicional
+                        </h3>
+                        <p class="text-gray-600">
+                            Las mascotas ofrecen compañía y afecto sin
+                            condiciones, mejorando tu bienestar emocional.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="bg-amber-100 p-3 rounded-full mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-amber-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-amber-900 mb-2">
+                            Salud mejorada
+                        </h3>
+                        <p class="text-gray-600">
+                            Estudios demuestran que convivir con mascotas reduce
+                            el estrés y mejora la salud cardiovascular.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="bg-amber-100 p-3 rounded-full mb-4">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-amber-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-amber-900 mb-2">
+                            Salvas una vida
+                        </h3>
+                        <p class="text-gray-600">
+                            Al adoptar, no solo cambias tu vida sino que le das
+                            una segunda oportunidad a un animal que lo necesita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    import PhotoSwipe from "photoswipe";
+
+    // Espera a que el DOM se cargue completamente
+    document.addEventListener("DOMContentLoaded", () => {
+        // Configuración de PhotoSwipe
+        const galleryEl = document.querySelector("#pet-gallery");
+
+        if (!galleryEl) return;
+
+        const galleryItems = galleryEl.querySelectorAll("a.gallery-item");
+
+        // Añade listener a cada item de la galería
+        galleryItems.forEach((item, index) => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                // Opciones para PhotoSwipe
+                const options = {
+                    dataSource: Array.from(galleryItems).map((itemEl) => ({
+                        src: itemEl.href,
+                        width: parseInt(itemEl.dataset.pswpWidth || "1500", 10),
+                        height: parseInt(
+                            itemEl.dataset.pswpHeight || "1000",
+                            10,
+                        ),
+                        alt: itemEl.querySelector("img")?.alt || "",
+                    })),
+                    pswpModule: PhotoSwipe,
+                    initialIndex: index,
+                };
+
+                // Inicializa PhotoSwipe
+                const lightbox = new PhotoSwipe(options);
+                lightbox.init();
+            });
+        });
+    });
+</script>
+
+<style>
+    .gallery-item {
+        display: block;
+        height: 100%;
+    }
+
+    /* Animación suave para hover */
+    .gallery-item img {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+</style>

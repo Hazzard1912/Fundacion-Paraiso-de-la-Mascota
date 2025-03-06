@@ -12,7 +12,7 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -22,10 +22,14 @@ const { title, description } = Astro.props;
 		<title>{title}</title>
 		<ClientRouter />
 	</head>
-	<body class="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+	<body class="min-h-screen bg-amber-50">
 		<Navbar />
-		<slot />
+		<main class="pt-12">
+			<slot />
+		</main>
 		<Footer />
+		<!-- Script global para la funcionalidad de compartir -->
+		<script src="/scripts/shareUtils.js" is:inline></script>
 	</body>
 </html>
 

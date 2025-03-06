@@ -2,169 +2,254 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Servicios - Fundación">
-    <main class="container mx-auto px-4 py-8">
-        <!-- Esterilización -->
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary mb-6">Esterilización</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Beneficios</h3>
-                    <ul class="list-disc pl-5">
-                        <li>Previene enfermedades reproductivas</li>
-                        <li>Reduce el riesgo de cáncer</li>
-                        <li>Control de población animal</li>
-                        <li>Mejor calidad de vida</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Requisitos</h3>
-                    <ul class="list-disc pl-5">
-                        <li>Mascota en ayuno de 8 horas</li>
-                        <li>Edad mínima: 6 meses</li>
-                        <li>Buen estado de salud</li>
-                    </ul>
-                </div>
-            </div>
-            <button class="mt-6 bg-primary text-white px-6 py-2 rounded-lg"
-                >Agendar Cita</button
-            >
-        </section>
+<Layout title="Servicios - Paraíso de la mascota Cali">
+    <!-- Hero section -->
+    <section
+        class="relative bg-gradient-to-br from-amber-800 to-amber-900 text-white py-20"
+    >
+        <div class="absolute inset-0 overflow-hidden">
+            <img
+                src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee"
+                alt="Servicios para mascotas"
+                class="w-full h-full object-cover opacity-20 mix-blend-overlay"
+            />
+        </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                Nuestros Servicios
+            </h1>
+            <p class="text-xl text-amber-100 max-w-3xl mx-auto">
+                Ofrecemos servicios de calidad para el bienestar y cuidado de
+                las mascotas. Conoce todas las opciones disponibles.
+            </p>
+        </div>
+    </section>
 
-        <!-- Veterinaria -->
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary mb-6">Veterinaria</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Servicios Disponibles
-                    </h3>
-                    <ul class="list-disc pl-5">
-                        <li>Consultas generales</li>
-                        <li>Vacunación</li>
-                        <li>Desparasitación</li>
-                        <li>Emergencias</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Horarios</h3>
-                    <p>Lunes a Viernes: 9:00 - 18:00</p>
-                    <p>Sábados: 9:00 - 14:00</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Sistema de Citas</h3>
-                    <button class="bg-primary text-white px-6 py-2 rounded-lg"
-                        >Reservar Cita</button
-                    >
-                </div>
-            </div>
-        </section>
-
-        <!-- Tienda -->
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary mb-6">Tienda</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Productos Disponibles
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Productos aquí -->
-                        <div class="p-4 border rounded">
-                            <h4>Alimento</h4>
-                            <p>Varios tipos disponibles</p>
-                        </div>
-                        <div class="p-4 border rounded">
-                            <h4>Accesorios</h4>
-                            <p>Collares, correas, etc.</p>
-                        </div>
+    <!-- Servicios principales -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Servicio Veterinaria -->
+                <div
+                    class="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl"
+                >
+                    <div class="h-64 overflow-hidden">
+                        <img
+                            src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def"
+                            alt="Servicio Veterinario"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="p-8">
+                        <h2 class="text-2xl font-bold text-amber-900 mb-4">
+                            Clínica Veterinaria
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Contamos con un equipo de profesionales para atender
+                            las necesidades médicas de tu mascota. Ofrecemos
+                            múltiples servicios desde consultas generales hasta
+                            procedimientos especializados.
+                        </p>
+                        <ul class="grid grid-cols-2 gap-y-2 gap-x-4 mb-8">
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Consulta general</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Medicina interna</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Cirugía</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Laboratorio</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Vacunación</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Ecografía</span>
+                            </li>
+                        </ul>
+                        <a
+                            href="/servicios/veterinaria"
+                            class="inline-flex items-center justify-center w-full bg-amber-600 text-white py-3 px-6 rounded-xl font-medium hover:bg-amber-700 transition-colors"
+                        >
+                            Ver detalles y solicitar cita
+                        </a>
                     </div>
                 </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Contacto para Compras
-                    </h3>
-                    <button class="bg-primary text-white px-6 py-2 rounded-lg"
-                        >Contactar</button
-                    >
-                </div>
-            </div>
-        </section>
 
-        <!-- Voluntariado -->
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary mb-6">Voluntariado</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Programas Disponibles
-                    </h3>
-                    <ul class="list-disc pl-5">
-                        <li>Cuidado de animales</li>
-                        <li>Apoyo en eventos</li>
-                        <li>Campañas de adopción</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Requisitos</h3>
-                    <ul class="list-disc pl-5">
-                        <li>Mayor de 18 años</li>
-                        <li>Compromiso mínimo de 3 meses</li>
-                        <li>Disponibilidad de 4 horas semanales</li>
-                    </ul>
-                    <button
-                        class="mt-4 bg-primary text-white px-6 py-2 rounded-lg"
-                        >Inscribirse</button
-                    >
-                </div>
-            </div>
-        </section>
+                <!-- Servicio Esterilización -->
+                <div
+                    class="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl"
+                >
+                    <div class="h-64 overflow-hidden">
+                        <img
+                            src="https://images.unsplash.com/photo-1629909834021-a4564b986d12"
+                            alt="Servicio de Esterilización"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <div class="p-8">
+                        <h2 class="text-2xl font-bold text-amber-900 mb-4">
+                            Programa de Esterilización
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            La esterilización es fundamental para el control de
+                            la población animal. Nuestro programa ofrece precios
+                            accesibles y el cuidado que tu mascota necesita.
+                        </p>
 
-        <!-- Donaciones -->
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary mb-6">
-                Donaciones en Especie
-            </h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Necesidades Actuales
-                    </h3>
-                    <ul class="list-disc pl-5">
-                        <li>Alimento para perros y gatos</li>
-                        <li>Materiales de limpieza</li>
-                        <li>Medicamentos</li>
-                        <li>Cobijas y camas</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">
-                        Puntos de Recepción
-                    </h3>
-                    <p>Dirección principal: [Tu dirección]</p>
-                    <p>Horario de recepción: Lunes a Viernes 9:00 - 17:00</p>
-                    <button
-                        class="mt-4 bg-primary text-white px-6 py-2 rounded-lg"
-                        >Coordinar Donación</button
-                    >
+                        <h3 class="text-lg font-semibold text-amber-800 mb-2">
+                            Beneficios:
+                        </h3>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Previene enfermedades reproductivas</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Reduce el riesgo de cáncer</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Control de población animal</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span
+                                    >Mejor calidad de vida para tu mascota</span
+                                >
+                            </li>
+                        </ul>
+
+                        <a
+                            href="https://wa.me/573152698780?text=Hola,%20me%20gustaría%20información%20sobre%20el%20servicio%20de%20esterilización"
+                            target="_blank"
+                            class="inline-flex items-center justify-center w-full bg-amber-600 text-white py-3 px-6 rounded-xl font-medium hover:bg-amber-700 transition-colors"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 mr-2"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                                ></path>
+                            </svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 </Layout>
-
-<style>
-    .text-primary {
-        color: #4a90e2;
-    }
-    .bg-primary {
-        background-color: #4a90e2;
-    }
-    button {
-        transition: all 0.3s ease;
-    }
-    button:hover {
-        opacity: 0.9;
-        transform: translateY(-2px);
-    }
-</style>

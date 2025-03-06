@@ -1,0 +1,228 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { pets } from "../../../data/pets";
+import FormularioAdopcion from "../../../components/FormularioAdopcion.astro";
+
+export async function getStaticPaths() {
+    return pets.map((pet) => ({
+        params: { name: pet.id },
+        props: { pet },
+    }));
+}
+
+const { pet } = Astro.props;
+---
+
+<Layout title={`Adoptar a ${pet.name} - Paraíso de la mascota Cali`}>
+    <main class="bg-amber-50/50 min-h-screen py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- Navegación de migas de pan (breadcrumbs) para SEO -->
+            <nav class="flex mb-8 text-sm">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a
+                            href="/"
+                            class="text-amber-800 hover:text-amber-600 transition-colors"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg
+                                class="w-3 h-3 text-gray-400 mx-1"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 6 10"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 9 4-4-4-4"></path>
+                            </svg>
+                            <a
+                                href="/mascotas"
+                                class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
+                            >
+                                Mascotas en adopción
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg
+                                class="w-3 h-3 text-gray-400 mx-1"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 6 10"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 9 4-4-4-4"></path>
+                            </svg>
+                            <a
+                                href={`/mascotas/${pet.id}`}
+                                class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
+                            >
+                                {pet.name}
+                            </a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg
+                                class="w-3 h-3 text-gray-400 mx-1"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 6 10"
+                            >
+                                <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 9 4-4-4-4"></path>
+                            </svg>
+                            <span class="ml-1 font-medium text-amber-900">
+                                Adoptar
+                            </span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="mb-10">
+                <a
+                    href={`/mascotas/${pet.id}`}
+                    class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-600 transition-colors"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Volver al perfil de {pet.name}</span>
+                </a>
+            </div>
+
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl font-bold text-amber-900 mb-4">
+                    Adoptar a {pet.name}
+                </h1>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    Estás a un paso de cambiar dos vidas para siempre: la de {
+                        pet.name
+                    } y la tuya. Completa este formulario y nos pondremos en contacto
+                    contigo a la brevedad.
+                </p>
+            </div>
+
+            <FormularioAdopcion
+                nombreMascota={pet.name}
+                fotoMascota={pet.images[0]}
+            />
+
+            <div class="mt-12 bg-white p-8 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-amber-900 mb-4">
+                    ¿Qué sigue después de enviar la solicitud?
+                </h3>
+
+                <ol class="space-y-6 mt-6">
+                    <li class="flex gap-4 items-start">
+                        <div
+                            class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold"
+                        >
+                            1
+                        </div>
+                        <div>
+                            <h4
+                                class="text-lg font-semibold text-amber-900 mb-1"
+                            >
+                                Revisión inicial
+                            </h4>
+                            <p class="text-gray-600">
+                                Nuestro equipo revisará tu solicitud y se pondrá
+                                en contacto contigo por teléfono o email en un
+                                máximo de 48 horas.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="flex gap-4 items-start">
+                        <div
+                            class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold"
+                        >
+                            2
+                        </div>
+                        <div>
+                            <h4
+                                class="text-lg font-semibold text-amber-900 mb-1"
+                            >
+                                Entrevista y visita
+                            </h4>
+                            <p class="text-gray-600">
+                                Programaremos una entrevista personal y, de ser
+                                necesario, una visita a tu hogar para
+                                asegurarnos que sea un ambiente adecuado.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="flex gap-4 items-start">
+                        <div
+                            class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold"
+                        >
+                            3
+                        </div>
+                        <div>
+                            <h4
+                                class="text-lg font-semibold text-amber-900 mb-1"
+                            >
+                                Periodo de adaptación
+                            </h4>
+                            <p class="text-gray-600">
+                                Si todo va bien, podrás llevarte a {pet.name} a casa
+                                por un periodo de adaptación mientras se finalizan
+                                los trámites de adopción.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li class="flex gap-4 items-start">
+                        <div
+                            class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold"
+                        >
+                            4
+                        </div>
+                        <div>
+                            <h4
+                                class="text-lg font-semibold text-amber-900 mb-1"
+                            >
+                                Adopción oficial
+                            </h4>
+                            <p class="text-gray-600">
+                                Finalizaremos el proceso con la firma del
+                                contrato de adopción y {pet.name} pasará oficialmente
+                                a ser parte de tu familia.
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+</Layout>

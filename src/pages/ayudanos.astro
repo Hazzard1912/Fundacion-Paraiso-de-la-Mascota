@@ -2,133 +2,609 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Ayúdanos - Fundación">
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <!-- Sección Dona -->
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">Dona</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">Donación única</h3>
-                    <div class="space-y-4">
-                        <button
-                            class="w-full py-2 bg-blue-600 text-white rounded-md"
-                            >$20.000</button
+<Layout title="Ayúdanos - Paraíso de la mascota Cali">
+    <!-- Hero section -->
+    <section class="relative bg-amber-800 text-white overflow-hidden">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-amber-900 to-amber-700 opacity-90 z-0"
+        >
+        </div>
+        <div class="absolute inset-0 overflow-hidden">
+            <img
+                src="https://images.unsplash.com/photo-1548767797-d8c844163c4c"
+                alt="Mascotas rescatadas"
+                class="w-full h-full object-cover opacity-20 mix-blend-overlay"
+            />
+        </div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 py-24 md:py-32">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    Tu ayuda transforma vidas
+                </h1>
+                <p
+                    class="text-xl md:text-2xl text-amber-100 mb-10 leading-relaxed"
+                >
+                    Te invitamos a ser parte de este gran Proyecto de Vida, para
+                    que juntos podamos seguir construyendo una vida más justa y
+                    digna para los animales maltratados y abandonados.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a
+                        href="#donaciones"
+                        class="bg-white text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    >
+                        Realizar una donación
+                    </a>
+                    <a
+                        href="#voluntariado"
+                        class="border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors duration-300"
+                    >
+                        Ser voluntario
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formas de ayudar - Grid -->
+    <section class="bg-white py-20 px-4">
+        <div class="max-w-6xl mx-auto text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-6">
+                ¿Cómo puedes ayudar?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Cada aporte, por pequeño que sea, hace una gran diferencia en la
+                vida de nuestros peludos.
+            </p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <div
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                id="donaciones"
+            >
+                <!-- Donaciones en especie -->
+                <div
+                    class="bg-amber-50 rounded-2xl p-8 shadow-md hover:shadow-lg transition-all"
+                >
+                    <div
+                        class="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8 text-amber-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
-                        <button
-                            class="w-full py-2 bg-blue-600 text-white rounded-md"
-                            >$50.000</button
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">
+                        Donaciones en especie
+                    </h3>
+                    <div class="mb-6 text-gray-600">
+                        <p class="mb-3">Puedes donar:</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Alimento para perros y gatos</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Medicinas</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Elementos de aseo</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Arena para gatos</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Juguetes, camas, casas, etc.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl mb-6">
+                        <h4 class="font-medium text-amber-800 mb-2">
+                            ¿Dónde entregar?
+                        </h4>
+                        <p class="text-gray-600 text-sm mb-2">
+                            <span class="font-semibold">Oficina:</span> Calle 38N
+                            # 2BN 95, Prados del Norte
+                        </p>
+                        <p class="text-gray-600 text-sm">
+                            <span class="font-semibold">Horario:</span> L-V: 8:00
+                            - 12:00 / 14:00 - 17:30 S: 8:00 - 12:00
+                        </p>
+                    </div>
+
+                    <a
+                        href="https://wa.me/573152698780?text=Hola,%20me%20gustaría%20hacer%20una%20donación%20en%20especie"
+                        target="_blank"
+                        class="flex items-center justify-center gap-2 w-full text-amber-700 border border-amber-700 rounded-lg py-3 hover:bg-amber-700 hover:text-white transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
                         >
-                        <button
-                            class="w-full py-2 bg-blue-600 text-white rounded-md"
-                            >$100.000</button
+                            <path
+                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+                            ></path>
+                        </svg>
+                        Coordinar recogida
+                    </a>
+                </div>
+
+                <!-- Donaciones en dinero -->
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-all border border-amber-100"
+                >
+                    <div
+                        class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8 text-amber-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">
+                        Donaciones en dinero
+                    </h3>
+                    <div class="mb-6 text-gray-600">
+                        <p class="mb-3">Puedes realizar transferencias a:</p>
+                        <div class="bg-amber-50 p-4 rounded-xl mb-6">
+                            <p class="mb-1">
+                                <span class="font-medium">Banco:</span> Bancolombia
+                            </p>
+                            <p class="mb-1">
+                                <span class="font-medium">Tipo de cuenta:</span>
+                                Corriente
+                            </p>
+                            <p class="mb-1">
+                                <span class="font-medium">Número:</span> 06015721294
+                            </p>
+                            <p class="mb-1">
+                                <span class="font-medium">Titular:</span> Fundación
+                                Paraíso de la Mascota
+                            </p>
+                            <p>
+                                <span class="font-medium">NIT:</span> 805028647
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-amber-800 mb-3">
+                        Donación en línea
+                    </h4>
+                    <div class="grid grid-cols-3 gap-2 mb-6">
+                        {
+                            [
+                                "30.000",
+                                "50.000",
+                                "80.000",
+                                "100.000",
+                                "150.000",
+                                "Otro",
+                            ].map((valor) => (
+                                <button class="py-2 border border-amber-200 rounded-lg hover:bg-amber-50 transition-colors">
+                                    ${valor}
+                                </button>
+                            ))
+                        }
+                    </div>
+
+                    <a
+                        href="#"
+                        class="flex items-center justify-center gap-2 w-full text-white bg-amber-600 rounded-lg py-3 hover:bg-amber-700 transition-colors mb-4"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Donar ahora
+                    </a>
+
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500">
+                            Para todos los tipos de donación, expedimos
+                            Certificado de Donación para efectos fiscales.
+                        </p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">
-                        Transferencia Bancaria
+
+                <!-- Débito automático -->
+                <div
+                    class="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-8 shadow-md hover:shadow-lg transition-all"
+                >
+                    <div
+                        class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8 text-amber-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-4">
+                        Débito automático
                     </h3>
-                    <p>Banco: XXXXX</p>
-                    <p>Cuenta: XXXXX</p>
+                    <div class="mb-6 text-gray-600">
+                        <p class="mb-4">
+                            Servicio fácil, seguro y eficaz para aportar
+                            mensualmente desde $30.000, debitando
+                            automáticamente de tu cuenta bancaria o tarjeta de
+                            crédito.
+                        </p>
+
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Sin costo para el donante</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span
+                                    >Compatible con todos los bancos de Colombia</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span
+                                    >Tarjetas MasterCard, Visa y American
+                                    Express</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <a
+                            href="#"
+                            class="flex items-center justify-center gap-2 w-full text-white bg-amber-600 rounded-lg py-3 hover:bg-amber-700 transition-colors"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                ></path>
+                            </svg>
+                            Descargar formulario
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR code para app Bancolombia -->
+            <div
+                class="mt-12 p-8 rounded-2xl bg-white border border-amber-100 shadow-md flex flex-col md:flex-row gap-8 items-center"
+            >
+                <div class="md:w-1/4">
                     <img
-                        src="/qr-code.png"
-                        alt="Código QR"
-                        class="mt-4 mx-auto"
+                        src="/img/qr-bancolombia.png"
+                        alt="QR Bancolombia"
+                        class="w-full max-w-[200px] mx-auto"
                     />
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">
-                        Plan Padrino Mensual
+                <div class="md:w-3/4">
+                    <h3 class="text-xl font-bold text-amber-900 mb-3">
+                        Dona con la app Bancolombia
                     </h3>
-                    <p class="mb-4">Apoya mensualmente nuestros programas</p>
-                    <button
-                        class="w-full py-2 bg-green-600 text-white rounded-md"
-                        >Suscribirse</button
-                    >
+                    <p class="text-gray-600 mb-4">
+                        Si tienes la aplicación de Bancolombia, puedes escanear
+                        este código QR para realizar tu donación de manera
+                        rápida y segura.
+                    </p>
+                    <div class="flex gap-4 flex-wrap">
+                        <a
+                            href="/img/qr-bancolombia.png"
+                            download
+                            class="inline-flex items-center gap-2 text-amber-700 border border-amber-700 px-4 py-2 rounded-lg hover:bg-amber-50 transition-colors"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                ></path>
+                            </svg>
+                            Descargar QR
+                        </a>
+                        <a
+                            href="#"
+                            class="inline-flex items-center gap-2 text-amber-700 px-4 py-2 hover:underline"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                            Cómo usar este QR
+                        </a>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Sección Apadrina -->
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">Apadrina</h2>
-            <div class="max-w-2xl mx-auto text-center">
-                <p class="mb-6">
-                    Cambia la vida de un niño a través de nuestro programa de
-                    apadrinamiento.
-                </p>
-                <button class="px-8 py-3 bg-orange-600 text-white rounded-md"
-                    >Apadrinar ahora</button
+    <!-- Voluntariado -->
+    <section
+        id="voluntariado"
+        class="bg-amber-800 text-white py-20 px-4 relative overflow-hidden"
+    >
+        <div class="absolute inset-0 bg-amber-900/50"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 overflow-hidden">
+            <img
+                src="https://images.unsplash.com/photo-1581888227599-779811939961"
+                alt="Voluntarios con perros"
+                class="w-full h-full object-cover opacity-20 md:opacity-30"
+            />
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">
+                    Únete a nuestro equipo de voluntarios
+                </h2>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-10">
+                    <p class="text-xl text-amber-100 mb-6">
+                        Tu tiempo es uno de los regalos más valiosos que puedes
+                        ofrecer. Como voluntario, ayudarás directamente a
+                        mejorar la calidad de vida de nuestras mascotas mientras
+                        esperan encontrar un hogar.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mb-4">
+                        Áreas donde puedes ayudar:
+                    </h3>
+                    <ul class="grid md:grid-cols-2 gap-x-8 gap-y-3 mb-8">
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Paseo y socialización</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Cuidado y alimentación</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Limpieza y mantenimiento</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Apoyo en eventos</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Fotografía y redes sociales</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-amber-300"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Apoyo veterinario (si aplica)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a
+                    href="https://wa.me/573152698780?text=Hola,%20me%20gustaría%20conocer%20más%20sobre%20el%20programa%20de%20voluntariado%20y%20cómo%20puedo%20ayudar."
+                    target="_blank"
+                    class="inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-full font-medium hover:bg-amber-100 transition-colors shadow-lg"
                 >
-            </div>
-        </section>
-
-        <!-- Sección Voluntariado -->
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">Voluntariado</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">
-                        Programas disponibles
-                    </h3>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Apoyo educativo</li>
-                        <li>Actividades recreativas</li>
-                        <li>Apoyo administrativo</li>
-                        <li>Eventos especiales</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">Requisitos</h3>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Ser mayor de edad</li>
-                        <li>Disponibilidad mínima de 4 horas semanales</li>
-                        <li>Compromiso mínimo de 3 meses</li>
-                    </ul>
-                    <button
-                        class="w-full py-2 bg-purple-600 text-white rounded-md"
-                        >Inscribirse como voluntario</button
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        class="h-6 w-6"
+                        viewBox="0 0 24 24" 
+                        fill="currentColor"
                     >
-                </div>
+                        <path 
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                        />
+                    </svg>
+                    Contactar por WhatsApp
+                </a>
             </div>
-        </section>
-
-        <!-- Sección Donaciones en especie -->
-        <section class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8">
-                Donaciones en especie
-            </h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">
-                        Necesidades actuales
-                    </h3>
-                    <ul class="list-disc list-inside">
-                        <li>Útiles escolares</li>
-                        <li>Ropa infantil</li>
-                        <li>Alimentos no perecederos</li>
-                        <li>Artículos de higiene</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">
-                        Puntos de recepción
-                    </h3>
-                    <p>Sede Principal:</p>
-                    <p>Dirección XXXXX</p>
-                    <p>Horario: Lunes a Viernes 9:00 - 17:00</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">Contacto</h3>
-                    <p>Teléfono: (XX) XXXX-XXXX</p>
-                    <p>Email: donaciones@fundacion.org</p>
-                    <button
-                        class="w-full py-2 bg-teal-600 text-white rounded-md mt-4"
-                        >Coordinar entrega</button
-                    >
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 </Layout>

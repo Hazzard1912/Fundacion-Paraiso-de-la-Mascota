@@ -1,0 +1,297 @@
+---
+interface Props {
+    servicios: string[];
+}
+
+const { servicios } = Astro.props;
+---
+
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-amber-800 text-white p-6">
+        <h3 class="text-2xl font-bold">Solicitar una cita</h3>
+        <p class="mt-2 text-amber-100">
+            Completa el formulario y nos pondremos en contacto contigo para
+            confirmar tu cita
+        </p>
+    </div>
+
+    <form class="p-8 space-y-6">
+        <!-- Datos personales -->
+        <div class="space-y-4">
+            <div>
+                <label
+                    for="nombre"
+                    class="block text-sm font-medium text-amber-900 mb-1"
+                >
+                    Nombre completo <span class="text-amber-600">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                    placeholder="Tu nombre completo"
+                />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label
+                        for="telefono"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Teléfono <span class="text-amber-600">*</span>
+                    </label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                ></path>
+                            </svg>
+                        </span>
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            required
+                            class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10"
+                            placeholder="000-000-0000"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label
+                        for="email"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Email <span class="text-amber-600">*</span>
+                    </label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                ></path>
+                            </svg>
+                        </span>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10"
+                            placeholder="ejemplo@email.com"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label
+                    for="mascota"
+                    class="block text-sm font-medium text-amber-900 mb-1"
+                >
+                    Nombre de la mascota <span class="text-amber-600">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="mascota"
+                    name="mascota"
+                    required
+                    class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                    placeholder="Nombre de tu mascota"
+                />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label
+                        for="especie"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Especie <span class="text-amber-600">*</span>
+                    </label>
+                    <select
+                        id="especie"
+                        name="especie"
+                        required
+                        class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                    >
+                        <option value="" disabled selected
+                            >Selecciona una opción</option
+                        >
+                        <option value="perro">Perro</option>
+                        <option value="gato">Gato</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label
+                        for="edad"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Edad aproximada
+                    </label>
+                    <input
+                        type="text"
+                        id="edad"
+                        name="edad"
+                        class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                        placeholder="Ej: 2 años"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalles de la cita -->
+        <div class="pt-4 border-t border-gray-200 space-y-4">
+            <div>
+                <label
+                    for="servicio"
+                    class="block text-sm font-medium text-amber-900 mb-1"
+                >
+                    Servicio requerido <span class="text-amber-600">*</span>
+                </label>
+                <select
+                    id="servicio"
+                    name="servicio"
+                    required
+                    class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                >
+                    <option value="" disabled selected
+                        >Selecciona un servicio</option
+                    >
+                    {
+                        servicios.map((servicio) => (
+                            <option value={servicio}>{servicio}</option>
+                        ))
+                    }
+                </select>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label
+                        for="fecha"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Fecha preferida <span class="text-amber-600">*</span>
+                    </label>
+                    <input
+                        type="date"
+                        id="fecha"
+                        name="fecha"
+                        required
+                        min={new Date().toISOString().split("T")[0]}
+                        class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                    />
+                </div>
+
+                <div>
+                    <label
+                        for="horario"
+                        class="block text-sm font-medium text-amber-900 mb-1"
+                    >
+                        Horario preferido <span class="text-amber-600">*</span>
+                    </label>
+                    <select
+                        id="horario"
+                        name="horario"
+                        required
+                        class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5"
+                    >
+                        <option value="" disabled selected
+                            >Selecciona un horario</option
+                        >
+                        <option value="manana">Mañana (8:00 - 12:00)</option>
+                        <option value="tarde">Tarde (14:00 - 18:00)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label
+                    for="mensaje"
+                    class="block text-sm font-medium text-amber-900 mb-1"
+                >
+                    Motivo de la consulta / Síntomas
+                </label>
+                <textarea
+                    id="mensaje"
+                    name="mensaje"
+                    rows="3"
+                    class="w-full rounded-lg border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 resize-none"
+                    placeholder="Describe brevemente el motivo de tu visita o los síntomas que presenta tu mascota"
+                ></textarea>
+            </div>
+        </div>
+
+        <!-- Términos y condiciones -->
+        <div class="pt-2">
+            <label class="flex items-start gap-2 cursor-pointer">
+                <input
+                    type="checkbox"
+                    name="terminos"
+                    required
+                    class="mt-1 rounded text-amber-600 focus:ring-amber-500"
+                />
+                <span class="text-sm text-gray-600">
+                    Acepto los términos y condiciones, y autorizo el tratamiento
+                    de mis datos personales para gestionar la cita.
+                </span>
+            </label>
+        </div>
+
+        <!-- Botón de envío -->
+        <div>
+            <button
+                type="submit"
+                class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                Solicitar cita
+            </button>
+        </div>
+
+        <p class="text-xs text-gray-500 text-center">
+            Te contactaremos a la brevedad para confirmar tu cita según
+            disponibilidad.
+        </p>
+    </form>
+</div>
