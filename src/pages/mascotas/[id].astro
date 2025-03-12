@@ -1,31 +1,36 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { pets } from "../../data/pets";
+import { actions } from "astro:actions";
 import "photoswipe/style.css";
 
-export async function getStaticPaths() {
-    return pets.map((pet) => ({
-        params: { name: pet.id },
-        props: { pet },
-    }));
+export const prerender = false;
+
+const { id } = Astro.params;
+
+const { data, error } = await Astro.callAction(actions.getPet, { id });
+
+if (error) {
+    console.error(error);
+    return Astro.redirect("/404");
 }
 
-const { pet } = Astro.props;
+if (data.pet[0].isAdopted) {
+    return Astro.redirect("/mascotas");
+}
 
-// Para el demo, duplicamos las imágenes para tener una galería más completa
-// En producción, se usarían imágenes reales diferentes
-const gallery =
-    pet.images.length > 1
-        ? pet.images
-        : [...Array(5)].map((_, i) => pet.images[0]);
+const pet = data.pet[0] || {};
+
+const gallery = pet.imageUrl ? [pet.imageUrl, pet.imageUrl, pet.imageUrl] : [];
 ---
 
-<Layout title={`${pet.name} - Adopción - Paraíso de la mascota Cali`}>
+<Layout
+    title={`${pet.name || "Mascota"} - Adopción - Paraíso de la mascota Cali`}
+>
     <main class="bg-amber-50/50 min-h-screen pb-16">
         <!-- Hero con imagen principal -->
         <div class="h-[60vh] relative overflow-hidden">
             <img
-                src={pet.images[0]}
+                src={gallery[0] || "/images/placeholder-pet.jpg"}
                 alt={pet.name}
                 class="w-full h-full object-cover"
             />
@@ -41,17 +46,17 @@ const gallery =
                     <span
                         class="px-4 py-2 bg-amber-500/90 backdrop-blur-sm rounded-full text-sm font-medium"
                     >
-                        {pet.especie}
+                        {pet.species}
                     </span>
                     <span
                         class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
                     >
-                        {pet.tamaño}
+                        {pet.size}
                     </span>
                     <span
                         class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
                     >
-                        {pet.edad}
+                        {pet.ageGroup}
                     </span>
                 </div>
             </div>
@@ -59,7 +64,6 @@ const gallery =
 
         <!-- Contenido principal -->
         <div class="max-w-6xl mx-auto px-4 py-12">
-
             <!-- Botón Volver -->
             <a
                 href="/mascotas"
@@ -94,25 +98,33 @@ const gallery =
                                 <span class="text-amber-900 font-medium"
                                     >Edad:</span
                                 >
-                                <p class="text-gray-600">{pet.edad}</p>
+                                <p class="text-gray-600">
+                                    {pet.ageGroup}
+                                </p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Sexo:</span
                                 >
-                                <p class="text-gray-600">{pet.sexo}</p>
+                                <p class="text-gray-600">
+                                    {pet.gender}
+                                </p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Tamaño:</span
                                 >
-                                <p class="text-gray-600">{pet.tamaño}</p>
+                                <p class="text-gray-600">
+                                    {pet.size}
+                                </p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Especie:</span
                                 >
-                                <p class="text-gray-600">{pet.especie}</p>
+                                <p class="text-gray-600">
+                                    {pet.species}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -272,38 +284,47 @@ const gallery =
 
     // Espera a que el DOM se cargue completamente
     document.addEventListener("DOMContentLoaded", () => {
-        // Configuración de PhotoSwipe
-        const galleryEl = document.querySelector("#pet-gallery");
+        try {
+            // Configuración de PhotoSwipe
+            const galleryEl = document.querySelector("#pet-gallery");
 
-        if (!galleryEl) return;
+            if (!galleryEl) return;
 
-        const galleryItems = galleryEl.querySelectorAll("a.gallery-item");
+            const galleryItems = galleryEl.querySelectorAll("a.gallery-item");
 
-        // Añade listener a cada item de la galería
-        galleryItems.forEach((item, index) => {
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
+            if (!galleryItems || galleryItems.length === 0) return;
 
-                // Opciones para PhotoSwipe
-                const options = {
-                    dataSource: Array.from(galleryItems).map((itemEl) => ({
-                        src: itemEl.href,
-                        width: parseInt(itemEl.dataset.pswpWidth || "1500", 10),
-                        height: parseInt(
-                            itemEl.dataset.pswpHeight || "1000",
-                            10,
-                        ),
-                        alt: itemEl.querySelector("img")?.alt || "",
-                    })),
-                    pswpModule: PhotoSwipe,
-                    initialIndex: index,
-                };
+            // Añade listener a cada item de la galería
+            galleryItems.forEach((item, index) => {
+                item.addEventListener("click", (e) => {
+                    e.preventDefault();
 
-                // Inicializa PhotoSwipe
-                const lightbox = new PhotoSwipe(options);
-                lightbox.init();
+                    // Opciones para PhotoSwipe
+                    const options = {
+                        dataSource: Array.from(galleryItems).map((itemEl) => ({
+                            src: itemEl.href,
+                            width: parseInt(
+                                itemEl.dataset.pswpWidth || "1500",
+                                10,
+                            ),
+                            height: parseInt(
+                                itemEl.dataset.pswpHeight || "1000",
+                                10,
+                            ),
+                            alt: itemEl.querySelector("img")?.alt || "",
+                        })),
+                        pswpModule: PhotoSwipe,
+                        initialIndex: index,
+                    };
+
+                    // Inicializa PhotoSwipe
+                    const lightbox = new PhotoSwipe(options);
+                    lightbox.init();
+                });
             });
-        });
+        } catch (error) {
+            console.error("Error initializing PhotoSwipe:", error);
+        }
     });
 </script>
 

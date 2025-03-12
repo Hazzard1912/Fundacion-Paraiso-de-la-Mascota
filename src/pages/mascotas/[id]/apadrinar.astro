@@ -1,16 +1,25 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { pets } from "../../../data/pets";
 import FormularioApadrinamiento from "../../../components/FormularioApadrinamiento.astro";
+import { actions } from "astro:actions";
 
-export async function getStaticPaths() {
-    return pets.map((pet) => ({
-        params: { name: pet.id },
-        props: { pet },
-    }));
+export const prerender = false;
+
+const { id } = Astro.params;
+
+// Obtenemos los datos de la mascota
+const { data, error } = await Astro.callAction(actions.getPet, { id });
+
+if (error) {
+    console.error(error);
+    return Astro.redirect("/404");
 }
 
-const { pet } = Astro.props;
+if (data.pet[0].isAdopted) {
+    return Astro.redirect(`/mascotas`);
+}
+
+const pet = data.pet[0];
 ---
 
 <Layout title={`Apadrinar a ${pet.name} - Paraíso de la mascota Cali`}>
@@ -126,7 +135,7 @@ const { pet } = Astro.props;
                 >
                 </div>
                 <img
-                    src={pet.images[0]}
+                    src={pet.imageUrl}
                     alt={`Apadrina a ${pet.name}`}
                     class="absolute inset-0 w-full h-full object-cover"
                 />
@@ -288,25 +297,25 @@ const { pet } = Astro.props;
                                 <span class="text-gray-500 text-sm block"
                                     >Especie</span
                                 >
-                                <span class="font-medium">{pet.especie}</span>
+                                <span class="font-medium">{pet.species}</span>
                             </div>
                             <div>
                                 <span class="text-gray-500 text-sm block"
                                     >Edad</span
                                 >
-                                <span class="font-medium">{pet.edad}</span>
+                                <span class="font-medium">{pet.ageGroup}</span>
                             </div>
                             <div>
                                 <span class="text-gray-500 text-sm block"
                                     >Sexo</span
                                 >
-                                <span class="font-medium">{pet.sexo}</span>
+                                <span class="font-medium">{pet.gender}</span>
                             </div>
                             <div>
                                 <span class="text-gray-500 text-sm block"
                                     >Tamaño</span
                                 >
-                                <span class="font-medium">{pet.tamaño}</span>
+                                <span class="font-medium">{pet.size}</span>
                             </div>
                         </div>
                     </div>
@@ -314,10 +323,7 @@ const { pet } = Astro.props;
 
                 <!-- Columna derecha: Formulario de apadrinamiento -->
                 <div>
-                    <FormularioApadrinamiento
-                        nombreMascota={pet.name}
-                        fotoMascota={pet.images[0]}
-                    />
+                    <FormularioApadrinamiento pet={{ id: pet.id, name: pet.name, imageUrl: pet.imageUrl }} />
                 </div>
             </div>
 

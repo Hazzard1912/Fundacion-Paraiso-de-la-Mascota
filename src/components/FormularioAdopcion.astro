@@ -1,19 +1,68 @@
 ---
+import { actions, isInputError } from "astro:actions";
+
 interface Props {
-    nombreMascota: string;
-    fotoMascota: string;
+    pet: {
+        id: number;
+        name: string;
+        imageUrl: string;
+    };
 }
 
-const { nombreMascota, fotoMascota } = Astro.props;
+const { pet } = Astro.props;
+const result = Astro.getActionResult(actions.createAdoptionRequest);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
 <div class="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl mx-auto">
+    {/* Mensaje de solicitud enviada */}
+    {
+        result?.data?.success === true && (
+            <div
+                class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
+                role="alert"
+            >
+                <p class="font-bold">¡Solicitud enviada correctamente!</p>
+                <p>{result.data.message}</p>
+            </div>
+        )
+    }
+    {
+        result?.data?.success === false && (
+            <div
+                class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+                role="alert"
+            >
+                <p class="font-bold">La solicitud no pudo completarse</p>
+                <p>{result.data.message || "Por favor, inténtalo nuevamente."}</p>
+            </div>
+        )
+    }
+
+    {/* Mensaje de error */}
+    {
+        result?.error && (
+            <div
+                class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+                role="alert"
+            >
+                <p class="font-bold">Error al enviar la solicitud</p>
+                <p>
+                    {isInputError(result.error)
+                        ? "Por favor revisa los campos del formulario."
+                        : result.error.message ||
+                          "Ocurrió un error inesperado. Intenta nuevamente."}
+                </p>
+            </div>
+        )
+    }
+
     <div class="grid md:grid-cols-2">
-        <!-- Columna imagen -->
+        {/* Columna imagen */}
         <div class="relative">
             <img
-                src={fotoMascota}
-                alt={nombreMascota}
+                src={pet.imageUrl}
+                alt={pet.name}
                 class="w-full h-full object-cover"
             />
             <div
@@ -21,8 +70,8 @@ const { nombreMascota, fotoMascota } = Astro.props;
             >
                 <div class="text-white">
                     <p class="text-lg italic mb-2">
-                        "¡Hola! Soy {nombreMascota} y estoy buscando una familia
-                        que me brinde mucho amor..."
+                        "¡Hola! Soy {pet.name} y estoy buscando una familia que me
+                        brinde mucho amor..."
                     </p>
                     <p class="text-amber-200 text-sm">
                         Cada adopción no solo cambia la vida de una mascota,
@@ -33,182 +82,280 @@ const { nombreMascota, fotoMascota } = Astro.props;
             </div>
         </div>
 
-        <!-- Columna formulario -->
+        {/* Columna formulario */}
         <div class="p-8 bg-gradient-to-br from-amber-50 to-white">
             <h3
                 class="text-2xl font-bold text-amber-900 mb-6 border-b pb-2 border-amber-200"
             >
-                Solicitud para adoptar a {nombreMascota}
+                Solicitud para adoptar a {pet.name}
             </h3>
-            <form class="space-y-6" method="POST" action="#success">
-                <div class="space-y-4">
-                    <div class="group">
-                        <label
-                            class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
-                        >
-                            Nombre completo
-                        </label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            required
-                            class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 transition-all duration-200 placeholder:text-gray-400"
-                            placeholder="Tu nombre completo"
-                        />
-                    </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="group">
-                            <label
-                                class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
-                            >
-                                Teléfono
-                            </label>
-                            <div class="relative">
-                                <span
-                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                        ></path>
-                                    </svg>
-                                </span>
+            {
+                !result?.data?.success ? (
+                    <form
+                        class="space-y-6"
+                        method="POST"
+                        action={actions.createAdoptionRequest}
+                    >
+                        <input type="hidden" name="petId" value={pet.id} />
+
+                        <div class="space-y-4">
+                            {/* Nombre */}
+                            <div class="group">
+                                <label class="block text-sm font-medium text-amber-800 mb-1">
+                                    Nombre completo
+                                </label>
                                 <input
-                                    type="tel"
-                                    name="telefono"
+                                    type="text"
+                                    name="name"
                                     required
-                                    class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10 pr-3 transition-all duration-200"
-                                    placeholder="000-000-0000"
+                                    class:list={[
+                                        "w-full rounded-lg border shadow-sm py-2.5 px-3 transition-all duration-200",
+                                        inputErrors.name
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                                            : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
+                                    ]}
+                                    placeholder="Tu nombre completo"
                                 />
+                                {inputErrors.name && (
+                                    <p class="text-red-500 text-xs mt-1">
+                                        {inputErrors.name.join(", ")}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Contacto */}
+                            <div class="grid grid-cols-2 gap-4">
+                                {/* Teléfono */}
+                                <div class="group">
+                                    <label class="block text-sm font-medium text-amber-800 mb-1">
+                                        Teléfono
+                                    </label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            required
+                                            class:list={[
+                                                "w-full rounded-lg border shadow-sm py-2.5 pl-10 pr-3 transition-all duration-200",
+                                                inputErrors.phone
+                                                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                                                    : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
+                                            ]}
+                                            placeholder="000-000-0000"
+                                        />
+                                        {inputErrors.phone && (
+                                            <p class="text-red-500 text-xs mt-1">
+                                                {inputErrors.phone.join(", ")}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Email */}
+                                <div class="group">
+                                    <label class="block text-sm font-medium text-amber-800 mb-1">
+                                        Email
+                                    </label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            required
+                                            class:list={[
+                                                "w-full rounded-lg border shadow-sm py-2.5 pl-10 pr-3 transition-all duration-200",
+                                                inputErrors.email
+                                                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                                                    : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
+                                            ]}
+                                            placeholder="ejemplo@email.com"
+                                        />
+                                        {inputErrors.email && (
+                                            <p class="text-red-500 text-xs mt-1">
+                                                {inputErrors.email.join(", ")}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Dirección */}
+                            <div class="group">
+                                <label class="block text-sm font-medium text-amber-800 mb-1">
+                                    Dirección
+                                </label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    required
+                                    class:list={[
+                                        "w-full rounded-lg border shadow-sm py-2.5 px-3 transition-all duration-200",
+                                        inputErrors.address
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                                            : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
+                                    ]}
+                                    placeholder="Tu dirección completa"
+                                />
+                                {inputErrors.address && (
+                                    <p class="text-red-500 text-xs mt-1">
+                                        {inputErrors.address.join(", ")}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Mascotas actuales */}
+                            <div class="group">
+                                <label class="block text-sm font-medium text-amber-800 mb-1">
+                                    ¿Tienes otras mascotas en casa?
+                                </label>
+                                <div class="relative">
+                                    <select
+                                        name="hasPets"
+                                        class="appearance-none w-full rounded-lg border border-amber-200 shadow-sm py-2.5 px-3 pr-8 bg-white transition-all duration-200 cursor-pointer"
+                                    >
+                                        <option value="no">
+                                            No, sería mi primera mascota
+                                        </option>
+                                        <option value="perro">
+                                            Sí, tengo perro(s)
+                                        </option>
+                                        <option value="gato">
+                                            Sí, tengo gato(s)
+                                        </option>
+                                        <option value="ambos">
+                                            Sí, tengo perros y gatos
+                                        </option>
+                                        <option value="otros">
+                                            Sí, tengo otras mascotas
+                                        </option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-600">
+                                        <svg
+                                            class="h-5 w-5"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Razón para adoptar */}
+                            <div class="group">
+                                <label class="block text-sm font-medium text-amber-800 mb-1">
+                                    ¿Por qué quieres adoptar a {pet.name}?
+                                </label>
+                                <textarea
+                                    rows="3"
+                                    name="adoptionReason"
+                                    class:list={[
+                                        "w-full rounded-lg border shadow-sm py-2.5 px-3 transition-all duration-200 resize-none",
+                                        inputErrors.adoptionReason
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                                            : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
+                                    ]}
+                                    placeholder={`Cuéntanos por qué ${pet.name} sería perfecto para tu hogar...`}
+                                />
+                                {inputErrors.adoptionReason && (
+                                    <p class="text-red-500 text-xs mt-1">
+                                        {inputErrors.adoptionReason.join(", ")}
+                                    </p>
+                                )}
                             </div>
                         </div>
-                        <div class="group">
-                            <label
-                                class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
-                            >
-                                Email
-                            </label>
-                            <div class="relative">
-                                <span
-                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-amber-500"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                        ></path>
-                                    </svg>
-                                </span>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    required
-                                    class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 pl-10 pr-3 transition-all duration-200"
-                                    placeholder="ejemplo@email.com"
-                                />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="group">
-                        <label
-                            class="block text-sm font-medium text-amber-800 mb-1"
-                        >
-                            ¿Tienes otras mascotas en casa?
-                        </label>
-                        <div class="relative">
-                            <select
-                                name="mascotas"
-                                class="appearance-none w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 pr-8 bg-white transition-all duration-200 cursor-pointer"
-                            >
-                                <option value="" disabled selected
-                                    >Selecciona una opción</option
-                                >
-                                <option value="no"
-                                    >No, sería mi primera mascota</option
-                                >
-                                <option value="perro">Sí, tengo perro(s)</option
-                                >
-                                <option value="gato">Sí, tengo gato(s)</option>
-                                <option value="ambos"
-                                    >Sí, tengo perros y gatos</option
-                                >
-                                <option value="otros"
-                                    >Sí, tengo otras mascotas</option
-                                >
-                            </select>
-                            <div
-                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-600"
+                        <div class="pt-4">
+                            <button
+                                type="submit"
+                                class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                             >
                                 <svg
-                                    class="h-5 w-5"
                                     xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    aria-hidden="true"
                                 >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"></path>
+                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
                                 </svg>
-                            </div>
+                                Enviar solicitud de adopción
+                            </button>
+                        </div>
+                    </form>
+                ) : (
+                    <div class="space-y-4 text-center">
+                        <div class="flex justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-24 w-24 text-green-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800">
+                            ¡Tu solicitud ha sido enviada!
+                        </h4>
+                        <p class="text-gray-600">
+                            Nos pondremos en contacto contigo pronto para seguir
+                            con el proceso de adopción.
+                        </p>
+                        <div class="pt-4">
+                            <a
+                                href="/mascotas"
+                                class="inline-block bg-amber-100 text-amber-700 hover:bg-amber-200 py-2 px-4 rounded-lg transition-colors"
+                            >
+                                Ver más mascotas en adopción
+                            </a>
                         </div>
                     </div>
-
-                    <div class="group">
-                        <label
-                            class="block text-sm font-medium text-amber-800 mb-1 transition-all group-focus-within:text-amber-600"
-                        >
-                            ¿Por qué quieres adoptar a {nombreMascota}?
-                        </label>
-                        <textarea
-                            rows="3"
-                            name="razon"
-                            class="w-full rounded-lg border border-amber-200 shadow-sm focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 transition-all duration-200 resize-none"
-                            required
-                            placeholder=`Cuéntanos por qué ${nombreMascota} sería perfecto para tu hogar...`
-                        ></textarea>
-                    </div>
-                </div>
-
-                <div class="pt-4">
-                    <button
-                        type="submit"
-                        class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                            ></path>
-                        </svg>
-                        Enviar solicitud de adopción
-                    </button>
-                </div>
-            </form>
+                )
+            }
         </div>
     </div>
 </div>

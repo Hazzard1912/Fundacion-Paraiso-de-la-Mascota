@@ -1,56 +1,91 @@
 ---
-import MascotaCard from "./MascotaCard.astro";
+import { actions } from "astro:actions";
 
-import { pets } from "../data/pets";
+const { data, error } = await Astro.callAction(actions.getFeaturedPets, {});
 
-const featuredPets = pets.slice(0, 3);
+if (error) {
+    console.error("Error fetching featured pets:", error);
+}
+
+const featuredPets = data?.pets || [];
 ---
 
-<section class="py-20 px-4 bg-gradient-to-b from-amber-50 to-white">
-    <div class="max-w-6xl mx-auto">
+<section class="bg-amber-50 py-24">
+    <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-6">
-                Encuentra a tu Compañero Ideal
+            <h2 class="text-4xl font-bold text-amber-900 mb-6">
+                Mascotas esperando un hogar
             </h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Conoce a algunos de nuestros residentes que están esperando un
-                hogar amoroso
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+                Conoce algunos de nuestros peludos que están buscando una
+                familia. Cada uno tiene una historia especial y mucho amor para
+                dar.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Featured pets grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {
                 featuredPets.map((pet) => (
-                    <MascotaCard 
-                        id={pet.id}
-                        nombre={pet.name}
-                        imagen={pet.images[0]}
-                        edad={pet.edad}
-                        tamaño={pet.tamaño}
-                        descripcion={pet.description}
-                    />
+                    <a
+                        href={`/mascotas/${pet.id}`}
+                        class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                        <div class="aspect-square overflow-hidden">
+                            <img
+                                src={pet.imageUrl}
+                                alt={pet.name}
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2 text-amber-800">
+                                {pet.name}
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs">
+                                    {pet.species}
+                                </span>
+                                <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs">
+                                    {pet.ageGroup}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                                {pet.description}
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-amber-600 font-medium text-sm inline-flex items-center">
+                                    Conocer más
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 ml-1"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 5l7 7-7 7"
+                                        />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
                 ))
             }
         </div>
 
+        <!-- Call to action button -->
         <div class="text-center mt-12">
             <a
                 href="/mascotas"
-                class="group inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 transition-colors"
+                class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg"
             >
-                Ver todas las mascotas disponibles
-                <svg
-                    class="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                        clip-rule="evenodd"></path>
-                </svg>
+                Ver todas las mascotas
             </a>
         </div>
     </div>
 </section>
-<script src="../scripts/shareUtils.js"></script>

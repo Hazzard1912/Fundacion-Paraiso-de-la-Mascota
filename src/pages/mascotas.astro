@@ -1,7 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { pets } from "../data/pets";
-import MascotaCard from "../components/MascotaCard.astro";
+import { actions } from "astro:actions";
+import PetListing from "../components/PetListing";
+export const prerender = false;
+
+// Get all pets regardless of filters - we'll filter on client side
+const { data, error } = await Astro.callAction(actions.getPetsForAdoption, {});
+
+if (error) {
+    console.error(error);
+}
+
+const pets = data?.pets || [];
 
 const filters = {
     especie: ["Perro", "Gato"],
@@ -28,82 +38,7 @@ const filters = {
     </section>
 
     <div class="max-w-6xl mx-auto px-4 py-16">
-        <!-- Modern filters with animation -->
-        <div
-            class="bg-white rounded-2xl shadow-lg p-8 mb-12 transform hover:shadow-xl transition-all duration-300"
-        >
-            <h2 class="text-2xl font-semibold mb-6 text-amber-900">
-                Filtrar Mascotas
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {
-                    Object.entries(filters).map(([category, options]) => (
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-amber-800 mb-2 capitalize">
-                                {category}
-                            </label>
-                            <div class="relative">
-                                <select
-                                    class="w-full rounded-lg border border-amber-200 bg-amber-50 py-3 px-4 shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-400 focus:ring-opacity-50 appearance-none transition-colors text-gray-700"
-                                    data-filter={category}
-                                >
-                                    <option value="">Todos</option>
-                                    {options.map((option) => (
-                                        <option value={option}>{option}</option>
-                                    ))}
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-amber-700">
-                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-            <div class="mt-8 text-center">
-                <button class="bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                    Aplicar Filtros
-                </button>
-            </div>
-        </div>
-
-        <!-- Elegant pets grid with modern cards -->
-        <div class="flex flex-row gap-6" 
-        id="petsGrid">
-            {
-                pets.map((pet) => (
-                    <a href={`/mascotas/${pet.id}`} class="group animate-fade-in">
-                        <MascotaCard
-                            id={pet.id}
-                            nombre={pet.name}
-                            imagen={pet.images[0]}
-                            edad={pet.edad}
-                            tamaño={pet.tamaño}
-                            descripcion={pet.description}
-                        />
-                    </a>
-                ))
-            }
-        </div>
+        <!-- React component for interactive filtering -->
+        <PetListing client:load initialPets={pets} filters={filters} />
     </div>
 </Layout>
-
-
-<style>
-    .animate-fade-in {
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
