@@ -22,11 +22,11 @@ function formatDate(dateString: Date) {
 }
 ---
 
-<section class="py-24 bg-amber-800 text-white">
+<section class="py-24 bg-amber-50 text-amber-900">
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold mb-6">Historias con Final Feliz</h2>
-            <p class="text-lg text-amber-100 max-w-3xl mx-auto">
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
                 Cada adopción es un nuevo comienzo lleno de esperanza. Estas
                 mascotas encontraron a sus familias para siempre y ahora
                 disfrutan de una vida plena de amor y cuidados.
@@ -37,7 +37,7 @@ function formatDate(dateString: Date) {
             adoptedPets.length > 0 ? (
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {adoptedPets.map((pet) => (
-                        <div class="bg-amber-700 rounded-xl overflow-hidden shadow-lg transform transition-transform hover:-translate-y-2">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                             <div class="relative">
                                 <img
                                     src={pet.imageUrl}
@@ -50,11 +50,11 @@ function formatDate(dateString: Date) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="p-6">
-                                <h3 class="text-2xl font-semibold mb-2">
+                            <div class="p-5">
+                                <h3 class="text-2xl font-semibold mb-2 text-amber-800">
                                     {pet.name}
                                 </h3>
-                                <p class="text-amber-200 mb-4">
+                                <p class="text-gray-600 mb-4">
                                     <span class="text-sm flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -72,14 +72,14 @@ function formatDate(dateString: Date) {
                                         {formatDate(pet.adoptedDate!)}
                                     </span>
                                 </p>
-                                <p class="text-amber-100 mb-6">
+                                <p class="text-gray-600 mb-6">
                                     {pet.description}
                                 </p>
                                 <div class="flex items-center gap-2">
-                                    <span class="bg-amber-600/50 px-3 py-1 rounded-full text-sm">
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs">
                                         {pet.species}
                                     </span>
-                                    <span class="bg-amber-600/50 px-3 py-1 rounded-full text-sm">
+                                    <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs">
                                         {pet.ageGroup}
                                     </span>
                                 </div>
@@ -88,10 +88,10 @@ function formatDate(dateString: Date) {
                     ))}
                 </div>
             ) : (
-                <div class="text-center py-12 bg-amber-700/50 rounded-xl">
+                <div class="text-center py-12 bg-white/80 rounded-xl shadow-md">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-12 w-12 mx-auto text-amber-300 mb-4"
+                        class="h-12 w-12 mx-auto text-amber-500 mb-4"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -103,7 +103,7 @@ function formatDate(dateString: Date) {
                             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                         />
                     </svg>
-                    <p class="text-lg">
+                    <p class="text-lg text-gray-700">
                         Pronto compartiremos historias de adopciones exitosas.
                     </p>
                 </div>
@@ -111,18 +111,18 @@ function formatDate(dateString: Date) {
         }
 
         <div class="mt-16 text-center">
-            <div class="bg-amber-700/50 p-8 rounded-xl max-w-3xl mx-auto">
-                <h3 class="text-2xl font-semibold mb-4">
+            <div class="bg-white p-8 rounded-xl max-w-3xl mx-auto shadow-md">
+                <h3 class="text-2xl font-semibold mb-4 text-amber-800">
                     Tú puedes ser parte del cambio
                 </h3>
-                <p class="text-xl font-light mb-8 text-amber-100">
+                <p class="text-xl font-light mb-8 text-gray-600">
                     Cada adopción transforma dos vidas: la de la mascota y la
                     tuya. Hay un amigo esperando para llenar tu hogar de alegría
                     y lealtad incondicional.
                 </p>
                 <a
                     href="/mascotas"
-                    class="inline-block bg-white hover:bg-amber-100 text-amber-800 font-medium py-3 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg"
+                    class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg"
                 >
                     Conoce a tu futuro amigo
                 </a>

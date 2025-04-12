@@ -173,6 +173,8 @@ export const prerender = false;
             password: formData.get("password") as string,
         });
 
+        console.log(resp);
+
         if (resp) {
             alert("Inicio de sesión exitoso");
             loginButton.disabled = false;

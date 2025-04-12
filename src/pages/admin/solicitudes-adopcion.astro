@@ -1,0 +1,348 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { actions } from "astro:actions";
+
+export const prerender = false;
+
+const { data, error } = await Astro.callAction(actions.getAdoptionRequests, {});
+
+if (error) {
+  console.error(error);
+}
+
+const requests = data || [];
+
+console.log(requests);
+
+// Status badge color mapping
+const statusColors = {
+  pending: "yellow",
+  approved: "green",
+  rejected: "red",
+};
+
+// Status display names mapping
+const statusNames = {
+  pending: "Pendiente",
+  approved: "Aprobada",
+  rejected: "Rechazada",
+};
+---
+
+<AdminLayout title="Solicitudes de Adopción">
+  <div class="space-y-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-gray-800">Solicitudes de Adopción</h1>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white shadow rounded-lg p-4 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label
+            for="status-filter"
+            class="block text-sm font-medium text-gray-700">Estado</label
+          >
+          <select
+            id="status-filter"
+            name="status"
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">Todos</option>
+            <option value="pending">Pendientes</option>
+            <option value="approved">Aprobadas</option>
+            <option value="rejected">Rechazadas</option>
+          </select>
+        </div>
+        <div>
+          <label
+            for="date-range"
+            class="block text-sm font-medium text-gray-700"
+            >Rango de fechas</label
+          >
+          <select
+            id="date-range"
+            name="date-range"
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">Todas las fechas</option>
+            <option value="last-week">Última semana</option>
+            <option value="last-month">Último mes</option>
+            <option value="last-3-months">Últimos 3 meses</option>
+          </select>
+        </div>
+        <div>
+          <label for="search" class="block text-sm font-medium text-gray-700"
+            >Buscar</label
+          >
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              type="text"
+              id="search"
+              name="search"
+              class="block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Nombre, mascota..."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adoption Requests list -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >ID</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Mascota</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Solicitante</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Dirección
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Contacto</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Fecha Solicitud</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Estado</th
+              >
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >Acciones</th
+              >
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {
+              requests.map((request) => (
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {request.requestId}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {request.petName || `Mascota #${request.petId}`}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {request.adopterName}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div>{request.adopterAddress}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div>{request.adopterEmail}</div>
+                    <div>{request.adopterPhone}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {new Date(request.requestDate).toLocaleDateString()}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      class={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${statusColors[request.requestStatus]}-100 text-${statusColors[request.requestStatus]}-800`}
+                    >
+                      {statusNames[request.requestStatus]}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    {request.requestStatus === "pending" ? (
+                      <div class="flex space-x-2">
+                        <button
+                          class="text-green-600 hover:text-green-900 approve-adoption-btn"
+                          data-request-id={request.requestId}
+                        >
+                          Aprobar
+                        </button>
+                        <button
+                          class="text-red-600 hover:text-red-900 reject-adoption-btn"
+                          data-request-id={request.requestId}
+                        >
+                          Rechazar
+                        </button>
+                      </div>
+                    ) : (
+                      <a href="#" class="text-blue-600 hover:text-blue-900">
+                        Detalles
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+        <div class="flex items-center justify-between">
+          <div
+            class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between"
+          >
+            <div>
+              <p class="text-sm text-gray-700">
+                Mostrando <span class="font-medium">1</span> a <span
+                  class="font-medium">{requests.length}</span
+                > de <span class="font-medium">{requests.length}</span> resultados
+              </p>
+            </div>
+            <div>
+              <nav
+                class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                aria-label="Pagination"
+              >
+                <a
+                  href="#"
+                  class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                >
+                  <span class="sr-only">Anterior</span>
+                  <svg
+                    class="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  1
+                </a>
+                <a
+                  href="#"
+                  class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                >
+                  <span class="sr-only">Siguiente</span>
+                  <svg
+                    class="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Find all approval and rejection buttons
+    const approveButtons = document.querySelectorAll(".approve-adoption-btn");
+    const rejectButtons = document.querySelectorAll(".reject-adoption-btn");
+
+    // Add click handlers to approve buttons
+    approveButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const requestId = button.getAttribute("data-request-id");
+        if (!requestId) return;
+
+        // Show loading state
+        const originalText = button.textContent;
+        button.textContent = "Procesando...";
+        button.disabled = true;
+
+        try {
+          // Call the action to approve the request
+          const result = await actions.updateAdoptionRequestStatus({
+            requestId: parseInt(requestId),
+            status: "approved",
+          });
+
+          console.log(result);
+
+          if (result.data && result.data.success) {
+            alert("Solicitud aprobada correctamente");
+            window.location.reload();
+          } else {
+            alert("Error al aprobar la solicitud");
+            button.textContent = originalText;
+            button.disabled = false;
+          }
+        } catch (error) {
+          console.error("Error al aprobar la solicitud:", error);
+          alert("Error al aprobar la solicitud");
+          button.textContent = originalText;
+          button.disabled = false;
+        }
+      });
+    });
+
+    // Add click handlers to reject buttons
+    rejectButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const requestId = button.getAttribute("data-request-id");
+        if (!requestId) return;
+
+        // Confirm before rejecting
+        if (!confirm("¿Está seguro de rechazar esta solicitud?")) return;
+
+        // Show loading state
+        const originalText = button.textContent;
+        button.textContent = "Procesando...";
+        button.disabled = true;
+
+        try {
+          // Call the action to reject the request
+          const result = await actions.updateAdoptionRequestStatus({
+            requestId: parseInt(requestId),
+            status: "rejected",
+          });
+
+          if (result.data && result.data.success) {
+            alert("Solicitud rechazada correctamente");
+            window.location.reload();
+          } else {
+            alert("Error al rechazar la solicitud");
+            button.textContent = originalText;
+            button.disabled = false;
+          }
+        } catch (error) {
+          console.error("Error al rechazar la solicitud:", error);
+          alert("Error al rechazar la solicitud");
+          button.textContent = originalText;
+          button.disabled = false;
+        }
+      });
+    });
+  });
+</script>

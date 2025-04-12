@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions";
-import { db, Pet, eq, and, desc, sql } from "astro:db";
+import { db, Pet, eq, and, desc, sql, PetAdoption, Adopter } from "astro:db";
+import {  } from "astro-cloudinary/helpers"
 
 export const getPets = defineAction({
     accept: 'json',
@@ -86,5 +87,35 @@ export const getLatestAdoptions = defineAction({
             .limit(limit);
 
         return { adoptedPets };
+    },
+});
+
+// New action to fetch all adoptions with detailed information
+export const getAllAdoptions = defineAction({
+    accept: 'json',
+    async handler() {
+        const allAdoptions = await db
+            .select({
+                adoptionId: PetAdoption.id,
+                adoptionDate: PetAdoption.adoptionDate,
+                // Pet information
+                petId: Pet.id,
+                petName: Pet.name,
+                petSpecies: Pet.species,
+                petBreed: Pet.breed,
+                petImageUrl: Pet.imageUrl,
+                // Adopter information
+                adopterId: Adopter.id,
+                adopterName: Adopter.name,
+                adopterEmail: Adopter.email,
+                adopterPhone: Adopter.phone,
+                adopterAddress: Adopter.address
+            })
+            .from(PetAdoption)
+            .innerJoin(Pet, eq(PetAdoption.petId, Pet.id))
+            .innerJoin(Adopter, eq(PetAdoption.adopterId, Adopter.id))
+            .orderBy(desc(PetAdoption.adoptionDate));
+
+        return { allAdoptions };
     },
 });

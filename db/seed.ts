@@ -1,4 +1,4 @@
-import { db, User, Pet } from 'astro:db';
+import { db, User, Pet, PetAdoption, Adopter } from 'astro:db';
 import bcrypt from 'bcryptjs';
 import { v4 as UUID } from 'uuid';
 
@@ -167,7 +167,59 @@ const sampleUsers = [
 	}
 ];
 
+// Sample adopter data
+const sampleAdopters = [
+	{
+		id: 1,
+		name: 'Juan Pérez',
+		email: 'juan.perez@example.com',
+		phone: '+123456789',
+		address: 'Calle Principal 123, Ciudad',
+		createdAt: new Date('2023-12-15')
+	},
+	{
+		id: 2,
+		name: 'María González',
+		email: 'maria.gonzalez@example.com',
+		phone: '+987654321',
+		address: 'Avenida Central 456, Ciudad',
+		createdAt: new Date('2024-01-05')
+	},
+	{
+		id: 3,
+		name: 'Carlos Rodríguez',
+		email: 'carlos.rodriguez@example.com',
+		phone: '+567891234',
+		address: 'Plaza Mayor 78, Ciudad',
+		createdAt: new Date('2024-02-20')
+	}
+];
+
+// Sample pet adoptions matching the adopted pets in samplePets
+const samplePetAdoptions = [
+	{
+		id: 1,
+		petId: 8, // Tokio
+		adopterId: 1, // Juan Pérez
+		adoptionDate: new Date('2024-01-10')
+	},
+	{
+		id: 2,
+		petId: 9, // Mittens
+		adopterId: 2, // María González
+		adoptionDate: new Date('2024-02-05')
+	},
+	{
+		id: 3,
+		petId: 10, // Bruno
+		adopterId: 3, // Carlos Rodríguez
+		adoptionDate: new Date('2024-03-01')
+	}
+];
+
 export default async function seed() {
 	await db.insert(Pet).values(samplePets);
 	await db.insert(User).values(sampleUsers);
+	await db.insert(Adopter).values(sampleAdopters);
+	await db.insert(PetAdoption).values(samplePetAdoptions);
 }

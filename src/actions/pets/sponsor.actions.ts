@@ -47,6 +47,21 @@ export const createSponsorRequest = defineAction({
                 };
             }
 
+            // Verifica si ya existe un apadrinamiento activo del mismo sponsor para esta mascota
+            const activeSponsorship = await db.select().from(ActiveSponsorship)
+                .where(and(
+                    eq(ActiveSponsorship.petId, petId),
+                    eq(ActiveSponsorship.sponsorId, sponsor.id),
+                    sql`${ActiveSponsorship.endDate} IS NULL`
+                )).limit(1).then(rows => rows[0]);
+
+            if (activeSponsorship) {
+                return {
+                    success: false,
+                    message: "Ya estás apadrinando actualmente a esta mascota."
+                };
+            }
+
             // Crea la solicitud de padrinazgo
             await db.insert(SponsorRequest).values({
                 petId,
@@ -97,13 +112,6 @@ export const updateSponsorRequestStatus = defineAction({
                 monthlyAmount: request.monthlyAmount,
                 startDate: now
             });
-
-            // Update pet to show it has sponsorship
-            await db.update(Pet)
-                .set({
-                    isSponsored: true
-                })
-                .where(eq(Pet.id, request.petId));
         }
 
         return {
@@ -176,24 +184,6 @@ export const endSponsorship = defineAction({
                 endDate: now
             })
             .where(eq(ActiveSponsorship.id, sponsorshipId));
-
-        // Check if there are other active sponsorships for this pet
-        const activeCount = await db.select({ count: sql`count(*)` })
-            .from(ActiveSponsorship)
-            .where(and(
-                eq(ActiveSponsorship.petId, sponsorship.petId),
-                sql`${ActiveSponsorship.endDate} IS NULL`
-            ))
-            .then(rows => rows[0].count);
-
-        // If no more active sponsorships, update pet status
-        if (activeCount === 0) {
-            await db.update(Pet)
-                .set({
-                    isSponsored: false
-                })
-                .where(eq(Pet.id, sponsorship.petId));
-        }
 
         return {
             success: true,

@@ -119,6 +119,8 @@ export const updateAdoptionRequestStatus = defineAction({
     }
 });
 
+
+
 export const getAdoptionRequests = defineAction({
     async handler({ status, limit = 10 } = {}) {
         const query = db.select({
@@ -132,7 +134,8 @@ export const getAdoptionRequests = defineAction({
             petImageUrl: Pet.imageUrl,
             adopterName: Adopter.name,
             adopterEmail: Adopter.email,
-            adopterPhone: Adopter.phone
+            adopterPhone: Adopter.phone,
+            adopterAddress: Adopter.address,
         })
             .from(AdoptionRequest)
             .innerJoin(Pet, eq(AdoptionRequest.petId, Pet.id))
