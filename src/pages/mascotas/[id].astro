@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { actions } from "astro:actions";
-import "photoswipe/style.css";
 
 export const prerender = false;
 
@@ -19,8 +18,6 @@ if (data.pet[0].isAdopted) {
 }
 
 const pet = data.pet[0] || {};
-
-const gallery = pet.imageUrl ? [pet.imageUrl, pet.imageUrl, pet.imageUrl] : [];
 ---
 
 <Layout
@@ -28,9 +25,9 @@ const gallery = pet.imageUrl ? [pet.imageUrl, pet.imageUrl, pet.imageUrl] : [];
 >
     <main class="bg-amber-50/50 min-h-screen pb-16">
         <!-- Hero con imagen principal -->
-        <div class="h-[60vh] relative overflow-hidden">
+        <div class="h-[40vh] relative overflow-hidden">
             <img
-                src={gallery[0] || "/images/placeholder-pet.jpg"}
+                src={pet.imageUrl || "/images/placeholder-pet.jpg"}
                 alt={pet.name}
                 class="w-full h-full object-cover"
             />
@@ -156,38 +153,25 @@ const gallery = pet.imageUrl ? [pet.imageUrl, pet.imageUrl, pet.imageUrl] : [];
                     </div>
                 </div>
 
-                <!-- Columna derecha: Galería -->
+                <!-- Columna derecha: Imagen detallada -->
                 <div class="lg:col-span-2">
                     <h2 class="text-2xl font-bold text-amber-900 mb-6">
-                        Galería de fotos
+                        Foto de {pet.name}
                     </h2>
-                    <div class="gallery-container">
-                        <div class="pswp-gallery" id="pet-gallery">
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                {
-                                    gallery.map((img, index) => (
-                                        <a
-                                            href={img}
-                                            data-pswp-width="1500"
-                                            data-pswp-height="1000"
-                                            data-cropped="true"
-                                            class={`gallery-item block rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow ${
-                                                index === 0
-                                                    ? "md:col-span-2 md:row-span-2"
-                                                    : ""
-                                            }`}
-                                        >
-                                            <img
-                                                src={img}
-                                                alt={`${pet.name} - Foto ${index + 1}`}
-                                                class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300"
-                                                loading="lazy"
-                                            />
-                                        </a>
-                                    ))
-                                }
-                            </div>
-                        </div>
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <a
+                            href={pet.imageUrl || "/images/placeholder-pet.jpg"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="block rounded-lg overflow-hidden cursor-zoom-in"
+                        >
+                            <img
+                                src={pet.imageUrl ||
+                                    "/images/placeholder-pet.jpg"}
+                                alt={`${pet.name}`}
+                                class="w-full h-auto max-h-[500px] object-contain hover:opacity-95 transition-opacity"
+                            />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -279,67 +263,8 @@ const gallery = pet.imageUrl ? [pet.imageUrl, pet.imageUrl, pet.imageUrl] : [];
     </main>
 </Layout>
 
-<script>
-    import PhotoSwipe from "photoswipe";
-
-    // Espera a que el DOM se cargue completamente
-    document.addEventListener("DOMContentLoaded", () => {
-        try {
-            // Configuración de PhotoSwipe
-            const galleryEl = document.querySelector("#pet-gallery");
-
-            if (!galleryEl) return;
-
-            const galleryItems = galleryEl.querySelectorAll("a.gallery-item");
-
-            if (!galleryItems || galleryItems.length === 0) return;
-
-            // Añade listener a cada item de la galería
-            galleryItems.forEach((item, index) => {
-                item.addEventListener("click", (e) => {
-                    e.preventDefault();
-
-                    // Opciones para PhotoSwipe
-                    const options = {
-                        dataSource: Array.from(galleryItems).map((itemEl) => ({
-                            src: itemEl.href,
-                            width: parseInt(
-                                itemEl.dataset.pswpWidth || "1500",
-                                10,
-                            ),
-                            height: parseInt(
-                                itemEl.dataset.pswpHeight || "1000",
-                                10,
-                            ),
-                            alt: itemEl.querySelector("img")?.alt || "",
-                        })),
-                        pswpModule: PhotoSwipe,
-                        initialIndex: index,
-                    };
-
-                    // Inicializa PhotoSwipe
-                    const lightbox = new PhotoSwipe(options);
-                    lightbox.init();
-                });
-            });
-        } catch (error) {
-            console.error("Error initializing PhotoSwipe:", error);
-        }
-    });
-</script>
-
 <style>
-    .gallery-item {
-        display: block;
-        height: 100%;
-    }
-
-    /* Animación suave para hover */
-    .gallery-item img {
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .gallery-item:hover img {
-        transform: scale(1.05);
+    .cursor-zoom-in {
+        cursor: zoom-in;
     }
 </style>

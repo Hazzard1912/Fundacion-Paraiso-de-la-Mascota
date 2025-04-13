@@ -1,27 +1,28 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import { actions } from "astro:actions";
-import PetsList from "../../components/admin/PetsList";
+import SponsorshipsList from "../../components/admin/SponsorshipsList";
 
 export const prerender = false;
 
-const { data, error } = await Astro.callAction(actions.getPets, {});
+const { data, error } = await Astro.callAction(
+    actions.getAllActiveSponsorships,
+    {},
+);
 
 if (error) {
-    console.error("Error fetching pets:", error);
+    console.error("Error fetching sponsorships:", error);
 }
 
-// Asegurarse de que usamos el array correcto basado en la estructura de los datos
-const petsData = data?.pets || data || [];
-console.log("Mascotas cargadas:", petsData.length);
+const sponsorships = data || [];
 ---
 
-<AdminLayout title="Gestión de Mascotas">
+<AdminLayout title="Gestión de Padrinos">
     <div class="space-y-6">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Mascotas</h1>
+            <h1 class="text-3xl font-bold text-gray-800">Padrinos</h1>
             <a
-                href="/admin/mascotas/nueva"
+                href="/admin/padrinos/nuevo"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm"
             >
                 <svg
@@ -37,11 +38,11 @@ console.log("Mascotas cargadas:", petsData.length);
                         stroke-width="2"
                         d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                Registrar Mascota
+                Registrar Padrino
             </a>
         </div>
 
-        <!-- Componente React para el listado de mascotas -->
-        <PetsList initialPets={petsData} client:load />
+        <!-- Componente React para el listado de padrinos -->
+        <SponsorshipsList initialSponsorships={sponsorships} client:load />
     </div>
 </AdminLayout>

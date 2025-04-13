@@ -75,6 +75,15 @@ export const Sponsor = defineTable({
   }
 });
 
+// Define Slide table for homepage carousel
+export const Slide = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true, autoIncrement: true }),
+    imageUrl: column.text({ optional: true }),
+    active: column.boolean({ default: true }),
+    createdAt: column.date({ default: new Date() })
+  }
+});
 
 // Define SponsorRequest table
 export const SponsorRequest = defineTable({

@@ -257,3 +257,32 @@ export const getPetSponsorships = defineAction({
             ));
     }
 });
+
+// Action to get all active sponsorships
+export const getAllActiveSponsorships = defineAction({
+    input: z.object({
+        limit: z.coerce.number().int().positive().default(10),
+        offset: z.coerce.number().int().nonnegative().default(0),
+    }),
+    async handler({ limit, offset }) {
+        return await db.select({
+            id: ActiveSponsorship.id,
+            petId: ActiveSponsorship.petId,
+            sponsorId: ActiveSponsorship.sponsorId,
+            startDate: ActiveSponsorship.startDate,
+            monthlyAmount: ActiveSponsorship.monthlyAmount,
+            petName: Pet.name,
+            petSpecies: Pet.species,
+            petImageUrl: Pet.imageUrl,
+            sponsorName: Sponsor.name,
+            sponsorEmail: Sponsor.email,
+        })
+            .from(ActiveSponsorship)
+            .innerJoin(Pet, eq(ActiveSponsorship.petId, Pet.id))
+            .innerJoin(Sponsor, eq(ActiveSponsorship.sponsorId, Sponsor.id))
+            .where(sql`${ActiveSponsorship.endDate} IS NULL`)
+            .orderBy(desc(ActiveSponsorship.startDate))
+            .limit(limit)
+            .offset(offset);
+    }
+});

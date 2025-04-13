@@ -1,4 +1,4 @@
-import { db, User, Pet, PetAdoption, Adopter } from 'astro:db';
+import { db, User, Pet, PetAdoption, Adopter, Slide } from 'astro:db';
 import bcrypt from 'bcryptjs';
 import { v4 as UUID } from 'uuid';
 
@@ -148,6 +148,21 @@ const samplePets = [
 		adoptedDate: new Date('2024-03-01'),
 		isAvailableForSponsorship: false,
 		createdAt: new Date('2023-10-20')
+	},
+	{
+		id: 11,
+		name: 'Lola',
+		species: 'Gato',
+		breed: 'Persa',
+		ageGroup: 'Cachorro',
+		gender: 'Hembra',
+		size: 'Pequeño',
+		description: 'Lola fue adoptada por una familia cariñosa que le brinda un hogar cálido y acogedor. Ahora disfruta de juegos y mimos constantes.',
+		imageUrl: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=500',
+		isAdopted: true,
+		adoptedDate: new Date('2024-02-15'),
+		isAvailableForSponsorship: false,
+		createdAt: new Date('2023-11-01')
 	}
 ];
 
@@ -217,9 +232,32 @@ const samplePetAdoptions = [
 	}
 ];
 
+// Sample slide data for homepage carousel
+const sampleSlides = [
+	{
+		id: 1,
+		imageUrl: 'https://images.unsplash.com/photo-1612460137028-a3c8c2e17758?q=80&w=2070&auto=format&fit=crop',
+		active: true,
+		createdAt: new Date()
+	},
+	{
+		id: 2,
+		imageUrl: 'https://images.unsplash.com/photo-1601758124316-3026abe11afe?q=80&w=2070&auto=format&fit=crop',
+		active: true,
+		createdAt: new Date()
+	},
+	{
+		id: 3,
+		imageUrl: null,
+		active: false,
+		createdAt: new Date()
+	}
+];
+
 export default async function seed() {
 	await db.insert(Pet).values(samplePets);
 	await db.insert(User).values(sampleUsers);
 	await db.insert(Adopter).values(sampleAdopters);
 	await db.insert(PetAdoption).values(samplePetAdoptions);
+	await db.insert(Slide).values(sampleSlides);
 }

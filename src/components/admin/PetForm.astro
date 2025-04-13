@@ -1,0 +1,243 @@
+---
+import { CldImage, CldUploadWidget } from "astro-cloudinary";
+
+// Props que recibe el componente
+const { 
+  pet = {}, 
+  mode = "new", // "new" o "edit"
+  isAdopted = false,
+  backUrl = ""
+} = Astro.props;
+
+// Extraer el Public ID de Cloudinary de la URL si existe
+function getPublicIdFromUrl(url) {
+    if (!url) return null;
+
+    try {
+        const urlObj = new URL(url);
+        const pathParts = urlObj.pathname.split("/");
+        // Eliminar 'image/upload' y la versión
+        const relevantPath = pathParts.slice(3).join("/");
+        // Eliminar la extensión del archivo
+        return relevantPath.replace(/\.[^/.]+$/, "");
+    } catch (e) {
+        return null;
+    }
+}
+
+const petImagePublicId = pet?.imageUrl
+    ? getPublicIdFromUrl(pet.imageUrl)
+    : null;
+
+const returnUrl = backUrl || (mode === "edit" ? `/admin/mascotas/${pet.id}/detalles` : "/admin/mascotas");
+---
+
+{isAdopted ? (
+    <div class="bg-blue-50 p-4 rounded-md mb-6">
+        <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            <p class="text-blue-700">Esta mascota está adoptada. Solo puedes actualizar su descripción.</p>
+        </div>
+    </div>
+    
+    <form method="POST" id="adopted-pet-form">
+        <input type="hidden" name="id" value={pet.id} />
+        <input type="hidden" name="isAdopted" value="true" />
+        
+        <div class="mb-6">
+            <label for="description" class="block text-sm font-medium mb-2">Descripción:</label>
+            <textarea
+                id="description"
+                name="description"
+                class="w-full p-3 border rounded-md h-40 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Actualiza la descripción o historia de esta mascota adoptada..."
+            >{pet?.description || ""}</textarea>
+        </div>
+
+        <div class="flex gap-4">
+            <button
+                type="submit"
+                class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            >
+                Actualizar descripción
+            </button>
+
+            <a
+                href={returnUrl}
+                class="bg-gray-300 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-400 transition-colors"
+            >
+                Cancelar
+            </a>
+        </div>
+    </form>
+) : (
+    <form method="POST" id="pet-form" class="space-y-6">
+        {pet.id && <input type="hidden" name="id" value={pet.id} />}
+        <input type="hidden" name="imageUrl" id="imageUrl" value={pet?.imageUrl || ""} />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="name" class="block text-sm font-medium mb-2">Nombre:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={pet?.name || ""}
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                />
+            </div>
+
+            <div>
+                <label for="species" class="block text-sm font-medium mb-2">Especie:</label>
+                <select
+                    id="species"
+                    name="species"
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                >
+                    <option value="">Seleccionar especie</option>
+                    <option value="perro" selected={pet?.species === "perro"}>Perro</option>
+                    <option value="gato" selected={pet?.species === "gato"}>Gato</option>
+                    <option value="otro" selected={pet?.species === "otro"}>Otro</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="gender" class="block text-sm font-medium mb-2">Sexo:</label>
+                <select
+                    id="gender"
+                    name="gender"
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                >
+                    <option value="">Seleccionar sexo</option>
+                    <option value="macho" selected={pet?.gender === "macho"}>Macho</option>
+                    <option value="hembra" selected={pet?.gender === "hembra"}>Hembra</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="ageGroup" class="block text-sm font-medium mb-2">Grupo de edad:</label>
+                <select
+                    id="ageGroup"
+                    name="ageGroup"
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                    <option value="">Seleccionar edad</option>
+                    <option value="cachorro" selected={pet?.ageGroup === "cachorro"}>Cachorro</option>
+                    <option value="joven" selected={pet?.ageGroup === "joven"}>Joven</option>
+                    <option value="adulto" selected={pet?.ageGroup === "adulto"}>Adulto</option>
+                    <option value="senior" selected={pet?.ageGroup === "senior"}>Senior</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="breed" class="block text-sm font-medium mb-2">Raza:</label>
+                <input
+                    type="text"
+                    id="breed"
+                    name="breed"
+                    value={pet?.breed || ""}
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+            </div>
+
+            <div>
+                <label for="size" class="block text-sm font-medium mb-2">Tamaño:</label>
+                <select
+                    id="size"
+                    name="size"
+                    class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                    <option value="">Seleccionar tamaño</option>
+                    <option value="pequeño" selected={pet?.size === "pequeño"}>Pequeño</option>
+                    <option value="mediano" selected={pet?.size === "mediano"}>Mediano</option>
+                    <option value="grande" selected={pet?.size === "grande"}>Grande</option>
+                </select>
+            </div>
+
+            <div class="col-span-2">
+                <label class="flex items-center space-x-2">
+                    <input
+                        type="checkbox"
+                        name="isAvailableForSponsorship"
+                        checked={pet?.isAvailableForSponsorship}
+                        class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span class="text-sm font-medium">Disponible para apadrinamiento</span>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <label for="description" class="block text-sm font-medium mb-2">Descripción:</label>
+            <textarea
+                id="description"
+                name="description"
+                class="w-full p-3 border rounded-md h-40 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >{pet?.description || ""}</textarea>
+        </div>
+
+        <!-- Sección de imagen -->
+        <div>
+            <label class="block text-sm font-medium mb-2">Imagen:</label>
+
+            <div class="flex items-center space-x-6">
+            <!-- Previsualización de imagen existente -->
+            <div id="image-preview" class="w-40 h-40 bg-gray-100 rounded-md overflow-hidden">
+                {
+                pet?.imageUrl ? (
+                    <img 
+                    src={pet.imageUrl}
+                    alt={`Imagen de ${pet?.name || "mascota"}`}
+                    class="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div class="w-full h-full flex items-center justify-center text-gray-400">
+                    No hay imagen
+                    </div>
+                )
+                }
+            </div>
+
+            <!-- Input para subir imagen -->
+            <div>
+                <input 
+                type="file" 
+                id="petImage" 
+                name="petImage"
+                accept="image/*"
+                class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-md file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-500 file:text-white
+                    hover:file:bg-blue-600"
+                />
+                <p class="mt-1 text-xs text-gray-500">
+                JPG, PNG o GIF. Máximo 5MB.
+                </p>
+            </div>
+            </div>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+            <button
+                type="submit"
+                class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+            >
+                {mode === "edit" ? "Actualizar mascota" : "Crear mascota"}
+            </button>
+
+            <a
+                href={returnUrl}
+                class="bg-gray-300 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-400 transition-colors"
+            >
+                Cancelar
+            </a>
+        </div>
+    </form>
+)}

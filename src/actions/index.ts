@@ -1,5 +1,5 @@
 import { getDashboardStats, getRecentActivity } from "./dashboard/stats.action"
-import { getFeaturedPets, getLatestAdoptions, getPet, getPets, getPetsForAdoption, getPetsWithFilters, createAdoptionRequest, createSponsorRequest, getAdoptionRequests, getSponsorRequests, getAllAdoptions, updateSponsorRequestStatus, updateAdoptionRequestStatus } from "./pets"
+import { getFeaturedPets, getLatestAdoptions, getPet, getPets, getPetsForAdoption, getPetsWithFilters, createAdoptionRequest, createSponsorRequest, getAdoptionRequests, getSponsorRequests, getAllAdoptions, updateSponsorRequestStatus, updateAdoptionRequestStatus, getAllActiveSponsorships, endSponsorship, getAdopterDetailsByAdoptionId, updateAdopterDetails, getSlides, activateSlide, deactivateSlide, createSlide, updateSlide } from "./pets"
 
 export const server = {
     // Pet actions
@@ -12,6 +12,8 @@ export const server = {
     // Adoption actions
     getLatestAdoptions,
     getAllAdoptions,
+    getAdopterDetailsByAdoptionId,
+    updateAdopterDetails,
 
     // Adoption request actions
     getAdoptionRequests,
@@ -22,8 +24,17 @@ export const server = {
     getSponsorRequests,
     createSponsorRequest,
     updateSponsorRequestStatus,
+    getAllActiveSponsorships,
+    endSponsorship,
 
     // Dashboard actions
     getDashboardStats,
     getRecentActivity,
+
+    // Slide actions
+    getSlides,
+    createSlide,
+    updateSlide,
+    activateSlide,
+    deactivateSlide,
 }

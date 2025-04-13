@@ -1,5 +1,5 @@
 import { defineDb } from 'astro:db';
-import { ActiveSponsorship, Adopter, AdoptionRequest, Pet, PetAdoption, Sponsor, SponsorRequest, User } from './schema';
+import { ActiveSponsorship, Adopter, AdoptionRequest, Pet, PetAdoption, Slide, Sponsor, SponsorRequest, User } from './schema';
 
 // https://astro.build/db/config
 export default defineDb({
@@ -12,5 +12,6 @@ export default defineDb({
     SponsorRequest,
     ActiveSponsorship,
     PetAdoption,
+    Slide,
   }
 });

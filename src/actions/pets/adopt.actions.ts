@@ -119,6 +119,52 @@ export const updateAdoptionRequestStatus = defineAction({
     }
 });
 
+export const getAdopterDetailsByAdoptionId = defineAction({
+    async handler({ adoptionId }) {
+        const adopterDetails = await db.select({
+            adopterId: Adopter.id,
+            name: Adopter.name,
+            email: Adopter.email,
+            phone: Adopter.phone,
+            address: Adopter.address
+        })
+            .from(PetAdoption)
+            .innerJoin(Adopter, eq(PetAdoption.adopterId, Adopter.id))
+            .where(eq(PetAdoption.id, adoptionId))
+            .limit(1).then(rows => rows[0]);
+
+        return adopterDetails;
+    }
+});
+
+export const updateAdopterDetails = defineAction({
+    accept: "form",
+    input: z.object({
+        adopterId: z.coerce.number().int().positive(),
+        name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+        email: z.string().email("Email inválido"),
+        phone: z.string().min(8, "El teléfono debe tener al menos 8 caracteres"),
+        address: z.string().min(5, "La dirección debe tener al menos 5 caracteres")
+    }),
+    async handler({ adopterId, name, email, phone, address }) {
+        try {
+            await db.update(Adopter)
+                .set({ name, email, phone, address })
+                .where(eq(Adopter.id, adopterId));
+
+            return {
+                success: true,
+                message: "Detalles del adoptante actualizados con éxito."
+            };
+        } catch (error) {
+            console.error("Error al actualizar detalles del adoptante:", error);
+            return {
+                success: false,
+                message: "Ocurrió un error al actualizar los detalles. Por favor intenta nuevamente."
+            };
+        }
+    }
+});
 
 
 export const getAdoptionRequests = defineAction({
