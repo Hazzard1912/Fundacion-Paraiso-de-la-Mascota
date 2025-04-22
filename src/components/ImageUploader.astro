@@ -1,0 +1,92 @@
+---
+import { CldImage, CldUploadWidget } from "astro-cloudinary";
+import { cloudinaryConfig } from "../config/cloudinary";
+
+const {
+  currentImageUrl = "",
+  onImageUpload,
+  uploadPreset = "ml_default",
+  previewWidth = 160,
+  previewHeight = 160,
+  buttonText = "Subir imagen"
+} = Astro.props;
+
+// Extraer el Public ID de Cloudinary de la URL si existe
+function getPublicIdFromUrl(url) {
+  if (!url) return null;
+
+  try {
+    const urlObj = new URL(url);
+    const pathParts = urlObj.pathname.split("/");
+    // Eliminar 'image/upload' y la versión
+    const relevantPath = pathParts.slice(3).join("/");
+    // Eliminar la extensión del archivo
+    return relevantPath.replace(/\.[^/.]+$/, "");
+  } catch (e) {
+    return null;
+  }
+}
+
+const imagePublicId = currentImageUrl ? getPublicIdFromUrl(currentImageUrl) : null;
+---
+
+<div class="flex items-center space-x-6">
+  <!-- Previsualización de imagen existente -->
+  <div id="image-preview" class="w-40 h-40 bg-gray-100 rounded-md overflow-hidden">
+    {currentImageUrl ? (
+      <CldImage
+        src={imagePublicId || ""}
+        width={previewWidth}
+        height={previewHeight}
+        alt="Previsualización de imagen"
+        class="w-full h-full object-cover"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center text-gray-400">
+        No hay imagen
+      </div>
+    )}
+  </div>
+
+  <!-- Widget de carga de Cloudinary -->
+  <CldUploadWidget
+    uploadPreset={uploadPreset}
+    onSuccess={(result) => {
+      const imageUrl = result.info.secure_url;
+      onImageUpload(imageUrl);
+      const preview = document.getElementById('image-preview');
+      if (preview) {
+        preview.innerHTML = `<img src="${imageUrl}" alt="Previsualización" class="w-full h-full object-cover" />`;
+      }
+    }}
+  >
+    {(widget) => (
+      <button
+        type="button"
+        onClick={() => widget.open()}
+        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        {currentImageUrl ? "Cambiar imagen" : buttonText}
+      </button>
+    )}
+  </CldUploadWidget>
+</div>
+<p class="mt-1 text-xs text-gray-500">
+  JPG, PNG o GIF. Máximo 5MB.
+</p>
+
+<script>
+  // Actualización de la previsualización una vez cargada la página
+  document.addEventListener('astro:page-load', () => {
+    const widget = document.querySelector('CldUploadWidget');
+    if (widget) {
+      widget.addEventListener('success', (result) => {
+        const imageUrl = result.info.secure_url;
+        const preview = document.getElementById('image-preview');
+        if (preview) {
+          preview.innerHTML = `<img src="${imageUrl}" alt="Previsualización" class="w-full h-full object-cover" />`;
+        }
+      });
+    }
+  });
+</script>

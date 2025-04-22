@@ -11,5 +11,11 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),
-  integrations: [tailwind(), sitemap(), db(), auth(), react()]
+  integrations: [
+    tailwind(), 
+    sitemap(), 
+    db(), 
+    auth(), 
+    react()
+  ]
 });
