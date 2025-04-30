@@ -1,7 +1,7 @@
 ---
 import { actions } from "astro:actions";
 import AdminLayout from "../../../../layouts/AdminLayout.astro";
-import PetForm from "../../../../components/admin/PetForm.astro";
+import PetForm from "../../../../components/admin/PetForm.jsx";
 
 export const prerender = false;
 
@@ -26,7 +26,7 @@ const isAdopted = pet.isAdopted;
     <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <div class="mb-6">
             <a
-                href={`/admin/mascotas/${pet.id}/detalles`}
+                href={`/admin/mascotas`}
                 class="text-blue-600 hover:text-blue-800 flex items-center"
             >
                 <svg
@@ -40,7 +40,7 @@ const isAdopted = pet.isAdopted;
                         d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
                         clip-rule="evenodd"></path>
                 </svg>
-                Volver a detalles
+                Volver a listado
             </a>
         </div>
 
@@ -53,10 +53,11 @@ const isAdopted = pet.isAdopted;
         </h1>
 
         <PetForm
-            pet={pet}
+            initialPet={pet}
             mode="edit"
             isAdopted={isAdopted}
-            backUrl={`/admin/mascotas/${pet.id}/detalles`}
+            backUrl={`/admin/mascotas`}
+            client:only="react"
         />
     </div>
 </AdminLayout>

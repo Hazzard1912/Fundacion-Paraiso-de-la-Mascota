@@ -24,41 +24,6 @@ const pet = data.pet[0] || {};
     title={`${pet.name || "Mascota"} - Adopción - Paraíso de la mascota Cali`}
 >
     <main class="bg-amber-50/50 min-h-screen pb-16">
-        <!-- Hero con imagen principal -->
-        <div class="h-[40vh] relative overflow-hidden">
-            <img
-                src={pet.imageUrl || "/images/placeholder-pet.jpg"}
-                alt={pet.name}
-                class="w-full h-full object-cover"
-            />
-            <div
-                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
-            >
-            </div>
-            <div
-                class="absolute bottom-0 left-0 right-0 p-8 text-white max-w-6xl mx-auto"
-            >
-                <h1 class="text-5xl font-bold mb-4">{pet.name}</h1>
-                <div class="flex flex-wrap gap-3">
-                    <span
-                        class="px-4 py-2 bg-amber-500/90 backdrop-blur-sm rounded-full text-sm font-medium"
-                    >
-                        {pet.species}
-                    </span>
-                    <span
-                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
-                    >
-                        {pet.size}
-                    </span>
-                    <span
-                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
-                    >
-                        {pet.ageGroup}
-                    </span>
-                </div>
-            </div>
-        </div>
-
         <!-- Contenido principal -->
         <div class="max-w-6xl mx-auto px-4 py-12">
             <!-- Botón Volver -->
@@ -80,104 +45,108 @@ const pet = data.pet[0] || {};
                 Volver a mascotas
             </a>
 
-            <div class="grid lg:grid-cols-3 gap-12">
-                <!-- Columna izquierda: Información -->
-                <div class="lg:col-span-1 space-y-8">
-                    <div class="bg-white rounded-2xl p-8 shadow-lg">
-                        <h2 class="text-2xl font-bold text-amber-900 mb-6">
+            <!-- Cabecera con nombre de la mascota -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-amber-900">
+                    {pet.name}
+                </h1>
+                <div class="flex flex-wrap gap-3 justify-center mt-4">
+                    <span
+                        class="px-4 py-2 bg-amber-500/90 backdrop-blur-sm rounded-full text-sm font-medium text-white"
+                    >
+                        {pet.species}
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
+                    >
+                        {pet.size}
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-white/90 text-amber-900 rounded-full text-sm font-medium"
+                    >
+                        {pet.ageGroup}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Sección principal con foto e información -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden mb-12">
+                <div class="md:flex">
+                    <!-- Foto de la mascota -->
+                    <div class="md:w-2/5 h-[300px] md:h-auto relative">
+                        <img
+                            src={pet.imageUrl || "/images/placeholder-pet.jpg"}
+                            alt={pet.name}
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+
+                    <!-- Información de la mascota -->
+                    <div class="md:w-3/5 p-6 md:p-8">
+                        <h2 class="text-2xl font-bold text-amber-900 mb-4">
                             Sobre {pet.name}
                         </h2>
                         <p class="text-gray-600 leading-relaxed mb-6">
                             {pet.description}
                         </p>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-2 gap-4 mb-8">
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Edad:</span
                                 >
-                                <p class="text-gray-600">
-                                    {pet.ageGroup}
-                                </p>
+                                <p class="text-gray-600">{pet.ageGroup}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Sexo:</span
                                 >
-                                <p class="text-gray-600">
-                                    {pet.gender}
-                                </p>
+                                <p class="text-gray-600">{pet.gender}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Tamaño:</span
                                 >
-                                <p class="text-gray-600">
-                                    {pet.size}
-                                </p>
+                                <p class="text-gray-600">{pet.size}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
                                 <span class="text-amber-900 font-medium"
                                     >Especie:</span
                                 >
-                                <p class="text-gray-600">
-                                    {pet.species}
-                                </p>
+                                <p class="text-gray-600">{pet.species}</p>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Botones de acción -->
-                    <div class="flex flex-col gap-4">
-                        <a
-                            href={`/mascotas/${pet.id}/adoptar`}
-                            class="bg-amber-600 text-white text-center py-4 px-6 rounded-xl font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
+                        <!-- Botones de acción -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a
+                                href={`/mascotas/${pet.id}/adoptar`}
+                                class="bg-amber-600 text-white text-center py-3 px-6 rounded-xl font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2 flex-1"
                             >
-                                <path
-                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                ></path>
-                            </svg>
-                            Adoptar a {pet.name}
-                        </a>
-                        <a
-                            href={`/mascotas/${pet.id}/apadrinar`}
-                            class="border-2 border-amber-600 text-amber-600 text-center py-4 px-6 rounded-xl font-semibold hover:bg-amber-50 transition-colors"
-                        >
-                            Apadrinar a {pet.name}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Columna derecha: Imagen detallada -->
-                <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold text-amber-900 mb-6">
-                        Foto de {pet.name}
-                    </h2>
-                    <div class="bg-white p-4 rounded-xl shadow-md">
-                        <a
-                            href={pet.imageUrl || "/images/placeholder-pet.jpg"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="block rounded-lg overflow-hidden cursor-zoom-in"
-                        >
-                            <img
-                                src={pet.imageUrl ||
-                                    "/images/placeholder-pet.jpg"}
-                                alt={`${pet.name}`}
-                                class="w-full h-auto max-h-[500px] object-contain hover:opacity-95 transition-opacity"
-                            />
-                        </a>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    ></path>
+                                </svg>
+                                Adoptar a {pet.name}
+                            </a>
+                            <a
+                                href={`/mascotas/${pet.id}/apadrinar`}
+                                class="border-2 border-amber-600 text-amber-600 text-center py-3 px-6 rounded-xl font-semibold hover:bg-amber-50 transition-colors flex-1"
+                            >
+                                Apadrinar a {pet.name}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Sección de más información -->
-            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg">
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
                 <h2 class="text-2xl font-bold text-amber-900 mb-6">
                     ¿Por qué adoptar a {pet.name}?
                 </h2>
@@ -262,9 +231,3 @@ const pet = data.pet[0] || {};
         </div>
     </main>
 </Layout>
-
-<style>
-    .cursor-zoom-in {
-        cursor: zoom-in;
-    }
-</style>

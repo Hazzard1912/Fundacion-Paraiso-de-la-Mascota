@@ -4,28 +4,22 @@ import { actions } from "astro:actions";
 
 export const prerender = false;
 
-// Get the pet ID from the URL parameters
 const { id } = Astro.params;
 let pet = null;
 
-// Use Astro's proper action calling mechanism
 const { data, error } = await Astro.callAction(actions.getPet, { id });
 
-// Handle error cases with redirect
 if (error) {
     console.error("Error fetching pet details:", error);
     return Astro.redirect("/admin/mascotas");
 }
 
-// Get the pet from the response
 pet = data.pet && data.pet.length > 0 ? data.pet[0] : null;
 
-// If pet doesn't exist, redirect
 if (!pet) {
     return Astro.redirect("/admin/mascotas");
 }
 
-// Format date helper function
 const formatDate = (dateString) => {
     if (!dateString) return "No disponible";
     const date = new Date(dateString);
@@ -36,7 +30,6 @@ const formatDate = (dateString) => {
     }).format(date);
 };
 
-// Spanish translations for statuses
 const statusNames = {
     true: "Adoptado",
     false: "Disponible",

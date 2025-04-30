@@ -9,8 +9,6 @@ export async function POST(context) {
         const data = await request.json();
         const { id } = data;
 
-        console.log("ID de adopción a eliminar:", id);
-
         if (!id) {
             return new Response(
                 JSON.stringify({

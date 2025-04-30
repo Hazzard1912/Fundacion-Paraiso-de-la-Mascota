@@ -1,6 +1,5 @@
 import { defineAction } from "astro:actions";
 import { db, Pet, eq, and, desc, sql, PetAdoption, Adopter } from "astro:db";
-import {} from "astro-cloudinary/helpers";
 import { z } from "astro:schema";
 
 export const getPets = defineAction({
@@ -35,7 +34,6 @@ export const getFeaturedPets = defineAction({
       .from(Pet)
       .orderBy(sql`RANDOM()`)
       .limit(4);
-    console.log(pets);
     return { pets };
   },
 });
@@ -129,7 +127,7 @@ export const getAllAdoptions = defineAction({
 });
 
 export const createPet = defineAction({
-  accept: "form",
+  accept: "json",
   input: z.object({
     name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
     species: z.enum(["perro", "gato", "otro"], {
@@ -177,6 +175,52 @@ export const createPet = defineAction({
       return {
         success: false,
         message: "Ocurrió un error al crear la mascota. Por favor intenta nuevamente."
+      };
+    }
+  }
+});
+
+export const updatePet = defineAction({
+  accept: "json",
+  input: z.object({
+    id: z.string(),
+    name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+    species: z.enum(["perro", "gato", "otro"], {
+      errorMap: () => ({ message: "Especie inválida" }),
+    }),
+    gender: z.enum(["macho", "hembra"], {
+      errorMap: () => ({ message: "Género inválido" }),
+    }),
+    ageGroup: z.enum(["cachorro", "joven", "adulto", "senior"], {
+      errorMap: () => ({ message: "Grupo de edad inválido" }),
+    }),
+    breed: z.string().nullable().transform(val => val ?? ""),
+    size: z.enum(["pequeño", "mediano", "grande"], {
+      errorMap: () => ({ message: "Tamaño inválido" }),
+    }),
+    description: z.string().nullable().transform(val => val ?? ""),
+    imageUrl: z.string().url("URL de imagen inválida").nullable().transform(val => val ?? ""),
+    isAvailableForSponsorship: z.boolean().default(false),
+  }),
+  async handler({ id, ...data }) {
+    try {
+      const updated = await db.update(Pet)
+        .set({ ...data })
+        .where(eq(Pet.id, parseInt(id)))
+        .returning();
+      if (!updated.length) {
+        return { success: false, message: "Mascota no encontrada" };
+      }
+      return {
+        success: true,
+        pet: updated[0],
+        message: "Mascota actualizada exitosamente"
+      };
+    } catch (error) {
+      console.error("Error al actualizar mascota:", error);
+      return {
+        success: false,
+        message: "Ocurrió un error al actualizar la mascota. Por favor intenta nuevamente."
       };
     }
   }

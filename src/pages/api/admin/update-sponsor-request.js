@@ -9,8 +9,6 @@ export async function POST(context) {
         const data = await request.json();
         const { requestId, status } = data;
 
-        console.log("Actualizando solicitud de apadrinamiento:", requestId, "a estado:", status);
-
         if (!requestId || !status) {
             return new Response(
                 JSON.stringify({

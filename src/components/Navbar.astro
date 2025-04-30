@@ -1,26 +1,31 @@
-<header class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-lg">
+---
+// Get current path for active link highlighting
+const { pathname } = Astro.url;
+---
+
+<header
+    class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-amber-100"
+>
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="flex items-center gap-2">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8 text-amber-600"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                    >
-                        <path
-                            d="M12 2c2.21 0 4 1.79 4 4 0 .89-.29 1.71-.78 2.38 1.14.71 2.03 1.74 2.55 3.01.8-1.12 1.23-2.47 1.23-3.89 0-3.87-3.13-7-7-7m0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2M3.5 7c.83 0 1.5.67 1.5 1.5S4.33 10 3.5 10 2 9.33 2 8.5 2.67 7 3.5 7m17 0c.83 0 1.5.67 1.5 1.5S21.33 10 20.5 10 19 9.33 19 8.5 19.67 7 20.5 7M6 11c1.11 0 2 .89 2 2 0 .52-.2 1-.53 1.36.31.09.63.14.97.14h7.12c.34 0 .66-.05.97-.14C16.2 14 16 13.52 16 13c0-1.11.89-2 2-2h.5c1.38 0 2.5 1.12 2.5 2.5 0 3.38-2.75 6.13-6.13 6.13h-7.75C3.75 19.63 1 16.87 1 13.5 1 12.12 2.12 11 3.5 11H4z"
-                        ></path>
-                    </svg>
+                <a href="/" class="flex items-center gap-3 group">
+                    <img
+                        src="/images/logo.png"
+                        alt="Fundación Logo"
+                        class="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
+                    />
                     <h1
-                        class="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent"
+                        class="text-lg md:text-xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent"
                     >
-                        Fundación
+                        Paraiso de la Mascota
                     </h1>
                 </a>
             </div>
-            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+
+            <div
+                class="hidden md:flex md:items-center lg:space-x-4"
+            >
                 {
                     [
                         { href: "/", text: "Inicio" },
@@ -28,48 +33,79 @@
                         { href: "/ayudanos", text: "Ayúdanos" },
                         { href: "/tienda", text: "Tienda" },
                         { href: "/servicios", text: "Servicios" },
-                    ].map((link) => (
-                        <a
-                            href={link.href}
-                            class="relative inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-600 hover:text-amber-600 transition-colors duration-200"
-                        >
-                            {link.text}
-                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transform scale-x-0 transition-transform duration-200 hover:scale-x-100" />
-                        </a>
-                    ))
+                        { href: "/contacto", text: "Contacto" },
+                    ].map((link) => {
+                        const isActive =
+                            pathname === link.href ||
+                            (link.href !== "/" &&
+                                pathname.startsWith(link.href));
+                        return (
+                            <a
+                                href={link.href}
+                                class={`relative px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ease-in-out
+                                       ${
+                                           isActive
+                                               ? "text-amber-700 bg-amber-50"
+                                               : "text-gray-600 hover:text-amber-600 hover:bg-amber-50/50"
+                                       }`}
+                                aria-current={isActive ? "page" : undefined}
+                            >
+                                {link.text}
+                                <span
+                                    class={`absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transform origin-left transition-transform duration-300
+                                            ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+                                />
+                            </a>
+                        );
+                    })
                 }
+
+                <a
+                    href="/ayudanos#donaciones"
+                    class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 transition-colors duration-200"
+                >
+                    Donar
+                </a>
             </div>
 
             <!-- Botón móvil mejorado -->
-            <div class="flex items-center sm:hidden">
+            <div class="flex items-center md:hidden">
                 <button
                     type="button"
                     id="mobile-menu-button"
                     class="inline-flex items-center justify-center p-2 rounded-md text-amber-600 hover:text-amber-700 hover:bg-amber-50 transition-colors duration-200"
                     aria-label="Menú principal"
+                    aria-expanded="false"
                 >
-                    <svg
-                        class="block h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    <span class="sr-only">Abrir menú principal</span>
+                    <div
+                        class="hamburger w-6 h-6 flex flex-col justify-center items-center"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                        <span
+                            class="block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out hamburger-line-1"
+                        ></span>
+                        <span
+                            class="block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out my-1 hamburger-line-2"
+                        ></span>
+                        <span
+                            class="block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out hamburger-line-3"
+                        ></span>
+                    </div>
                 </button>
             </div>
         </div>
 
         <!-- Menú móvil mejorado -->
         <div
-            class="sm:hidden hidden transition-all duration-200 ease-in-out"
+            class="md:hidden fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+            id="mobile-backdrop"
+        >
+        </div>
+        <div
+            class="md:hidden fixed right-0 top-20 bottom-0 w-64 bg-white shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out"
             id="mobile-menu"
         >
-            <div class="pt-2 pb-3 space-y-1">
+            <div class="pt-4 pb-3 px-4 space-y-2 flex flex-col">
                 {
                     [
                         { href: "/", text: "Inicio" },
@@ -77,25 +113,98 @@
                         { href: "/ayudanos", text: "Ayúdanos" },
                         { href: "/tienda", text: "Tienda" },
                         { href: "/servicios", text: "Servicios" },
-                    ].map((link) => (
-                        <a
-                            href={link.href}
-                            class="block pl-3 pr-4 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors duration-200"
-                        >
-                            {link.text}
-                        </a>
-                    ))
+                        { href: "/contacto", text: "Contacto" },
+                    ].map((link) => {
+                        const isActive =
+                            pathname === link.href ||
+                            (link.href !== "/" &&
+                                pathname.startsWith(link.href));
+                        return (
+                            <a
+                                href={link.href}
+                                class={`block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 
+                                      ${
+                                          isActive
+                                              ? "text-amber-700 bg-amber-50"
+                                              : "text-gray-600 hover:text-amber-600 hover:bg-amber-50"
+                                      }`}
+                                aria-current={isActive ? "page" : undefined}
+                            >
+                                {link.text}
+                            </a>
+                        );
+                    })
                 }
+
+                <a
+                    href="/donar"
+                    class="mt-4 block text-center px-4 py-3 rounded-lg bg-amber-600 text-white font-medium hover:bg-amber-700 transition-colors duration-200"
+                >
+                    Donar
+                </a>
             </div>
         </div>
     </nav>
 </header>
 
+<style>
+    /* Hamburger animation */
+    .hamburger.active .hamburger-line-1 {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .hamburger-line-2 {
+        opacity: 0;
+    }
+    .hamburger.active .hamburger-line-3 {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+</style>
+
 <script>
+    // Initialize DOM elements
     const mobileMenuButton = document.getElementById("mobile-menu-button");
     const mobileMenu = document.getElementById("mobile-menu");
+    const mobileBackdrop = document.getElementById("mobile-backdrop");
+    const hamburger = document.querySelector(".hamburger");
 
-    mobileMenuButton?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+        const isOpen = mobileMenu?.classList.contains("translate-x-0");
+
+        if (isOpen) {
+            // Close menu
+            mobileMenu?.classList.remove("translate-x-0");
+            mobileMenu?.classList.add("translate-x-full");
+            mobileBackdrop?.classList.add("opacity-0");
+            mobileBackdrop?.classList.remove("opacity-100");
+            mobileBackdrop?.classList.add("pointer-events-none");
+            hamburger?.classList.remove("active");
+            document.body.classList.remove("overflow-hidden");
+            mobileMenuButton?.setAttribute("aria-expanded", "false");
+        } else {
+            // Open menu
+            mobileMenu?.classList.add("translate-x-0");
+            mobileMenu?.classList.remove("translate-x-full");
+            mobileBackdrop?.classList.remove("opacity-0");
+            mobileBackdrop?.classList.add("opacity-100");
+            mobileBackdrop?.classList.remove("pointer-events-none");
+            hamburger?.classList.add("active");
+            document.body.classList.add("overflow-hidden");
+            mobileMenuButton?.setAttribute("aria-expanded", "true");
+        }
+    }
+
+    // Add event listeners
+    mobileMenuButton?.addEventListener("click", toggleMobileMenu);
+    mobileBackdrop?.addEventListener("click", toggleMobileMenu);
+
+    // Close menu on window resize
+    window.addEventListener("resize", () => {
+        if (
+            window.innerWidth >= 768 &&
+            mobileMenu?.classList.contains("translate-x-0")
+        ) {
+            toggleMobileMenu();
+        }
     });
 </script>

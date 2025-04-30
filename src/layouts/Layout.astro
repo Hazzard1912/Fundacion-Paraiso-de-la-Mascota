@@ -19,6 +19,7 @@ const { title, description } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<link rel="icon" type="image/png" href="/images/favicon.png" />
 		<title>{title}</title>
 		<ClientRouter />
 	</head>
@@ -28,8 +29,6 @@ const { title, description } = Astro.props;
 			<slot />
 		</main>
 		<Footer />
-		<!-- Script global para la funcionalidad de compartir -->
-		<script src="/scripts/shareUtils.js" is:inline></script>
 	</body>
 </html>
 

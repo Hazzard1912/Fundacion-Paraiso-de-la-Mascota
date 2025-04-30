@@ -1,0 +1,93 @@
+---
+import { actions } from "astro:actions";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// Obtener los slides activos
+let slides = [];
+let error = null;
+
+try {
+    const { data, error: fetchError } = await Astro.callAction(
+        actions.getActiveSlides,
+        undefined,
+    );
+    if (fetchError) {
+        console.error("Error fetching active slides:", fetchError);
+        error = fetchError;
+    } else if (data) {
+        slides = data.slides.filter((slide) => slide.imageUrl);
+    } else {
+        console.error("No data returned from getActiveSlides");
+        error = new Error("No data returned");
+    }
+} catch (e) {
+    console.error("Exception fetching active slides:", e);
+    error = e;
+}
+---
+
+{
+    error ? (
+        <div class="bg-red-100 text-red-700 p-4 rounded-lg mt-8 max-w-2xl mx-auto">
+            Error cargando las imágenes del slider
+        </div>
+    ) : slides.length === 0 ? null : (
+        <div class="mt-12 max-w-4xl mx-auto p-4 bg-white rounded-xl shadow-lg">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    {slides.map((slide, index) => (
+                        <div class="swiper-slide flex justify-center items-center">
+                            <img
+                                src={slide.imageUrl}
+                                alt={`Slide ${index + 1}`}
+                                class="w-full h-auto md:h-[400px] object-cover rounded-lg"
+                            />
+                        </div>
+                    ))}
+                </div>
+                {slides.length > 1 && (
+                    <>
+                        <div class="swiper-pagination" />
+                        <div class="swiper-button-prev" />
+                        <div class="swiper-button-next" />
+                    </>
+                )}
+            </div>
+        </div>
+    )
+}
+
+<script>
+    import Swiper from "swiper/bundle";
+    if (document.querySelector(".swiper")) {
+        new Swiper(".swiper", {
+            effect: "slide",
+            loop: true,
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            slidesPerView: 1,
+            spaceBetween: 20,
+        });
+    }
+</script>
+
+<style>
+    /* Mantener solo los estilos de diseño general */
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide img {
+        display: block;
+        margin: 0 auto;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 0.75rem;
+    }
+</style>

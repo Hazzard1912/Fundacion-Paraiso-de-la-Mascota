@@ -26,8 +26,6 @@ const stats = data?.success
           adoptionsByMonth: [],
       };
 
-console.log(stats);
-
 const recentActivity = activityData?.success ? activityData.recentActivity : [];
 
 // Use sample data for recent adoptions if needed
@@ -256,7 +254,7 @@ if (activityError) console.error("Error fetching activity:", activityError);
                 </h2>
                 <div class="grid grid-cols-2 gap-4">
                     <a
-                        href="/admin/mascotas"
+                        href="/admin/mascotas/nueva"
                         class="inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-sm"
                     >
                         <svg

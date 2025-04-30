@@ -1,6 +1,6 @@
 ---
 import AdminLayout from "../../../layouts/AdminLayout.astro";
-import PetForm from "../../../components/admin/PetForm.astro";
+import PetForm from "../../../components/admin/PetForm.jsx";
 
 export const prerender = false;
 ---
@@ -29,6 +29,10 @@ export const prerender = false;
 
         <h1 class="text-2xl font-bold mb-6">Agregar Nueva Mascota</h1>
 
-        <PetForm mode="new" isAdopted={false} backUrl="/admin/mascotas" />
+        <PetForm
+            mode="new"
+            backUrl="/admin/mascotas"
+            client:only="react"
+        />
     </div>
 </AdminLayout>

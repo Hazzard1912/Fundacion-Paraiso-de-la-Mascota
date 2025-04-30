@@ -9,8 +9,6 @@ export async function POST(context) {
         const data = await request.json();
         const { sponsorshipId } = data;
 
-        console.log("Terminando padrinaje:", sponsorshipId);
-
         if (!sponsorshipId) {
             return new Response(
                 JSON.stringify({

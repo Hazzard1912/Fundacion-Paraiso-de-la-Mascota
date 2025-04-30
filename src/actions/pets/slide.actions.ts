@@ -66,3 +66,20 @@ export const deactivateSlide = defineAction({
         }
     }
 });
+
+// Agrega esto a tu archivo de acciones
+export async function getActiveSlides() {
+    try {
+        // Suponiendo que tienes una función que obtiene los slides de tu base de datos
+        const slides = await db.select().from(Slide).where(eq(Slide.active, true)).orderBy(Slide.id);
+        
+        return {
+            data: { slides }
+        };
+    } catch (error) {
+        console.error("Error getting active slides:", error);
+        return {
+            error: "Failed to fetch active slides"
+        };
+    }
+}

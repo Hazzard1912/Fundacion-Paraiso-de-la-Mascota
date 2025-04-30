@@ -1,6 +1,7 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import { actions } from "astro:actions";
+import ImageUploader from "../../components/ImageUploader.jsx";
 
 export const prerender = false;
 
@@ -13,9 +14,7 @@ try {
         console.error("Error fetching slides:", error);
         errorMessage = "Error loading slides";
     } else {
-        slides = data.slides;
-
-        console.log("Slides fetched successfully:", slides);
+        slides = data.slides || [];
     }
 } catch (e) {
     console.error("Exception fetching slides:", e);
@@ -45,111 +44,61 @@ try {
 
                 {
                     slides.map((slide) => (
-                        <div class="bg-white rounded-lg shadow p-6 mt-4">
-                            <div class="flex flex-col md:flex-row">
-                                <div class="md:w-1/3 mb-4 md:mb-0">
-                                    <div class="image-container h-48 w-full overflow-hidden rounded-lg">
-                                        {slide.imageUrl ? (
-                                            <img
-                                                src={slide.imageUrl}
-                                                alt="Imagen del slider"
-                                                class="w-full h-full object-cover"
-                                            />
-                                        ) : (
-                                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                                <p class="text-gray-500">Sin imagen</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <p class="mt-2 text-sm text-gray-500">
-                                        Slide #{slide.id} - Estado:{" "}
-                                        <span
-                                            class={
-                                                slide.active
-                                                    ? "text-green-600 font-medium"
-                                                    : "text-red-600 font-medium"
-                                            }
-                                        >
-                                            {slide.active ? "Activo" : "Inactivo"}
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="md:w-2/3 md:pl-6">
-                                    <form
-                                        id={`slideForm-${slide.id}`}
-                                        class="space-y-4"
-                                        data-slide-id={slide.id}
-                                    >
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            value={slide.id}
+                        <div class="bg-white rounded-xl shadow-md p-6 mt-6 flex flex-col md:flex-row items-center gap-6">
+                            <div class="flex-1 w-full">
+                                <form
+                                    id={`slideForm-${slide.id}`}
+                                    class="space-y-4"
+                                    data-slide-id={slide.id}
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="id"
+                                        value={slide.id}
+                                    />
+
+                                    <div>
+                                        <ImageUploader 
+                                            imageUrl={slide.imageUrl} 
+                                            setImageUrl={""}
+                                            buttonText={slide.imageUrl ? "Cambiar imagen" : "Subir imagen"}
+                                            slideId={slide.id}
+                                            client:load
                                         />
+                                        <p class="mt-1 text-sm text-gray-500">
+                                            PNG, JPG o WEBP (max. 5MB). La imagen
+                                            debe incluir todo el texto informativo
+                                            necesario.
+                                        </p>
+                                    </div>
 
-                                        <div>
-                                            <label
-                                                for={`slideImage-${slide.id}`}
-                                                class="block text-sm font-medium text-gray-700"
-                                            >
-                                                {slide.imageUrl
-                                                    ? "Cambiar imagen"
-                                                    : "Subir imagen"}
-                                            </label>
-                                            <div class="mt-1 flex items-center">
-                                                <input
-                                                    type="file"
-                                                    id={`slideImage-${slide.id}`}
-                                                    name="slideImage"
-                                                    accept="image/*"
-                                                    class="hidden"
-                                                />
-                                                <label
-                                                    for={`slideImage-${slide.id}`}
-                                                    class="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                                                >
-                                                    Seleccionar imagen
-                                                </label>
-                                                <p
-                                                    id={`fileNameDisplay-${slide.id}`}
-                                                    class="ml-3 text-sm text-gray-500"
-                                                />
-                                            </div>
-                                            <p class="mt-1 text-sm text-gray-500">
-                                                PNG, JPG o WEBP (max. 5MB). La imagen
-                                                debe incluir todo el texto informativo
-                                                necesario.
-                                            </p>
-                                        </div>
-
-                                        <div class="flex justify-end space-x-3">
-                                            {slide.active ? (
-                                                <button
-                                                    type="button"
-                                                    class="slide-status-btn inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                                    data-slide-id={slide.id}
-                                                    data-action="deactivate"
-                                                >
-                                                    Inactivar slide
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    type="button"
-                                                    class="slide-status-btn inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                                    data-slide-id={slide.id}
-                                                    data-action="activate"
-                                                >
-                                                    Activar slide
-                                                </button>
-                                            )}
-                                            <button
-                                                type="submit"
-                                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                            >
-                                                Guardar cambios
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-sm text-gray-500">
+                                            Estado:
+                                            <span class={
+                                                slide.active
+                                                    ? "text-green-600 font-medium ml-1"
+                                                    : "text-red-600 font-medium ml-1"
+                                            }>
+                                                {slide.active ? "Activo" : "Inactivo"}
+                                            </span>
+                                        </span>
+                                        <button
+                                            type="button"
+                                            class="slide-status-btn px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                                            data-slide-id={slide.id}
+                                            data-action={slide.active ? "deactivate" : "activate"}
+                                        >
+                                            {slide.active ? "Inactivar" : "Activar"}
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                                        >
+                                            Actualizar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     ))
@@ -168,51 +117,9 @@ try {
     </style>
 
     <script>
-        // Import the action functions directly in the client-side script
         import { actions } from "astro:actions";
 
         document.addEventListener("DOMContentLoaded", function () {
-            // File input handling for each slide
-            document
-                .querySelectorAll('input[type="file"][id^="slideImage-"]')
-                .forEach((input) => {
-                    input.addEventListener("change", function (e) {
-                        const slideId = this.id.split("-")[1];
-                        const fileNameDisplay = document.getElementById(
-                            `fileNameDisplay-${slideId}`,
-                        );
-                        const file = e.target.files[0];
-                        if (file) {
-                            // Validate file type
-                            const validTypes = [
-                                "image/jpeg",
-                                "image/png",
-                                "image/webp",
-                                "image/jpg",
-                            ];
-                            if (!validTypes.includes(file.type)) {
-                                alert(
-                                    "Por favor seleccione un archivo de imagen válido (PNG, JPG o WEBP)",
-                                );
-                                this.value = "";
-                                return;
-                            }
-
-                            // Validate file size (max 5MB)
-                            if (file.size > 5 * 1024 * 1024) {
-                                alert(
-                                    "El tamaño de la imagen no debe exceder 5MB",
-                                );
-                                this.value = "";
-                                return;
-                            }
-
-                            // Show file name
-                            fileNameDisplay.textContent = file.name;
-                        }
-                    });
-                });
-
             // Handle activate/deactivate slide buttons
             document.querySelectorAll(".slide-status-btn").forEach((button) => {
                 button.addEventListener("click", async function () {
@@ -222,7 +129,6 @@ try {
                     try {
                         if (action === "activate") {
                             if (confirm("¿Desea activar este slide?")) {
-                                // Call the action directly
                                 const result = await actions.activateSlide({
                                     id: parseInt(slideId),
                                 });
@@ -237,7 +143,6 @@ try {
                             }
                         } else if (action === "deactivate") {
                             if (confirm("¿Desea inactivar este slide?")) {
-                                // Call the action directly
                                 const result = await actions.deactivateSlide({
                                     id: parseInt(slideId),
                                 });
@@ -266,42 +171,25 @@ try {
                         e.preventDefault();
 
                         const slideId = this.getAttribute("data-slide-id");
-                        const fileInput =
-                            this.querySelector('input[type="file"]');
+                        const imageDataInput = this.querySelector('input[name="imageData"]');
 
-                        // Check if a file was selected
-                        if (!fileInput.files || fileInput.files.length === 0) {
-                            alert(
-                                "Por favor seleccione una imagen para actualizar",
-                            );
+                        if (!imageDataInput || !imageDataInput.value) {
+                            alert("Por favor seleccione una imagen para actualizar");
                             return;
                         }
 
                         try {
-                            // Convert the image file to base64
-                            const file = fileInput.files[0];
-                            const reader = new FileReader();
+                            const result = await actions.updateSlide({
+                                id: parseInt(slideId),
+                                imageUrl: imageDataInput.value
+                            });
 
-                            reader.onloadend = async function () {
-                                const base64String = reader.result;
-
-                                // Call the action directly
-                                const result = await actions.updateSlide({
-                                    id: parseInt(slideId),
-                                    imageUrl: base64String,
-                                });
-
-                                if (result) {
-                                    alert("Slide actualizado correctamente");
-                                    window.location.reload();
-                                } else {
-                                    alert(
-                                        "Error al actualizar el slide"
-                                    );
-                                }
-                            };
-
-                            reader.readAsDataURL(file);
+                            if (result) {
+                                alert("Slide actualizado correctamente");
+                                window.location.reload();
+                            } else {
+                                alert("Error al actualizar el slide");
+                            }
                         } catch (error) {
                             console.error("Error:", error);
                             alert("Error al procesar la solicitud");
