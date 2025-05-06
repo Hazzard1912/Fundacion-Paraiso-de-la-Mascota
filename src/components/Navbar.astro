@@ -23,9 +23,7 @@ const { pathname } = Astro.url;
                 </a>
             </div>
 
-            <div
-                class="hidden md:flex md:items-center lg:space-x-4"
-            >
+            <div class="hidden md:flex md:items-center lg:space-x-4">
                 {
                     [
                         { href: "/", text: "Inicio" },
@@ -161,50 +159,53 @@ const { pathname } = Astro.url;
 </style>
 
 <script>
-    // Initialize DOM elements
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const mobileBackdrop = document.getElementById("mobile-backdrop");
-    const hamburger = document.querySelector(".hamburger");
+    // Add this function to your Navbar.astro script section
+    document.addEventListener("astro:page-load", () => {
+        // Initialize DOM elements
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileBackdrop = document.getElementById("mobile-backdrop");
+        const hamburger = document.querySelector(".hamburger");
 
-    // Toggle mobile menu
-    function toggleMobileMenu() {
-        const isOpen = mobileMenu?.classList.contains("translate-x-0");
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu?.classList.contains("translate-x-0");
 
-        if (isOpen) {
-            // Close menu
-            mobileMenu?.classList.remove("translate-x-0");
-            mobileMenu?.classList.add("translate-x-full");
-            mobileBackdrop?.classList.add("opacity-0");
-            mobileBackdrop?.classList.remove("opacity-100");
-            mobileBackdrop?.classList.add("pointer-events-none");
-            hamburger?.classList.remove("active");
-            document.body.classList.remove("overflow-hidden");
-            mobileMenuButton?.setAttribute("aria-expanded", "false");
-        } else {
-            // Open menu
-            mobileMenu?.classList.add("translate-x-0");
-            mobileMenu?.classList.remove("translate-x-full");
-            mobileBackdrop?.classList.remove("opacity-0");
-            mobileBackdrop?.classList.add("opacity-100");
-            mobileBackdrop?.classList.remove("pointer-events-none");
-            hamburger?.classList.add("active");
-            document.body.classList.add("overflow-hidden");
-            mobileMenuButton?.setAttribute("aria-expanded", "true");
+            if (isOpen) {
+                // Close menu
+                mobileMenu?.classList.remove("translate-x-0");
+                mobileMenu?.classList.add("translate-x-full");
+                mobileBackdrop?.classList.add("opacity-0");
+                mobileBackdrop?.classList.remove("opacity-100");
+                mobileBackdrop?.classList.add("pointer-events-none");
+                hamburger?.classList.remove("active");
+                document.body.classList.remove("overflow-hidden");
+                mobileMenuButton?.setAttribute("aria-expanded", "false");
+            } else {
+                // Open menu
+                mobileMenu?.classList.add("translate-x-0");
+                mobileMenu?.classList.remove("translate-x-full");
+                mobileBackdrop?.classList.remove("opacity-0");
+                mobileBackdrop?.classList.add("opacity-100");
+                mobileBackdrop?.classList.remove("pointer-events-none");
+                hamburger?.classList.add("active");
+                document.body.classList.add("overflow-hidden");
+                mobileMenuButton?.setAttribute("aria-expanded", "true");
+            }
         }
-    }
 
-    // Add event listeners
-    mobileMenuButton?.addEventListener("click", toggleMobileMenu);
-    mobileBackdrop?.addEventListener("click", toggleMobileMenu);
+        // Add event listeners
+        mobileMenuButton?.addEventListener("click", toggleMobileMenu);
+        mobileBackdrop?.addEventListener("click", toggleMobileMenu);
 
-    // Close menu on window resize
-    window.addEventListener("resize", () => {
-        if (
-            window.innerWidth >= 768 &&
-            mobileMenu?.classList.contains("translate-x-0")
-        ) {
-            toggleMobileMenu();
-        }
+        // Close menu on window resize
+        window.addEventListener("resize", () => {
+            if (
+                window.innerWidth >= 768 &&
+                mobileMenu?.classList.contains("translate-x-0")
+            ) {
+                toggleMobileMenu();
+            }
+        });
     });
 </script>
