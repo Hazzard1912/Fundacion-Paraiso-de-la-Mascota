@@ -4,7 +4,7 @@ const { pathname } = Astro.url;
 ---
 
 <header
-    class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-amber-100"
+    class="fixed w-full z-50 bg-white backdrop-blur-md shadow-sm border-b border-amber-100"
 >
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
@@ -95,15 +95,49 @@ const { pathname } = Astro.url;
 
         <!-- Menú móvil mejorado -->
         <div
-            class="md:hidden fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+            class="md:hidden fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out z-40"
             id="mobile-backdrop"
         >
         </div>
         <div
-            class="md:hidden fixed right-0 top-20 bottom-0 w-64 bg-white shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out"
+            class="md:hidden fixed right-0 top-0 bottom-0 w-80 bg-white backdrop-blur-md shadow-2xl border-l border-amber-100 transform translate-x-full transition-transform duration-300 ease-in-out z-50"
             id="mobile-menu"
         >
-            <div class="pt-4 pb-3 px-4 space-y-2 flex flex-col">
+            <!-- Header del menú móvil -->
+            <div
+                class="flex items-center justify-between p-4 border-b border-amber-100 bg-white backdrop-blur-sm"
+            >
+                <div class="flex items-center gap-2">
+                    <img src="/images/logo.png" alt="Logo" class="h-8 w-auto" />
+                    <span class="text-sm font-semibold text-amber-700"
+                        >Paraíso de la Mascota</span
+                    >
+                </div>
+                <button
+                    type="button"
+                    id="mobile-menu-close"
+                    class="p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                    aria-label="Cerrar menú"
+                >
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contenido del menú -->
+            <div
+                class="flex-1 pt-6 pb-6 px-4 space-y-1 bg-white backdrop-blur-sm overflow-y-auto"
+            >
                 {
                     [
                         { href: "/", text: "Inicio" },
@@ -120,26 +154,44 @@ const { pathname } = Astro.url;
                         return (
                             <a
                                 href={link.href}
-                                class={`block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 
+                                class={`mobile-menu-link block px-4 py-4 text-base font-medium rounded-xl transition-all duration-200 border-l-4
                                       ${
                                           isActive
-                                              ? "text-amber-700 bg-amber-50"
-                                              : "text-gray-600 hover:text-amber-600 hover:bg-amber-50"
+                                              ? "text-amber-700 bg-amber-50 border-amber-500 shadow-sm"
+                                              : "text-gray-700 hover:text-amber-600 hover:bg-amber-50/80 border-transparent hover:border-amber-300"
                                       }`}
                                 aria-current={isActive ? "page" : undefined}
                             >
-                                {link.text}
+                                <span class="flex items-center gap-3">
+                                    {link.text}
+                                    {isActive && (
+                                        <svg
+                                            class="w-4 h-4 text-amber-500"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    )}
+                                </span>
                             </a>
                         );
                     })
                 }
 
-                <a
-                    href="/donar"
-                    class="mt-4 block text-center px-4 py-3 rounded-lg bg-amber-600 text-white font-medium hover:bg-amber-700 transition-colors duration-200"
-                >
-                    Donar
-                </a>
+                <!-- Botón de donación destacado -->
+                <div class="pt-6 mt-6 border-t border-amber-100">
+                    <a
+                        href="/ayudanos#donaciones"
+                        class="mobile-menu-link block text-center px-6 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold shadow-lg hover:from-amber-600 hover:to-amber-700 transform hover:scale-105 transition-all duration-200"
+                    >
+                        💝 Donar Ahora
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -163,9 +215,11 @@ const { pathname } = Astro.url;
     document.addEventListener("astro:page-load", () => {
         // Initialize DOM elements
         const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenuClose = document.getElementById("mobile-menu-close");
         const mobileMenu = document.getElementById("mobile-menu");
         const mobileBackdrop = document.getElementById("mobile-backdrop");
         const hamburger = document.querySelector(".hamburger");
+        const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
 
         // Toggle mobile menu
         function toggleMobileMenu() {
@@ -196,12 +250,31 @@ const { pathname } = Astro.url;
 
         // Add event listeners
         mobileMenuButton?.addEventListener("click", toggleMobileMenu);
+        mobileMenuClose?.addEventListener("click", toggleMobileMenu);
         mobileBackdrop?.addEventListener("click", toggleMobileMenu);
+
+        // Close menu when clicking on links
+        mobileMenuLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                // Small delay to allow navigation
+                setTimeout(toggleMobileMenu, 100);
+            });
+        });
 
         // Close menu on window resize
         window.addEventListener("resize", () => {
             if (
                 window.innerWidth >= 768 &&
+                mobileMenu?.classList.contains("translate-x-0")
+            ) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.key === "Escape" &&
                 mobileMenu?.classList.contains("translate-x-0")
             ) {
                 toggleMobileMenu();
