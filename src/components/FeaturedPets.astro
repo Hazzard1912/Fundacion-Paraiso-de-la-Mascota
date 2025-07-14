@@ -1,13 +1,51 @@
 ---
-import { actions } from "astro:actions";
+import { getFeaturedPets } from "../actions/cms.actions"; 
 
-const { data, error } = await Astro.callAction(actions.getFeaturedPets, {});
+const { data, error } = await Astro.callAction(getFeaturedPets, {});
 
 if (error) {
     console.error("Error fetching featured pets:", error);
 }
 
-const featuredPets = data?.pets || [];
+console.log("Data: ", data?.data);
+
+interface Pet {
+    id: number;
+    name: string;
+    description: string;
+    species: string;
+    ageGroup: string;
+    gender: string;
+    size: string;
+    photos: Array<{
+        id: number;
+        url: string;
+        alternativeText?: string;
+    }>;
+}
+
+// Procesar las mascotas para usar la primera foto de cada una
+const featuredPets: Pet[] = (data?.data?.pets || []).map((pet: any) => {
+    // Obtener la primera foto o usar una imagen por defecto
+    const firstPhoto = pet.photos && pet.photos.length > 0 ? pet.photos[0] : null;
+    
+    return {
+        id: pet.id,
+        name: pet.name,
+        description: pet.description,
+        species: pet.species,
+        ageGroup: pet.ageGroup,
+        gender: pet.gender,
+        size: pet.size,
+        photos: firstPhoto ? [{
+            id: firstPhoto.id,
+            url: `${firstPhoto.url}`,
+            alternativeText: firstPhoto.alternativeText || ""
+        }] : []
+    };
+});
+
+console.log("featuredPets: ", featuredPets);
 ---
 
 <section class="bg-white py-28">
@@ -29,57 +67,55 @@ const featuredPets = data?.pets || [];
         <div
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 gap-y-14"
         >
-            {
-                featuredPets.map((pet) => (
-                    <a
-                        href={`/mascotas/${pet.id}`}
-                        class="group bg-amber-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100"
-                    >
-                        <div class="aspect-square overflow-hidden flex items-center justify-center bg-white">
-                            <img
-                                src={pet.imageUrl}
-                                alt={pet.name}
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-2xl"
-                            />
+            {featuredPets.map((pet: Pet) => (
+                <a
+                    href={`/mascotas/${pet.id}`}
+                    class="group bg-amber-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100"
+                >
+                    <div class="aspect-square overflow-hidden flex items-center justify-center bg-white">
+                        <img
+                            src={pet.photos.length > 0 ? pet.photos[0].url : "/images/shelter-dogs.jpg"}
+                            alt={pet.photos.length > 0 ? pet.photos[0].alternativeText || pet.name : pet.name}
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-2xl"
+                        />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-2xl mb-2 text-amber-800">
+                            {pet.name}
+                        </h3>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
+                                {pet.species}
+                            </span>
+                            <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
+                                {pet.ageGroup}
+                            </span>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-2xl mb-2 text-amber-800">
-                                {pet.name}
-                            </h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
-                                    {pet.species}
-                                </span>
-                                <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
-                                    {pet.ageGroup}
-                                </span>
-                            </div>
-                            <p class="text-gray-600 text-sm line-clamp-2 mb-4">
-                                {pet.description}
-                            </p>
-                            <div class="flex items-center justify-between">
-                                <span class="text-amber-700 font-medium text-sm inline-flex items-center group-hover:text-amber-900 transition-colors">
-                                    Conocer más
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 ml-1"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 5l7 7-7 7"
-                                        />
-                                    </svg>
-                                </span>
-                            </div>
+                        <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                            {pet.description}
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-amber-700 font-medium text-sm inline-flex items-center group-hover:text-amber-900 transition-colors">
+                                Conocer más
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 ml-1"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </span>
                         </div>
-                    </a>
-                ))
-            }
+                    </div>
+                </a>
+            ))}
         </div>
 
         <!-- Call to action button -->

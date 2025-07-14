@@ -1,43 +1,16 @@
-import { getDashboardStats, getRecentActivity } from "./dashboard/stats.action"
-import { getFeaturedPets, getLatestAdoptions, getPet, getPets, getPetsForAdoption, getPetsWithFilters, createPet, createAdoptionRequest, createSponsorRequest, getAdoptionRequests, getSponsorRequests, getAllAdoptions, updateSponsorRequestStatus, updateAdoptionRequestStatus, getAllActiveSponsorships, endSponsorship, getAdopterDetailsByAdoptionId, updateAdopterDetails, getSlides, activateSlide, deactivateSlide, createSlide, updateSlide, updatePet, getActiveSlides } from "./pets"
+import { createAdoptionRequest } from "./pets/adopt.actions"
+import { createSponsorRequest } from "./pets/sponsor.actions"
+import { getHeroData, getSlidesData, getFeaturedPets } from "./cms.actions"
 
 export const server = {
-    // Pet actions
-    getPets,
-    getPetsForAdoption,
-    getPet,
-    getFeaturedPets,
-    getPetsWithFilters,
-    createPet,
-    updatePet,
-
-    // Adoption actions
-    getLatestAdoptions,
-    getAllAdoptions,
-    getAdopterDetailsByAdoptionId,
-    updateAdopterDetails,
-
     // Adoption request actions
-    getAdoptionRequests,
     createAdoptionRequest,
-    updateAdoptionRequestStatus,
 
     // Sponsor actions
-    getSponsorRequests,
     createSponsorRequest,
-    updateSponsorRequestStatus,
-    getAllActiveSponsorships,
-    endSponsorship,
 
-    // Dashboard actions
-    getDashboardStats,
-    getRecentActivity,
-
-    // Slide actions
-    getSlides,
-    createSlide,
-    updateSlide,
-    activateSlide,
-    deactivateSlide,
-    getActiveSlides,
+    // CMS actions
+    getHeroData,
+    getSlidesData,
+    getFeaturedPets,
 }

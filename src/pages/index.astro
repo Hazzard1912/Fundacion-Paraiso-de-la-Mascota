@@ -4,7 +4,7 @@ import Hero from "../components/Hero.astro";
 import Mision from "../components/Mision.astro";
 import FeaturedPets from "../components/FeaturedPets.astro";
 import LatestAdoptions from "../components/LatestAdoptions.astro";
-// import Testimonials from "../components/Testimonials.astro";
+import Testimonials from "../components/Testimonials.astro";
 import CallToAction from "../components/CallToAction.astro";
 import Carousel from "../components/Carousel.astro";
 import Historia from "../components/Historia.astro";
@@ -17,8 +17,10 @@ import FAQ from "../components/FAQ.astro";
 	<Mision />
 	<Historia />
 	<FeaturedPets server:defer />
+	<!-- 
 	<LatestAdoptions server:defer />
-	<!-- <Testimonials /> -->
+	-->
+	<Testimonials />
 	<CallToAction />
 	<FAQ />
 </Layout>

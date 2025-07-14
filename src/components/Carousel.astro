@@ -1,29 +1,33 @@
 ---
-import { actions } from "astro:actions";
+import { getSlidesData } from "../actions/cms.actions";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-// Obtener los slides activos
-let slides = [];
+// Obtener los slides activos desde Strapi
+interface Slide {
+    id: number;
+    imageUrl: string;
+    alternativeText: string | null;
+}
+
+let slides: Slide[] = [];
 let error = null;
 
 try {
-    const { data, error: fetchError } = await Astro.callAction(
-        actions.getActiveSlides,
-        undefined,
-    );
-    if (fetchError) {
-        console.error("Error fetching active slides:", fetchError);
-        error = fetchError;
-    } else if (data) {
-        slides = data.slides.filter((slide) => slide.imageUrl);
+    const result = await Astro.callAction(getSlidesData, {});
+    if (result.error) {
+        console.error("Error fetching slides:", result.error);
+        error = result.error;
+    } else if (result.data && Array.isArray(result.data?.data)) {
+        slides = result.data.data.filter((slide: any) => slide.imageUrl);
+        console.log("Slides:", slides);
     } else {
-        console.error("No data returned from getActiveSlides");
+        console.error("No data returned from getSlidesData");
         error = new Error("No data returned");
     }
 } catch (e) {
-    console.error("Exception fetching active slides:", e);
+    console.error("Exception fetching slides:", e);
     error = e;
 }
 ---
@@ -37,11 +41,11 @@ try {
         <div class="mt-12 max-w-4xl mx-auto p-4 bg-white rounded-xl shadow-lg">
             <div class="swiper">
                 <div class="swiper-wrapper">
-                    {slides.map((slide, index) => (
+                    {slides.map((slide: any, index: number) => (
                         <div class="swiper-slide flex justify-center items-center">
                             <img
                                 src={slide.imageUrl}
-                                alt={`Slide ${index + 1}`}
+                                alt={`Campaña ${index + 1}`}
                                 class="w-full h-auto md:h-[400px] object-cover rounded-lg"
                             />
                         </div>
