@@ -1,18 +1,16 @@
 ---
-import { actions } from "astro:actions";
+import { getLatestAdoptions } from "../actions/cms.actions";
 
-const { data, error } = await Astro.callAction(actions.getLatestAdoptions, {
-    limit: 3,
-});
+const { data, error } = await Astro.callAction(getLatestAdoptions, {});
 
 if (error) {
     console.error("Error fetching latest adoptions:", error);
 }
 
-const adoptedPets = data?.adoptedPets || [];
+const adoptions = data?.data?.adoptions || [];
 
 // Función para formatear la fecha en español
-function formatDate(dateString: Date) {
+function formatDate(dateString: string) {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("es-ES", {
         year: "numeric",
@@ -36,14 +34,14 @@ function formatDate(dateString: Date) {
         </div>
 
         {
-            adoptedPets.length > 0 ? (
+            adoptions.length > 0 ? (
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 gap-y-14">
-                    {adoptedPets.map((pet) => (
+                    {adoptions.map((adoption) => (
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100">
                             <div class="relative aspect-square flex items-center justify-center bg-white">
                                 <img
-                                    src={pet.imageUrl}
-                                    alt={`${pet.name} adoptado`}
+                                    src={adoption.pet.imageUrl}
+                                    alt={`${adoption.pet.name} adoptado`}
                                     class="w-full h-full object-cover rounded-t-2xl"
                                 />
                                 <div class="absolute top-4 right-4">
@@ -54,7 +52,7 @@ function formatDate(dateString: Date) {
                             </div>
                             <div class="p-6">
                                 <h3 class="text-2xl font-bold mb-2 text-amber-800">
-                                    {pet.name}
+                                    {adoption.pet.name}
                                 </h3>
                                 <p class="text-gray-600 mb-4 text-sm">
                                     <span class="flex items-center">
@@ -71,20 +69,29 @@ function formatDate(dateString: Date) {
                                             />
                                         </svg>
                                         Adoptado el{" "}
-                                        {formatDate(pet.adoptedDate!)}
+                                        {formatDate(adoption.adoptionDate)}
+                                    </span>
+                                </p>
+                                <p class="text-gray-600 mb-4 text-sm">
+                                    <span class="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 mr-1"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                        Por {adoption.adopter.name}
                                     </span>
                                 </p>
                                 <p class="text-gray-600 mb-6 text-sm line-clamp-2">
-                                    {pet.description}
+                                    {adoption.pet.description}
                                 </p>
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
-                                        {pet.species}
-                                    </span>
-                                    <span class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">
-                                        {pet.ageGroup}
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     ))}

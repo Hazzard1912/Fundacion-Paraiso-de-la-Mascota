@@ -3,7 +3,7 @@ import { actions, isInputError } from "astro:actions";
 
 interface Props {
     pet: {
-        id: number;
+        documentId: string;
         name: string;
         imageUrl: string;
     };
@@ -97,7 +97,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                         method="POST"
                         action={actions.createAdoptionRequest}
                     >
-                        <input type="hidden" name="petId" value={pet.id} />
+                        <input type="hidden" name="pet" value={pet.documentId} />
 
                         <div class="space-y-4">
                             {/* Nombre */}

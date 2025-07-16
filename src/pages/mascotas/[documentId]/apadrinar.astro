@@ -5,21 +5,25 @@ import { actions } from "astro:actions";
 
 export const prerender = false;
 
-const { id } = Astro.params;
+const { documentId } = Astro.params;
 
 // Obtenemos los datos de la mascota
-const { data, error } = await Astro.callAction(actions.getPet, { id });
+const { data, error } = await Astro.callAction(actions.getPet, { documentId });
 
 if (error) {
     console.error(error);
     return Astro.redirect("/404");
 }
 
-if (data.pet[0].isAdopted) {
-    return Astro.redirect(`/mascotas`);
+if (!data?.data?.pet || data.data.pet.length === 0) {
+    return Astro.redirect("/404");
 }
 
-const pet = data.pet[0];
+const pet = data.data.pet[0];
+
+if (pet.isAdopted) {
+    return Astro.redirect(`/mascotas`);
+}
 ---
 
 <Layout title={`Apadrinar a ${pet.name} - Paraíso de la mascota Cali`}>
@@ -77,7 +81,7 @@ const pet = data.pet[0];
                                     d="m1 9 4-4-4-4"></path>
                             </svg>
                             <a
-                                href={`/mascotas/${pet.id}`}
+                                href={`/mascotas/${pet.documentId}`}
                                 class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
                             >
                                 {pet.name}
@@ -110,7 +114,7 @@ const pet = data.pet[0];
 
             <div class="mb-10">
                 <a
-                    href={`/mascotas/${pet.id}`}
+                    href={`/mascotas/${pet.documentId}`}
                     class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-600 transition-colors"
                 >
                     <svg
@@ -151,11 +155,6 @@ const pet = data.pet[0];
                         hasta encontrar su hogar definitivo.
                     </p>
                     <div class="flex gap-4 items-center">
-                        <img
-                            src="/img/paw.svg"
-                            alt="Huella"
-                            class="w-10 h-10 opacity-80"
-                        />
                         <p class="text-lg">
                             Tu generosidad marca la diferencia
                         </p>
@@ -323,7 +322,7 @@ const pet = data.pet[0];
 
                 <!-- Columna derecha: Formulario de apadrinamiento -->
                 <div>
-                    <FormularioApadrinamiento pet={{ id: pet.id, name: pet.name, imageUrl: pet.imageUrl }} />
+                    <FormularioApadrinamiento pet={{ documentId: pet.documentId, name: pet.name, imageUrl: pet.imageUrl }} />
                 </div>
             </div>
 

@@ -5,20 +5,24 @@ import { actions } from "astro:actions";
 
 export const prerender = false;
 
-const { id } = Astro.params;
+const { documentId } = Astro.params;
 
-const { data, error } = await Astro.callAction(actions.getPet, { id });
+const { data, error } = await Astro.callAction(actions.getPet, { documentId });
 
 if (error) {
     console.error(error);
     return Astro.redirect("/404");
 }
 
-if (data.pet[0].isAdopted) {
-    return Astro.redirect(`/mascotas/${id}`);
+if (!data?.data?.pet || data.data.pet.length === 0) {
+    return Astro.redirect("/404");
 }
 
-const pet = data.pet[0] || {};
+const pet = data.data.pet[0];
+
+if (pet.isAdopted) {
+    return Astro.redirect(`/mascotas/${documentId}`);
+}
 ---
 
 <Layout title={`Adoptar a ${pet.name} - Paraíso de la mascota Cali`}>
@@ -76,7 +80,7 @@ const pet = data.pet[0] || {};
                                     d="m1 9 4-4-4-4"></path>
                             </svg>
                             <a
-                                href={`/mascotas/${pet.id}`}
+                                href={`/mascotas/${pet.documentId}`}
                                 class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
                             >
                                 {pet.name}
@@ -109,7 +113,7 @@ const pet = data.pet[0] || {};
 
             <div class="mb-10">
                 <a
-                    href={`/mascotas/${pet.id}`}
+                    href={`/mascotas/${pet.documentId}`}
                     class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-600 transition-colors"
                 >
                     <svg
@@ -139,7 +143,7 @@ const pet = data.pet[0] || {};
                 </p>
             </div>
 
-            <FormularioAdopcion pet={{ id: pet.id, name: pet.name, imageUrl: pet.imageUrl }}/>
+            <FormularioAdopcion pet={{ documentId: pet.documentId, name: pet.name, imageUrl: pet.imageUrl }}/>
 
             <div class="mt-12 bg-white p-8 rounded-2xl shadow-lg">
                 <h3 class="text-2xl font-bold text-amber-900 mb-4">

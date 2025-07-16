@@ -1,47 +1,71 @@
 ---
-// Import Swiper
+import { getTestimoniosData } from "../actions/cms.actions";
 import { Swiper } from "swiper/bundle";
 
-const testimonials = [
-    {
-        name: "Ana María Rodríguez",
-        role: "Madre adoptiva de Luna",
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
-        text: "Adoptar a Luna fue la mejor decisión que pudimos tomar como familia. El proceso fue transparente y el equipo nos apoyó en todo momento. Ahora no podemos imaginar nuestra vida sin ella.",
-    },
-    {
-        name: "Carlos Mendoza",
-        role: "Voluntario y padrino",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-        text: "Ser voluntario en la fundación me ha permitido ver de primera mano el amor y dedicación que ponen en cada animal. Es increíble ver cómo transforman vidas todos los días.",
-    },
-    {
-        name: "Isabella Martínez",
-        role: "Adoptante de Max",
-        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-        text: "La fundación hace un trabajo excepcional. No solo encontré a mi compañero perfecto, sino que también recibí todo el asesoramiento necesario para darle el mejor hogar posible.",
-    },
-    {
-        name: "Javier Pérez",
-        role: "Padre adoptivo de Milo",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-        text: "Adoptar a Milo fue una experiencia maravillosa. El equipo de la fundación nos ayudó a encontrar al gato perfecto para nuestra familia. ¡Gracias por todo!",
-    },
-];
+let testimoniosData = null;
+let error = null;
+
+try {
+    const result = await Astro.callAction(getTestimoniosData, {});
+    if (result.error) {
+        console.error("Error fetching testimonios data:", result.error);
+        error = result.error;
+    } else if (result.data) {
+        testimoniosData = result.data;
+    }
+
+    console.log(testimoniosData);
+} catch (e) {
+    console.error("Exception fetching testimonios data:", e);
+    error = e;
+}
+
+const defaultData = {
+    titulo: "TESTIMONIOS",
+    subtitulo: "Historias que Inspiran",
+    descripcion: "Descubre cómo nuestro trabajo ha transformado vidas, uniendo familias y creando lazos inquebrantables",
+    testimonios: [
+        {
+            nombre: "Ana María Rodríguez",
+            rol: "Madre adoptiva de Luna",
+            imagen: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+            texto: "Adoptar a Luna fue la mejor decisión que pudimos tomar como familia. El proceso fue transparente y el equipo nos apoyó en todo momento. Ahora no podemos imaginar nuestra vida sin ella.",
+        },
+        {
+            nombre: "Carlos Mendoza",
+            rol: "Voluntario y padrino",
+            imagen: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+            texto: "Ser voluntario en la fundación me ha permitido ver de primera mano el amor y dedicación que ponen en cada animal. Es increíble ver cómo transforman vidas todos los días.",
+        },
+        {
+            nombre: "Isabella Martínez",
+            rol: "Adoptante de Max",
+            imagen: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+            texto: "La fundación hace un trabajo excepcional. No solo encontré a mi compañero perfecto, sino que también recibí todo el asesoramiento necesario para darle el mejor hogar posible.",
+        },
+        {
+            nombre: "Javier Pérez",
+            rol: "Padre adoptivo de Milo",
+            imagen: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+            texto: "Adoptar a Milo fue una experiencia maravillosa. El equipo de la fundación nos ayudó a encontrar al gato perfecto para nuestra familia. ¡Gracias por todo!",
+        },
+    ]
+};
+
+const finalData = (testimoniosData && testimoniosData.success && testimoniosData.data) ? testimoniosData.data : defaultData;
 ---
 
 <section class="py-24 bg-amber-50">
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-16">
-            <span class="text-amber-600 font-medium mb-4 block"
-                >TESTIMONIOS</span
-            >
+            <span class="text-amber-600 font-medium mb-4 block">
+                {finalData.titulo}
+            </span>
             <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6">
-                Historias que Inspiran
+                {finalData.subtitulo}
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Descubre cómo nuestro trabajo ha transformado vidas, uniendo
-                familias y creando lazos inquebrantables
+                {finalData.descripcion}
             </p>
         </div>
 
@@ -49,34 +73,27 @@ const testimonials = [
         <div class="swiper testimonials-swiper">
             <div class="swiper-wrapper pb-12">
                 {
-                    testimonials.map((testimonial) => (
+                    finalData.testimonios.map((testimonial) => (
                         <div class="swiper-slide">
                             <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 mx-4">
                                 <div class="flex items-center gap-4 mb-6">
                                     <img
-                                        src={testimonial.image}
-                                        alt={testimonial.name}
+                                        src={testimonial.imagen}
+                                        alt={testimonial.nombre}
                                         class="w-16 h-16 rounded-full object-cover"
                                     />
                                     <div>
                                         <h3 class="text-xl font-semibold text-amber-900">
-                                            {testimonial.name}
+                                            {testimonial.nombre}
                                         </h3>
                                         <p class="text-gray-600">
-                                            {testimonial.role}
+                                            {testimonial.rol}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <svg
-                                        class="absolute -top-4 -left-4 w-8 h-8 text-amber-600"
-                                        fill="currentColor"
-                                        viewBox="0 0 32 32"
-                                    >
-                                        <path d="M10 8c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8s-3.582-8-8-8zm0 14c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6zm22-6c0-4.418-3.582-8-8-8s-8 3.582-8 8 3.582 8 8 8 8-3.582 8-8zm-14 0c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6-6-2.686-6-6z" />
-                                    </svg>
                                     <p class="text-gray-600 leading-relaxed">
-                                        {testimonial.text}
+                                        {testimonial.texto}
                                     </p>
                                 </div>
                             </div>

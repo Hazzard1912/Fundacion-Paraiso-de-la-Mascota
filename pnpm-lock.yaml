@@ -20,6 +20,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^8.1.1
         version: 8.1.1(astro@5.1.5(jiti@1.21.7)(rollup@4.39.0)(typescript@5.7.3)(yaml@2.7.0))(react@19.0.0)(rollup@4.39.0)
+      '@strapi/blocks-react-renderer':
+        specifier: ^1.0.2
+        version: 1.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       astro:
         specifier: ^5.1.5
         version: 5.1.5(jiti@1.21.7)(rollup@4.39.0)(typescript@5.7.3)(yaml@2.7.0)
@@ -1000,6 +1003,12 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.1':
     resolution: {integrity: sha512-fTIQwLF+Qhuws31iw7Ncl1R3HUDtGwIipiJ9iU+UsDUwMhegFcQKQHd51nZjb7CArq0MvON8rbgCGQYWHUKAdg==}
+
+  '@strapi/blocks-react-renderer@1.0.2':
+    resolution: {integrity: sha512-pRV/WMreo5wyrLg7J0pw1DM9lg8U8m+QA7Bd8CPN3beUBTdDhYrFTTNZh3XveEdnURZNJu1X0aWXAg4SzVg7QA==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3382,6 +3391,11 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@10.0.1': {}
+
+  '@strapi/blocks-react-renderer@1.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   '@types/babel__core@7.20.5':
     dependencies:

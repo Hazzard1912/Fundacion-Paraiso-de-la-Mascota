@@ -1,0 +1,85 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { actions } from "astro:actions";
+
+const { slug } = Astro.params;
+const { data, error } = await Astro.callAction(actions.getNoticiaBySlugData, { slug });
+const noticia = data?.data;
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("es-CO", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<Layout title={noticia?.titulo.concat(" | Paraíso de la mascota Cali") || "Noticia - Paraíso de la mascota Cali"}>
+  {noticia ? (
+    <article class="min-h-screen">
+      <!-- Hero Section con imagen de cover -->
+      <section class="relative h-[60vh] min-h-[400px] max-h-[600px] overflow-hidden">
+        {noticia.imagen?.url && (
+          <img 
+            src={noticia.imagen.url} 
+            alt={noticia.imagen.alternativeText || noticia.titulo} 
+            class="w-full h-full object-cover"
+          />
+        )}
+        <!-- Overlay gradiente para mejor legibilidad -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+        
+        <!-- Contenido superpuesto -->
+        <div class="absolute inset-0 flex items-end">
+          <div class="max-w-4xl mx-auto px-4 pb-12 w-full">
+            <div class="text-white">
+              <span class="inline-block bg-amber-500 text-amber-900 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                {formatDate(noticia.fecha)}
+              </span>
+              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+                {noticia.titulo}
+              </h1>
+              <p class="text-xl md:text-2xl text-gray-200 max-w-3xl leading-relaxed">
+                {noticia.resumen}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contenido principal -->
+      <section class="bg-white py-16">
+        <div class="max-w-4xl mx-auto px-4">
+          <div class="prose prose-lg prose-amber max-w-none">
+            <!-- Separador visual -->
+            <div class="w-24 h-1 bg-amber-500 mb-12"></div>
+            
+            <BlocksRenderer content={noticia.contenido} />
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección de cierre opcional -->
+      <section class="bg-amber-50 py-12">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+          <div class="inline-flex items-center gap-2 text-amber-700">
+            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+            <span class="text-sm font-medium">Paraíso de la mascota Cali</span>
+            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+          </div>
+        </div>
+      </section>
+    </article>
+  ) : (
+    <section class="bg-amber-50 py-20 min-h-[60vh]">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center text-gray-500 py-32">
+          No se encontró la noticia.
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>

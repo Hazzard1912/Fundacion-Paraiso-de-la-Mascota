@@ -1,5 +1,41 @@
 ---
-// No imports needed
+import { getHistoriaData } from "../actions/cms.actions";
+
+let historiaData = null;
+let error = null;
+
+try {
+    const result = await Astro.callAction(getHistoriaData, {});
+    if (result.error) {
+        console.error("Error fetching historia data:", result.error);
+        error = result.error;
+    } else if (result.data) {
+        historiaData = result.data;
+    }
+} catch (e) {
+    console.error("Exception fetching historia data:", e);
+    error = e;
+}
+
+const defaultData = {
+    titulo: "Nuestra Historia",
+    introduccion: "La Fundación Paraíso de la Mascota se creó en el año 2003 como una entidad sin ánimo de lucro, con la intención de:",
+    objetivos: [
+        "Crear conciencia social en la comunidad sobre la tenencia responsable de mascotas.",
+        "Evitar la reproducción indiscriminada de animales callejeros por medio de campañas de esterilización en Cali y sus alrededores.",
+        "Proteger y defender a los animales maltratados y/o abandonados, brindándoles en nuestro centro de adopción, un hogar de paso."
+    ],
+    frase: "¡Somos la voz de los que no tienen voz!",
+    imagenRefugio: "/images/shelter-dogs.jpg",
+    centroTitulo: "Nuestro Centro de Adopción",
+    centroDescripcion: "Esta labor la llevamos a cabo desde nuestro centro de adopción localizado en Cali, Colombia; donde tenemos a 300 animalitos entre perros y gatos, en proceso de ser adoptados. Todo esto es logrado con el esfuerzo y dedicación de aquellas personas que contribuyen voluntariamente, movidas por el amor incondicional hacia estos seres que sólo esperan ser tratados dignamente y tener la oportunidad de demostrar su eterna gratitud.",
+    imagenCentro: "/images/kid-dog.jpg",
+    fundadoraTitulo: "Nuestra Fundadora",
+    fundadoraDescripcion: "El centro de adopción viene funcionando desde Noviembre de 1999, por iniciativa de nuestra Fundadora y actual Presidente, señora Ofelia Villegas, quien después de su jubilación, empezó a rescatar animalitos de la calle, llevándolos a su casa. Esta obra fue creciendo a través de los años, hasta alquilar un lugar con mayor espacio en Diciembre de 2001. Sin los recursos económicos suficientes, logró lo que siempre han querido hacer los protectores de animales: tener un Centro de Adopción sin ningún apoyo del estado, solo con el apoyo de las personas que aman y se preocupan por el bienestar animal. A las que agradecemos inmensamente su apoyo.",
+    imagenFundadora: "/images/founder.jpg"
+};
+
+const finalData = (historiaData && historiaData.success && historiaData.data) ? historiaData.data : defaultData;
 ---
 
 <section class="py-16 bg-amber-50/50" id="historia">
@@ -7,7 +43,7 @@
         <!-- Section Header -->
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-amber-800 mb-4">
-                Nuestra Historia
+                {finalData.titulo}
             </h2>
             <div class="w-24 h-1 bg-amber-500 mx-auto"></div>
         </div>
@@ -20,81 +56,36 @@
                         Sobre Nosotros
                     </h3>
                     <p class="text-gray-700 mb-4">
-                        La Fundación Paraíso de la Mascota se creó en el año
-                        2003 como una entidad sin ánimo de lucro, con la
-                        intención de:
+                        {finalData.introduccion}
                     </p>
 
                     <ul class="space-y-3 mb-6">
-                        <li class="flex items-start">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-amber-600 mr-2 flex-shrink-0 mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >Crear conciencia social en la comunidad sobre
-                                la tenencia responsable de mascotas.</span
-                            >
-                        </li>
-                        <li class="flex items-start">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-amber-600 mr-2 flex-shrink-0 mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >Evitar la reproducción indiscriminada de
-                                animales callejeros por medio de campañas de
-                                esterilización en Cali y sus alrededores.</span
-                            >
-                        </li>
-                        <li class="flex items-start">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-amber-600 mr-2 flex-shrink-0 mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span
-                                >Proteger y defender a los animales maltratados
-                                y/o abandonados, brindándoles en nuestro centro
-                                de adopción, un hogar de paso.</span
-                            >
-                        </li>
+                        {finalData.objetivos.map((objetivo) => (
+                            <li class="flex items-start">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-amber-600 mr-2 flex-shrink-0 mt-0.5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>{objetivo}</span>
+                            </li>
+                        ))}
                     </ul>
-                    <p
-                        class="italic text-amber-700 font-medium text-center text-lg mt-8"
-                    >
-                        ¡Somos la voz de los que no tienen voz!
+                    <p class="italic text-amber-700 font-medium text-center text-lg mt-8">
+                        {finalData.frase}
                     </p>
                 </div>
                 <div class="bg-amber-100 h-full">
                     <img
-                        src="/images/shelter-dogs.jpg"
+                        src={finalData.imagenRefugio}
                         alt="Perros en el refugio"
                         class="w-full h-full object-cover"
                     />
@@ -102,29 +93,16 @@
             </div>
         </div>
 
-        
-
         <!-- Current Status -->
         <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-16">
             <div class="grid md:grid-cols-5">
                 <div class="p-8 md:col-span-3">
                     <h3 class="text-2xl font-bold text-amber-800 mb-6">
-                        Nuestro Centro de Adopción
+                        {finalData.centroTitulo}
                     </h3>
                     <p class="text-gray-700 mb-4">
-                        Esta labor la llevamos a cabo desde nuestro centro de
-                        adopción localizado en Cali, Colombia; donde tenemos a
-                        300 animalitos entre perros y gatos, en proceso de ser
-                        adoptados.
+                        {finalData.centroDescripcion}
                     </p>
-                    <p class="text-gray-700 mb-6">
-                        Todo esto es logrado con el esfuerzo y dedicación de
-                        aquellas personas que contribuyen voluntariamente,
-                        movidas por el amor incondicional hacia estos seres que
-                        sólo esperan ser tratados dignamente y tener la
-                        oportunidad de demostrar su eterna gratitud.
-                    </p>
-
                     <div class="flex justify-center md:justify-start">
                         <a
                             href="/mascotas"
@@ -147,7 +125,7 @@
                 </div>
                 <div class="md:col-span-2 bg-amber-100">
                     <img
-                        src="/images/kid-dog.jpg"
+                        src={finalData.imagenCentro}
                         alt="Niña con perro"
                         class="w-full h-full object-cover"
                     />
@@ -156,38 +134,17 @@
         </div>
 
         <!-- Founder Story -->
-        <div
-            class="bg-gradient-to-r from-amber-700 to-amber-500 rounded-xl shadow-lg overflow-hidden text-white"
-        >
+        <div class="bg-gradient-to-r from-amber-700 to-amber-500 rounded-xl shadow-lg overflow-hidden text-white">
             <div class="grid md:grid-cols-2 items-center">
                 <div class="p-8 md:order-2">
-                    <h3 class="text-2xl font-bold mb-6">Nuestra Fundadora</h3>
+                    <h3 class="text-2xl font-bold mb-6">{finalData.fundadoraTitulo}</h3>
                     <p class="mb-4">
-                        El centro de adopción viene funcionando desde Noviembre
-                        de 1999, por iniciativa de nuestra Fundadora y actual
-                        Presidente, señora <strong>Ofelia Villegas</strong>,
-                        quien después de su jubilación, empezó a rescatar
-                        animalitos de la calle, llevándolos a su casa.
-                    </p>
-                    <p class="mb-4">
-                        Esta obra fue creciendo a través de los años, hasta
-                        alquilar un lugar con mayor espacio en Diciembre de
-                        2001.
-                    </p>
-                    <p>
-                        Sin los recursos económicos suficientes, logró lo que
-                        siempre han querido hacer los protectores de animales:
-                        tener un Centro de Adopción sin ningún apoyo del estado,
-                        solo con el apoyo de las personas que aman y se
-                        preocupan por el bienestar animal.
-                    </p>
-                    <p class="font-medium text-amber-100 mt-4">
-                        A las que agradecemos inmensamente su apoyo.
+                        {finalData.fundadoraDescripcion}
                     </p>
                 </div>
                 <div class="h-full md:order-1">
                     <img
-                        src="/images/founder.jpg"
+                        src={finalData.imagenFundadora}
                         alt="Ofelia Villegas - Fundadora"
                         class="w-full h-full object-cover"
                     />

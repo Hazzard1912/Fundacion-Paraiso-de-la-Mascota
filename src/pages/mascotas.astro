@@ -11,7 +11,7 @@ if (error) {
     console.error(error);
 }
 
-const pets = data?.pets || [];
+const pets = data?.data?.pets || [];
 
 const filters = {
     especie: ["perro", "gato"],

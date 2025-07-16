@@ -1,102 +1,73 @@
+---
+import { getMisionData } from "../actions/cms.actions";
+
+let misionData = null;
+let error = null;
+
+try {
+    const result = await Astro.callAction(getMisionData, {});
+    if (result.error) {
+        console.error("Error fetching mision data:", result.error);
+        error = result.error;
+    } else if (result.data) {
+        misionData = result.data;
+    }
+} catch (e) {
+    console.error("Exception fetching mision data:", e);
+    error = e;
+}
+
+const defaultData = {
+    desde: "DESDE 2003",
+    titulo: "Nuestra Misión: Dar Esperanza a Cada Patita",
+    subtitulo: "Trabajamos incansablemente por transformar la vida de los animales en situación de vulnerabilidad, creando historias de amor y segundas oportunidades.",
+    cards: [
+        {
+            titulo: "Rescate y Rehabilitación",
+            descripcion: "Proporcionamos refugio, atención médica especializada y el cariño que cada animal merece. Cada historia es importante para nosotros.",
+            icono: "heart"
+        },
+        {
+            titulo: "Adopciones Responsables",
+            descripcion: "Buscamos hogares amorosos y responsables para cada mascota, garantizando un proceso de adopción seguro y transparente.",
+            icono: "paw"
+        },
+        {
+            titulo: "Educación y Conciencia",
+            descripcion: "Promovemos la tenencia responsable de mascotas, brindando información y recursos para el cuidado y bienestar animal.",
+            icono: "book"
+        }
+    ]
+};
+
+const finalData = (misionData && misionData.success && misionData.data) ? misionData.data : defaultData;
+---
+
 <section class="py-24 px-4 bg-gradient-to-b from-amber-50 to-white" id="mision">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-20">
-            <span class="text-amber-600 font-medium mb-4 block">DESDE 2003</span
-            >
-            <h2
-                class="text-4xl md:text-5xl font-bold text-amber-900 mb-6 leading-tight"
-            >
-                Nuestra Misión: Dar Esperanza<br class="hidden md:block" /> a Cada
-                Patita
+            <span class="text-amber-600 font-medium mb-4 block">{finalData.desde.toUpperCase()}</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-6 leading-tight">
+                {finalData.titulo}
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Trabajamos incansablemente por transformar la vida de los
-                animales en situación de vulnerabilidad, creando historias de
-                amor y segundas oportunidades.
+                {finalData.subtitulo}
             </p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-            <div
-                class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-                <div
-                    class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6 transform transition-transform hover:rotate-12"
-                >
-                    <svg
-                        class="w-8 h-8 text-amber-600"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        stroke="none"
-                    >
-                        <path
-                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                        ></path>
-                    </svg>
+            {finalData.cards.map((card) => (
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6 transform transition-transform hover:rotate-12">
+                        <!-- Aquí puedes personalizar el ícono según el campo 'icono' -->
+                        <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-amber-900 mb-4">{card.titulo}</h3>
+                    <p class="text-gray-600 leading-relaxed">{card.descripcion}</p>
                 </div>
-                <h3 class="text-2xl font-bold text-amber-900 mb-4">
-                    Rescate y Rehabilitación
-                </h3>
-                <p class="text-gray-600 leading-relaxed">
-                    Proporcionamos refugio, atención médica especializada y el
-                    cariño que cada animal merece. Cada historia es importante
-                    para nosotros.
-                </p>
-            </div>
-
-            <!-- Aquí van las otras dos cards -->
-
-            <div
-                class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-                <div
-                    class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6 transform transition-transform hover:rotate-12"
-                >
-                    <svg
-                        class="w-8 h-8 text-amber-600"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        stroke="none"
-                    >
-                        <path
-                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                        ></path>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold text-amber-900 mb-4">
-                    Adopciones Responsables
-                </h3>
-                <p class="text-gray-600 leading-relaxed">
-                    Buscamos hogares amorosos y responsables para cada mascota,
-                    garantizando un proceso de adopción seguro y transparente.
-                </p>
-            </div>
-
-            <div
-                class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-                <div
-                    class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6 transform transition-transform hover:rotate-12"
-                >
-                    <svg
-                        class="w-8 h-8 text-amber-600"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        stroke="none"
-                    >
-                        <path
-                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                        ></path>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold text-amber-900 mb-4">
-                    Educación y Conciencia
-                </h3>
-                <p class="text-gray-600 leading-relaxed">
-                    Promovemos la tenencia responsable de mascotas, brindando
-                    información y recursos para el cuidado y bienestar animal.
-                </p>
-            </div>
+            ))}
         </div>
     </div>
 </section>

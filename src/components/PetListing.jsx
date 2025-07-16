@@ -117,8 +117,8 @@ export default function PetListing({ initialPets, filters }) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredPets.map((pet) => (
           <a
-            key={pet.id}
-            href={`/mascotas/${pet.id}`}
+            key={pet.documentId}
+            href={`/mascotas/${pet.documentId}`}
             className="group transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
