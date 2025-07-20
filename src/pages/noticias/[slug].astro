@@ -15,9 +15,24 @@ function formatDate(dateString: string) {
     day: "numeric",
   });
 }
+
+// SEO metadata específica para la noticia
+const seoTitle = noticia?.titulo ? `${noticia.titulo} - Fundación Paraíso de la Mascota Cali` : "Noticia - Fundación Paraíso de la Mascota Cali";
+const seoDescription = noticia?.resumen || "Noticia de la Fundación Paraíso de la Mascota Cali. Mantente informado sobre nuestros rescates, adopciones y eventos.";
+const seoKeywords = noticia?.titulo ? `noticia ${noticia.titulo}, fundación mascotas, ${noticia.titulo.toLowerCase()}, noticias animal Cali` : "noticias fundación mascotas, noticias animal Cali";
+const ogImage = noticia?.imagen?.url || "/images/logo.png";
 ---
 
-<Layout title={noticia?.titulo.concat(" | Paraíso de la mascota Cali") || "Noticia - Paraíso de la mascota Cali"}>
+<Layout 
+	title={seoTitle}
+	description={seoDescription}
+	keywords={seoKeywords}
+	ogTitle={noticia?.titulo || "Noticia - Fundación Paraíso de la Mascota"}
+	ogDescription={seoDescription}
+	ogImage={ogImage}
+	ogUrl={Astro.url.href}
+	canonicalUrl={Astro.url.href}
+>
   {noticia ? (
     <article class="min-h-screen">
       <!-- Hero Section con imagen de cover -->

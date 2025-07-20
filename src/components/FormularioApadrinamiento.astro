@@ -42,7 +42,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     </div>
 
     {
-        result?.data?.success && (
+        result?.data?.success === true && (
             <div
                 class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-4 mx-8"
                 role="alert"
@@ -54,13 +54,13 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     }
 
     {
-        result && !result.data?.success && (
+        result?.data?.success === false && (
             <div
                 class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-4 mx-8"
                 role="alert"
             >
                 <p class="font-medium">Error</p>
-                <p>{result.data!.message}</p>
+                <p>{result.data.message || "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente."}</p>
             </div>
         )
     }

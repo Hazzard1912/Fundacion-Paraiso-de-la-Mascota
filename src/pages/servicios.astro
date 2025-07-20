@@ -2,18 +2,17 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Servicios - Paraíso de la mascota Cali">
+<Layout 
+	title="Servicios Veterinarios - Fundación Paraíso de la Mascota Cali"
+	description="Servicios veterinarios de calidad para tu mascota en Cali. Consultas, vacunación, esterilización, emergencias y más. Cuidamos a tu compañero como si fuera nuestro."
+	keywords="veterinario Cali, servicios veterinarios, clínica mascotas, vacunación mascotas, esterilización mascotas, emergencias veterinarias Cali"
+	ogTitle="Servicios Veterinarios - Fundación Paraíso de la Mascota"
+	ogDescription="Cuidamos a tu mascota con amor y profesionalismo. Servicios veterinarios completos en Cali."
+>
     <!-- Hero section -->
     <section
         class="relative bg-gradient-to-br from-amber-800 to-amber-900 text-white py-20"
     >
-        <div class="absolute inset-0 overflow-hidden">
-            <img
-                src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee"
-                alt="Servicios para mascotas"
-                class="w-full h-full object-cover opacity-20 mix-blend-overlay"
-            />
-        </div>
         <div class="relative z-10 max-w-6xl mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6">
                 Nuestros Servicios
@@ -32,6 +31,7 @@ import Layout from "../layouts/Layout.astro";
                 <!-- Servicio Veterinaria -->
                 <div
                     class="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl"
+                    id="veterinaria"
                 >
                     <div class="h-64 overflow-hidden">
                         <img
@@ -148,10 +148,11 @@ import Layout from "../layouts/Layout.astro";
                 <!-- Servicio Esterilización -->
                 <div
                     class="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl"
+                    id="esterilizacion"
                 >
                     <div class="h-64 overflow-hidden">
                         <img
-                            src="https://images.unsplash.com/photo-1629909834021-a4564b986d12"
+                            src="https://images.unsplash.com/photo-1654895716780-b4664497420d"
                             alt="Servicio de Esterilización"
                             class="w-full h-full object-cover"
                         />

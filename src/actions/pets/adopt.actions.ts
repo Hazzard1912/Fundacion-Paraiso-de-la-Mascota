@@ -28,18 +28,15 @@ export const createAdoptionRequest = defineAction({
                 adoptionReason
             });
 
-            console.log("Solicitud de adopción creada en Strapi:", response);
-
-            return {
-                success: true,
-                message: "¡Solicitud enviada con éxito! Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en un máximo de 48 horas."
-            };
-        } catch (error) {
-            console.error("Error al procesar solicitud de adopción:", error);
-            
+            return response;
+        } catch (error: any) {
+            let message = "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente.";
+            if (error?.error?.message) {
+                message = error.error.message;
+            }
             return {
                 success: false,
-                message: "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente."
+                message
             };
         }
     }

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tusitio.com/sitemap.xml
+
+Allow: /mascotas/
+Allow: /noticias/
+Allow: /servicios/
+Allow: /tienda/ 

@@ -2,8 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import { actions } from "astro:actions";
 
+export const prerender = false;
+
 const { data, error } = await Astro.callAction(actions.getNoticiasData, {});
-const noticias = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
+
+if (error) {
+    console.error(error);
+}
+
+const noticias = data?.data || [];
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -15,7 +22,13 @@ function formatDate(dateString: string) {
 }
 ---
 
-<Layout title="Noticias - Paraíso de la mascota Cali">
+<Layout 
+	title="Noticias - Fundación Paraíso de la Mascota Cali"
+	description="Mantente informado sobre nuestras actividades, rescates, adopciones exitosas y eventos. Noticias sobre el bienestar animal y nuestra labor en Cali."
+	keywords="noticias mascotas, fundación animal noticias, rescate mascotas Cali, adopciones exitosas, eventos mascotas, bienestar animal"
+	ogTitle="Noticias - Fundación Paraíso de la Mascota"
+	ogDescription="Mantente informado sobre nuestros rescates, adopciones y eventos. ¡Sigue nuestras historias de éxito!"
+>
   <section class="bg-amber-50 py-20">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-16">

@@ -24,9 +24,21 @@ const pet = data.data.pet[0];
 if (pet.isAdopted) {
     return Astro.redirect(`/mascotas`);
 }
+
+// SEO metadata específica para el formulario de apadrinamiento
+const seoTitle = `Apadrinar a ${pet.name} - Fundación Paraíso de la Mascota Cali`;
+const seoDescription = `Apadrina a ${pet.name} y ayúdanos a mantenerla mientras encuentra su hogar definitivo. Tu apoyo mensual cubre alimentación, cuidados veterinarios y amor. ¡Haz la diferencia!`;
+const seoKeywords = `apadrinar ${pet.name}, apadrinamiento ${pet.species}, donación mascota, apadrinamiento responsable Cali, ${pet.name} apadrinamiento`;
 ---
 
-<Layout title={`Apadrinar a ${pet.name} - Paraíso de la mascota Cali`}>
+<Layout 
+	title={seoTitle}
+	description={seoDescription}
+	keywords={seoKeywords}
+	ogTitle={`Apadrinar a ${pet.name} - Fundación Paraíso de la Mascota`}
+	ogDescription={`Tu apoyo mensual cambia la vida de ${pet.name}. ¡Apadrina y haz la diferencia!`}
+	ogImage={pet.imageUrl || "/images/placeholder-dog.jpg"}
+>
     <main class="bg-amber-50/50 min-h-screen py-16">
         <div class="max-w-6xl mx-auto px-4">
             <!-- Navegación de migas de pan -->

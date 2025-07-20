@@ -19,74 +19,266 @@ const filters = {
 };
 ---
 
-<Layout title="Apadrina una vida - Paraíso de la mascota Cali">
+<Layout 
+	title="Apadrina una Mascota - Fundación Paraíso de la Mascota Cali"
+	description="Apadrina una mascota y ayúdanos a mantenerla mientras encuentra su hogar definitivo. Tu apoyo mensual cubre alimentación, cuidados veterinarios y amor. ¡Haz la diferencia!"
+	keywords="apadrinar mascota, apadrinamiento animal, donación mascotas, ayuda animal Cali, fundación mascotas, apadrinamiento responsable"
+	ogTitle="Apadrina una Mascota - Fundación Paraíso de la Mascota"
+	ogDescription="Tu apoyo mensual cambia vidas. Apadrina una mascota y ayúdanos a cuidarla."
+>
+    <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-amber-900 to-amber-700 text-white py-32">
         <div class="relative max-w-6xl mx-auto px-4">
             <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
                 Apadrina y Transforma Vidas
             </h1>
-            <p class="text-xl text-amber-50 max-w-2xl leading-relaxed">
+            <p class="text-xl text-amber-50 max-w-2xl leading-relaxed mb-8">
                 Tu apoyo mensual permite que nuestros peludos reciban los cuidados y el amor que necesitan mientras esperan un hogar definitivo. ¡Conviértete en padrino y haz la diferencia hoy!
             </p>
+            <div class="flex flex-wrap gap-4">
+                <div class="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
+                    <span class="text-2xl font-bold">300+</span>
+                    <span class="text-amber-100 ml-2">Mascotas rescatadas</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <div class="max-w-6xl mx-auto px-4 py-16">
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
-            <h2 class="text-2xl font-semibold mb-6 text-amber-900">
-                ¿En qué consiste el apadrinamiento?
-            </h2>
-            <ul class="list-disc pl-6 space-y-2 text-gray-700">
-                <li>Un aporte económico mensual que puedes elegir según tus posibilidades.</li>
-                <li>Podrás visitar a tu ahijado/a en los horarios establecidos.</li>
-                <li>Contribuirás a su socialización y bienestar emocional.</li>
-                <li>Recibirás actualizaciones periódicas sobre su evolución.</li>
-            </ul>
-            <div class="mt-6 bg-amber-100/50 p-4 rounded-lg border border-amber-200">
-                <p class="italic text-amber-900">
-                    "Tu generosidad es invaluable para la Fundación y para cada animalito rescatado. ¡Gracias por ser parte del cambio!"
+    <!-- Why Sponsor Section -->
+    <section class="py-20 bg-gradient-to-b from-amber-50 to-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">
+                    ¿Por qué es tan importante apadrinar?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Cada mascota rescatada necesita cuidados especializados, alimentación, atención veterinaria y mucho amor antes de encontrar su hogar definitivo.
                 </p>
             </div>
-        </div>
 
-        <h2 class="text-3xl font-bold text-amber-900 mb-8 text-center">Elige a tu ahijado/a</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pets.map((pet) => (
-                <a
-                    key={pet.documentId}
-                    href={`/mascotas/${pet.documentId}/apadrinar`}
-                    class="group transition-all duration-300 transform hover:-translate-y-1"
-                >
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                        <div class="relative h-64 overflow-hidden">
-                            <img
-                                src={pet.imageUrl}
-                                alt={pet.name}
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                loading="lazy"
-                            />
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                                <h3 class="text-white text-xl font-semibold">{pet.name}</h3>
-                                <p class="text-amber-200 text-sm">{pet.ageGroup} · {pet.species}</p>
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Cuidado Médico Continuo</h3>
+                    <p class="text-gray-600">
+                        Muchas mascotas llegan con problemas de salud que requieren tratamiento especializado y seguimiento veterinario constante.
+                    </p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Alimentación Especializada</h3>
+                    <p class="text-gray-600">
+                        Cada mascota tiene necesidades nutricionales específicas según su edad, tamaño y condición de salud.
+                    </p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Socialización y Rehabilitación</h3>
+                    <p class="text-gray-600">
+                        Tiempo y dedicación para ayudarles a recuperar la confianza en los humanos y prepararse para una nueva familia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">
+                    ¿Cómo funciona el apadrinamiento?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Es más fácil de lo que imaginas y el impacto es inmediato
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Elige tu ahijado/a</h3>
+                                <p class="text-gray-600">Conoce a nuestros peludos y selecciona aquel que más toque tu corazón.</p>
                             </div>
                         </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 line-clamp-2">{pet.description || "Sin descripción"}</p>
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                                    {pet.size}
-                                </span>
-                                <span class="text-amber-600 font-medium text-sm">Apadrinar →</span>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Define tu aporte mensual</h3>
+                                <p class="text-gray-600">Desde $40,000 pesos mensuales puedes hacer la diferencia. Tú decides el monto según tus posibilidades.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Recibe actualizaciones</h3>
+                                <p class="text-gray-600">Te mantendremos informado sobre el progreso, salud y momentos especiales de tu ahijado/a.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                4
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Visita cuando quieras</h3>
+                                <p class="text-gray-600">Puedes visitarlo en nuestros horarios establecidos y ser parte activa de su proceso de recuperación.</p>
                             </div>
                         </div>
                     </div>
-                </a>
-            ))}
-        </div>
-        {pets.length === 0 && (
-            <div class="text-center py-12">
-                <p class="text-xl text-gray-600">No hay mascotas disponibles para apadrinar en este momento.</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-amber-100 to-amber-50 rounded-2xl p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-amber-900">Beneficios del apadrinamiento</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Contribuyes directamente al bienestar animal
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Creas un vínculo especial sin compromiso de adopción
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Puedes cancelar el apadrinamiento cuando desees
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Acceso prioritario si decides adoptarlo
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-6 bg-amber-200/50 p-4 rounded-lg border border-amber-300">
+                        <p class="italic text-amber-900 font-medium">
+                            "Tu generosidad es invaluable para la Fundación y para cada animalito rescatado. ¡Gracias por ser parte del cambio!"
+                        </p>
+                    </div>
+                </div>
             </div>
-        )}
-    </div>
-</Layout> 
+        </div>
+    </section>
+
+    <!-- Pet Selection Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">Elige a tu ahijado/a</h2>
+                <p class="text-xl text-gray-600">
+                    Cada uno tiene una historia única y está esperando tu apoyo
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {pets.map((pet) => (
+                    <a
+                        key={pet.documentId}
+                        href={`/mascotas/${pet.documentId}/apadrinar`}
+                        class="group transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                            <div class="relative h-64 overflow-hidden">
+                                <img
+                                    src={pet.imageUrl}
+                                    alt={pet.name}
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                                <div class="absolute top-4 left-4">
+                                    <span class="bg-white/90 backdrop-blur-sm text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+                                        Disponible para apadrinamiento
+                                    </span>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                                    <h3 class="text-white text-xl font-semibold">{pet.name}</h3>
+                                    <p class="text-amber-200 text-sm">{pet.ageGroup} · {pet.species}</p>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <p class="text-gray-600 line-clamp-2 mb-4">{pet.description || "Un amor especial esperando tu apoyo"}</p>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+                                        {pet.size}
+                                    </span>
+                                    <span class="bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                        {pet.gender}
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="text-sm text-gray-500">
+                                        Desde $15,000/mes
+                                    </div>
+                                    <span class="text-amber-600 font-medium text-sm group-hover:text-amber-700">
+                                        Apadrinar →
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+
+            {pets.length === 0 && (
+                <div class="text-center py-12">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-2">No hay mascotas disponibles</h3>
+                    <p class="text-gray-600">En este momento todas nuestras mascotas tienen padrinos. ¡Vuelve pronto para conocer nuevos peludos que necesiten tu apoyo!</p>
+                </div>
+            )}
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-amber-900 to-amber-700 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6">
+                ¿Listo para cambiar una vida?
+            </h2>
+            <p class="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
+                Tu apoyo puede ser la diferencia entre la esperanza y la desesperanza para un peludito que lo necesita. Comienza hoy mismo.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-amber-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-50 transition-colors">
+                    Ver mascotas disponibles
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-amber-900 transition-colors">
+                    Conocer más sobre el proceso
+                </button>
+            </div>
+        </div>
+    </section>
+</Layout>

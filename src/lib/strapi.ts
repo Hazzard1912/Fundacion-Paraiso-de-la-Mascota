@@ -12,7 +12,7 @@ interface StrapiResponse<T> {
 
 interface StrapiData<T> {
   id: number;
-  attributes: T;
+  data: T;
 }
 
 export class StrapiService {
@@ -88,8 +88,8 @@ export class StrapiService {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Strapi API error: ${response.status} ${response.statusText} - ${errorText}`);
+      const error = await response.json();
+      throw error;
     }
 
     return response.json();
@@ -152,27 +152,47 @@ export class StrapiService {
     address: string;
     hasPets: string;
     adoptionReason: string;
-  }): Promise<StrapiResponse<any>> {
-    console.log("Datos que se envían a Strapi:", JSON.stringify(data, null, 2));
+  }): Promise<{ success: boolean; message: string }> {
     try {
-      // 1. Crear el adoptante
-      const adopterResponse = await this.post('/adopters', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        address: data.address
-      });
-      const adopterDocId = (adopterResponse.data as any).documentId;
+      // 1. Buscar adoptante por email
+      const existingAdopterResp = await this.fetch(`/adopters?filters[email][$eq]=${encodeURIComponent(data.email)}`);
+      const existingAdopter = Array.isArray(existingAdopterResp.data) ? existingAdopterResp.data[0] : null;
+
+      let adopterDocId;
+      if (existingAdopter) {
+        adopterDocId = existingAdopter.documentId;
+      } else {
+        // 2. Crear el adoptante si no existe
+        const adopterResponse = await this.post('/adopters', {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address
+        });
+        adopterDocId = (adopterResponse.data as any).documentId;
+      }
+      // 3. Crear la solicitud de adopción
       const requestResponse = await this.post('/adoption-requests', {
         pet: data.pet,
         adopter: adopterDocId,
         hasPets: data.hasPets,
         adoptionReason: data.adoptionReason
       });
-      return requestResponse as any;
+
+      return {
+        success: true,
+        message: "¡Solicitud enviada con éxito! Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en un máximo de 48 horas."
+      };
     } catch (error) {
-      console.error("Error completo de Strapi:", error);
-      throw error;
+      let message = "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente.";
+
+      if (error?.error?.message) {
+        message = error.error.message;
+      }
+      return {
+        success: false,
+        message
+      };
     }
   }
 
@@ -184,26 +204,43 @@ export class StrapiService {
     phone: string;
     address: string;
     monthlyAmount: number;
-  }): Promise<StrapiResponse<any>> {
-    console.log("Datos que se envían a Strapi:", JSON.stringify(data, null, 2));
+  }): Promise<{ success: boolean; message: string }> {
     try {
-      const sponsorResponse = await this.post('/sponsors', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        address: data.address
-      });
-      const sponsorDocId = (sponsorResponse.data as any).documentId;
+      // 1. Buscar sponsor por email
+      const existingSponsorResp = await this.fetch(`/sponsors?filters[email][$eq]=${encodeURIComponent(data.email)}`);
+      const existingSponsor = Array.isArray(existingSponsorResp.data) ? existingSponsorResp.data[0] : null;
+      let sponsorDocId;
+      if (existingSponsor) {
+        sponsorDocId = existingSponsor.documentId;
+      } else {
+        // 2. Crear el sponsor si no existe
+        const sponsorResponse = await this.post('/sponsors', {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address
+        });
+        sponsorDocId = (sponsorResponse.data as any).documentId;
+      }
+      // 3. Crear la solicitud de apadrinamiento
       const requestResponse = await this.post('/sponsor-requests', {
         pet: data.pet,
         sponsor: sponsorDocId,
         monthlyAmount: data.monthlyAmount
       });
-      console.log("Solicitud de apadrinamiento creada:", requestResponse);
-      return requestResponse as any;
+      return {
+        success: true,
+        message: "¡Solicitud de padrinazgo enviada con éxito! Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en un máximo de 48 horas."
+      };
     } catch (error) {
-      console.error("Error completo de Strapi:", error);
-      throw error;
+      let message = "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente.";
+      if (error?.error?.message) {
+        message = error.error.message;
+      }
+      return {
+        success: false,
+        message
+      };
     }
   }
 

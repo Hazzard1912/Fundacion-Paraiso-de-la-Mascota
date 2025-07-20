@@ -25,18 +25,15 @@ export const createSponsorRequest = defineAction({
                 monthlyAmount
             });
 
-            console.log("Solicitud de apadrinamiento creada en Strapi:", response);
-
-            return {
-                success: true,
-                message: "¡Solicitud de padrinazgo enviada con éxito! Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en un máximo de 48 horas."
-            };
-        } catch (error) {
-            console.error("Error al procesar solicitud de padrinazgo:", error);
-            
+            return response;
+        } catch (error: any) {
+            let message = "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente.";
+            if (error?.error?.message) {
+                message = error.error.message;
+            }
             return {
                 success: false,
-                message: "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente."
+                message
             };
         }
     }

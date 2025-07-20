@@ -18,10 +18,27 @@ if (data.data.pet[0].isAdopted) {
 }
 
 const pet = data.data.pet[0] || {};
+const siteUrl = Astro.url.origin;
+const petUrl = `${siteUrl}/mascotas/${pet.documentId}`;
+const shareTitle = `¡Adopta a ${pet.name}! | Fundación Paraíso de la mascota Cali`;
+const shareDescription = pet.description ? `${pet.name} está buscando una familia. ${pet.description.substring(0, 100)}...` : `¡Ayuda a ${pet.name} a encontrar un hogar!`;
+const shareImage = pet.imageUrl || `${siteUrl}/images/placeholder-pet.jpg`;
+
+// SEO metadata específica para esta mascota
+const seoTitle = `${pet.name} - Adopción - Paraíso de la mascota Cali`;
+const seoDescription = `${pet.name} está buscando una familia amorosa. ${pet.species} ${pet.ageGroup} de tamaño ${pet.size}. ¡Conoce más sobre ${pet.name} y dale una segunda oportunidad!`;
+const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGroup}, ${pet.size}, adopción Cali, fundación mascotas, ${pet.species} en adopción`;
 ---
 
 <Layout
-    title={`${pet.name || "Mascota"} - Adopción - Paraíso de la mascota Cali`}
+    title={seoTitle}
+    description={seoDescription}
+    keywords={seoKeywords}
+    ogTitle={shareTitle}
+    ogDescription={shareDescription}
+    ogImage={shareImage}
+    ogUrl={petUrl}
+    canonicalUrl={petUrl}
 >
     <main class="bg-amber-50/50 min-h-screen pb-16">
         <!-- Contenido principal -->
@@ -91,33 +108,24 @@ const pet = data.data.pet[0] || {};
                         </p>
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <div class="bg-amber-50 p-4 rounded-xl">
-                                <span class="text-amber-900 font-medium"
-                                    >Edad:</span
-                                >
+                                <span class="text-amber-900 font-medium">Edad:</span>
                                 <p class="text-gray-600">{pet.ageGroup}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
-                                <span class="text-amber-900 font-medium"
-                                    >Sexo:</span
-                                >
+                                <span class="text-amber-900 font-medium">Sexo:</span>
                                 <p class="text-gray-600">{pet.gender}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
-                                <span class="text-amber-900 font-medium"
-                                    >Tamaño:</span
-                                >
+                                <span class="text-amber-900 font-medium">Tamaño:</span>
                                 <p class="text-gray-600">{pet.size}</p>
                             </div>
                             <div class="bg-amber-50 p-4 rounded-xl">
-                                <span class="text-amber-900 font-medium"
-                                    >Especie:</span
-                                >
+                                <span class="text-amber-900 font-medium">Especie:</span>
                                 <p class="text-gray-600">{pet.species}</p>
                             </div>
                         </div>
-
-                        <!-- Botones de acción -->
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <!-- Botones de acción y compartir -->
+                        <div class="flex flex-col sm:flex-row gap-4 items-center">
                             <a
                                 href={`/mascotas/${pet.documentId}/adoptar`}
                                 class="bg-amber-600 text-white text-center py-3 px-6 rounded-xl font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2 flex-1"
@@ -140,7 +148,78 @@ const pet = data.data.pet[0] || {};
                             >
                                 Apadrinar a {pet.name}
                             </a>
+                            <div class="relative flex-1 flex justify-center sm:justify-end w-full">
+                                <button id="share-btn" type="button" class="flex items-center gap-2 bg-amber-100 text-amber-700 px-4 py-2 rounded-lg shadow hover:bg-amber-200 transition-colors font-medium border border-amber-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6"cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                    Compartir
+                                </button>
+                                <div id="share-menu" class="share-menu hidden absolute bottom-full mb-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-50 opacity-0 scale-95 transition-all min-w-[180px]">
+                                    <span class="block text-gray-700 font-semibold mb-2 px-2">Compartir en:</span>
+                                    <a href={`https://wa.me/?text=${encodeURIComponent(`${shareTitle} ${petUrl}`)}`} target="_blank" rel="noopener" class="block w-full text-left py-2 px-2 text-gray-800 hover:bg-amber-50 rounded">WhatsApp</a>
+                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(petUrl)}`} target="_blank" rel="noopener" class="block w-full text-left py-2 px-2 text-gray-800 hover:bg-amber-50 rounded">Facebook</a>
+                                    <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(petUrl)}`} target="_blank" rel="noopener" class="block w-full text-left py-2 px-2 text-gray-800 hover:bg-amber-50 rounded">Twitter</a>
+                                    <button id="copy-link-btn" class="block w-full text-left py-2 px-2 text-gray-800 hover:bg-amber-50 rounded">Copiar enlace</button>
+                                </div>
+                            </div>
                         </div>
+                        <script define:vars={{ shareTitle, shareDescription, petUrl }}>
+                            document.addEventListener("astro:page-load", () => {
+                                const shareButton = document.getElementById("share-btn");
+                                const shareMenu = document.getElementById("share-menu");
+                                const copyLinkBtn = document.getElementById("copy-link-btn");
+                                
+                                if (!shareButton || !shareMenu || !copyLinkBtn) return;
+                    
+                                const shareData = {
+                                    title: shareTitle,
+                                    text: shareDescription,
+                                    url: petUrl,
+                                };
+                    
+                                const toggleShareMenu = () => {
+                                    const isVisible = !shareMenu.classList.contains("hidden");
+                                    if (isVisible) {
+                                        shareMenu.classList.add("opacity-0", "scale-95");
+                                        setTimeout(() => shareMenu.classList.add("hidden"), 200);
+                                    } else {
+                                        shareMenu.classList.remove("hidden");
+                                        setTimeout(() => shareMenu.classList.remove("opacity-0", "scale-95"), 10);
+                                    }
+                                };
+                                
+                                shareButton.addEventListener("click", async (e) => {
+                                    e.stopPropagation(); // Evita que el click cierre el menú inmediatamente
+                                    if (navigator.share) {
+                                        try {
+                                            await navigator.share(shareData);
+                                        } catch (err) {
+                                            // El usuario cerró el diálogo de compartir, mostramos el menú como alternativa
+                                            console.log("Web Share API falló o fue cancelada. Mostrando menú de fallback.");
+                                            toggleShareMenu();
+                                        }
+                                    } else {
+                                        // El navegador no soporta Web Share API
+                                        toggleShareMenu();
+                                    }
+                                });
+                    
+                                copyLinkBtn.addEventListener("click", () => {
+                                    navigator.clipboard.writeText(petUrl);
+                                    copyLinkBtn.textContent = "¡Enlace copiado!";
+                                    setTimeout(() => {
+                                        copyLinkBtn.textContent = "Copiar enlace";
+                                        toggleShareMenu(); // Opcional: cierra el menú después de copiar
+                                    }, 1500);
+                                });
+                    
+                                // Cierra el menú si se hace clic fuera de él
+                                document.addEventListener("click", (e) => {
+                                    if (!shareMenu.classList.contains("hidden") && !shareMenu.contains(e.target) && !shareButton.contains(e.target)) {
+                                        toggleShareMenu();
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

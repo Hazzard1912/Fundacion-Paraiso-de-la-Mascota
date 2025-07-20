@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+import { Image } from "astro:assets";
+
 // Productos de la tienda
 const productos = [
     {
@@ -15,7 +17,7 @@ const productos = [
         id: "camiseta",
         nombre: "Camiseta Paraíso",
         precio: 20000,
-        imagen: "/images/tienda/camiseta.jpg", // Reemplazar con la imagen real
+        imagen: "/images/tienda/camiseta.jpg",
         descripcion: "Camiseta 100% algodón con estampado de la fundación. Disponible en varias tallas.",
         destacado: false,
     },
@@ -23,7 +25,7 @@ const productos = [
         id: "mug",
         nombre: "Mug Paraíso",
         precio: 20000,
-        imagen: "/images/tienda/mug.jpg", // Reemplazar con la imagen real
+        imagen: "/images/tienda/mug.jpg",
         descripcion: "Mug de cerámica con diseños de nuestros peludos. Ideal para tus bebidas favoritas.",
         destacado: false,
     },
@@ -49,17 +51,17 @@ const puntosVenta = [
 ];
 ---
 
-<Layout title="Tienda Solidaria - Paraíso de la mascota Cali">
+<Layout 
+	title="Tienda - Fundación Paraíso de la Mascota Cali"
+	description="Compra productos de nuestra tienda y apoya a la fundación. Camisetas, tazas, calendarios y más. Cada compra ayuda a seguir rescatando y cuidando mascotas en Cali."
+	keywords="tienda fundación mascotas, productos animal, camisetas mascotas, tazas mascotas, calendario mascotas, compra solidaria Cali"
+	ogTitle="Tienda - Fundación Paraíso de la Mascota"
+	ogDescription="Compra productos solidarios y apoya nuestra misión. ¡Cada compra ayuda a las mascotas!"
+	ogImage="/images/tienda/calendario-2025.png"
+>
     <!-- Hero section con fondo y mensaje motivador -->
     <section class="relative bg-amber-800 text-white overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-amber-900 to-amber-700 opacity-90 z-0"></div>
-        <div class="absolute inset-0 overflow-hidden">
-            <img 
-                src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc" 
-                alt="Perrito con regalo" 
-                class="w-full h-full object-cover opacity-30 mix-blend-overlay"
-            />
-        </div>
         <div class="relative z-10 max-w-6xl mx-auto px-4 py-20 md:py-24 text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in">
                 Tienda Solidaria
@@ -184,7 +186,7 @@ const puntosVenta = [
                     <div class="bg-gradient-to-br from-amber-50 to-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
                         <div class="h-56 sm:h-64 md:h-72 overflow-hidden relative">
                             <div class="absolute inset-0 bg-amber-100/40"></div>
-                            <img 
+                            <img
                                 src={producto.imagen} 
                                 alt={producto.nombre} 
                                 class="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"

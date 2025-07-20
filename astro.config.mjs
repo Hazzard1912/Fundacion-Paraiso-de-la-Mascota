@@ -10,6 +10,7 @@ import react from '@astrojs/react';
 export default defineConfig({
   adapter: vercel(),
   output: 'server',
+  trailingSlash: 'never',
   integrations: [
     tailwind(), 
     sitemap(), 

@@ -6,21 +6,84 @@ import Footer from "../components/Footer.astro";
 interface Props {
 	title: string;
 	description?: string;
+	keywords?: string;
+	ogTitle?: string;
+	ogDescription?: string;
+	ogImage?: string;
+	ogUrl?: string;
+	twitterCard?: string;
+	canonicalUrl?: string;
 }
 
-const { title, description } = Astro.props;
+const { 
+	title, 
+	description = "Fundación Paraíso de la Mascota Cali - Rescatamos, rehabilitamos y buscamos hogares responsables para perros y gatos en situación de vulnerabilidad. ¡Adopta y cambia una vida!",
+	keywords = "adopción mascotas, perros gatos, fundación animal, rescate mascotas, Cali, Colombia, adopción responsable, mascotas abandonadas",
+	ogTitle = title,
+	ogDescription = description,
+	ogImage = "/images/logo.png",
+	ogUrl = Astro.url.href,
+	twitterCard = "summary_large_image",
+	canonicalUrl = Astro.url.href
+} = Astro.props;
+
+const siteName = "Fundación Paraíso de la Mascota Cali";
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
 		<link rel="icon" type="image/png" href="/images/favicon.png" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO Meta Tags -->
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content={siteName} />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={canonicalUrl} />
+		
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={ogTitle} />
+		<meta property="og:description" content={ogDescription} />
+		<meta property="og:image" content={new URL(ogImage, Astro.url)} />
+		<meta property="og:url" content={ogUrl} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:locale" content="es_CO" />
+		
+		<!-- Twitter Card Meta Tags -->
+		<meta name="twitter:card" content={twitterCard} />
+		<meta name="twitter:title" content={ogTitle} />
+		<meta name="twitter:description" content={ogDescription} />
+		<meta name="twitter:image" content={new URL(ogImage, Astro.url)} />
+		
+		<!-- Additional SEO Meta Tags -->
+		<meta name="theme-color" content="#d97706" />
+		<meta name="msapplication-TileColor" content="#d97706" />
+		
+		<!-- Structured Data for Organization -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "NonProfit",
+			"name": siteName,
+			"description": description,
+			"url": Astro.url.origin,
+			"logo": new URL("/images/logo.png", Astro.url),
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Cali",
+				"addressCountry": "CO"
+			},
+			"sameAs": [
+				// Aquí puedes agregar tus redes sociales cuando las tengas
+			]
+		})} />
+		
 		<ClientRouter />
 	</head>
 	<body class="min-h-screen bg-amber-50">

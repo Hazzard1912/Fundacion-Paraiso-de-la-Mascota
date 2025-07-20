@@ -23,9 +23,21 @@ const pet = data.data.pet[0];
 if (pet.isAdopted) {
     return Astro.redirect(`/mascotas/${documentId}`);
 }
+
+// SEO metadata específica para el formulario de adopción
+const seoTitle = `Adoptar a ${pet.name} - Fundación Paraíso de la Mascota Cali`;
+const seoDescription = `Adopta a ${pet.name} y dale una segunda oportunidad. Completa el formulario de adopción y nos pondremos en contacto contigo. ¡Cambia dos vidas para siempre!`;
+const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario adopción, adopción responsable Cali, ${pet.name} adopción`;
 ---
 
-<Layout title={`Adoptar a ${pet.name} - Paraíso de la mascota Cali`}>
+<Layout 
+	title={seoTitle}
+	description={seoDescription}
+	keywords={seoKeywords}
+	ogTitle={`Adoptar a ${pet.name} - Fundación Paraíso de la Mascota`}
+	ogDescription={`¡Adopta a ${pet.name} y cambia dos vidas para siempre!`}
+	ogImage={pet.imageUrl || "/images/placeholder-dog.jpg"}
+>
     <main class="bg-amber-50/50 min-h-screen py-16">
         <div class="max-w-6xl mx-auto px-4">
             <!-- Navegación de migas de pan (breadcrumbs) para SEO -->
