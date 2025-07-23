@@ -158,6 +158,8 @@ export class StrapiService {
       const existingAdopterResp = await this.fetch(`/adopters?filters[email][$eq]=${encodeURIComponent(data.email)}`);
       const existingAdopter = Array.isArray(existingAdopterResp.data) ? existingAdopterResp.data[0] : null;
 
+      console.log('Existing adopter:', existingAdopter);
+
       let adopterDocId;
       if (existingAdopter) {
         adopterDocId = existingAdopter.documentId;
@@ -171,6 +173,16 @@ export class StrapiService {
         });
         adopterDocId = (adopterResponse.data as any).documentId;
       }
+
+      console.log('Adopter document ID:', adopterDocId);
+
+      console.log("data a enviar:", {
+        pet: data.pet,
+        adopter: adopterDocId,
+        hasPets: data.hasPets,
+        adoptionReason: data.adoptionReason
+      });
+
       // 3. Crear la solicitud de adopción
       const requestResponse = await this.post('/adoption-requests', {
         pet: data.pet,
