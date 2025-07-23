@@ -514,14 +514,13 @@ export class StrapiService {
     fecha: string;
   }>; meta: any; }> {
     const response = await this.fetch('/noticias?populate=imagen&fields=titulo,slug,resumen,contenido,fecha');
-    const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
     return {
       data: Array.isArray(response.data) ? response.data.map((item: any) => ({
         id: item.id,
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: `${baseUrl}${item.imagen.url}`,
+              url: item.imagen.url, // Cloudinary devuelve URLs absolutas
               alternativeText: item.imagen.alternativeText || ''
             }
           : null
@@ -543,14 +542,13 @@ export class StrapiService {
     fecha: string;
   }>; meta: any; }> {
     const response = await this.fetch(`/noticias?filters[slug][$eq]=${slug}&populate=imagen&fields=titulo,slug,resumen,contenido,fecha`);
-    const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
     return {
       data: Array.isArray(response.data) ? response.data.map((item: any) => ({
         id: item.id,
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: `${baseUrl}${item.imagen.url}`,
+              url: item.imagen.url, // Cloudinary devuelve URLs absolutas
               alternativeText: item.imagen.alternativeText || ''
             }
           : null

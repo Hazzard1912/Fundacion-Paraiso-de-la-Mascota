@@ -23,8 +23,7 @@ export const getHeroData = defineAction({
         
         if (heroData.backgroundImage && Array.isArray(heroData.backgroundImage) && heroData.backgroundImage.length > 0) {
           const image = heroData.backgroundImage[0];
-          const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-          backgroundImageUrl = `${baseUrl}${image.url}`;
+          backgroundImageUrl = image.url; // Cloudinary devuelve URLs absolutas
           alternativeText = image.alternativeText || "";
         }
         
@@ -69,10 +68,9 @@ export const getSlidesData = defineAction({
       if (slideRecord && slideRecord.image && Array.isArray(slideRecord.image)) {
 
         for (const image of slideRecord.image) {
-          const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
           slides.push({
             id: image.id,
-            imageUrl: `${baseUrl}${image.url}`,
+            imageUrl: image.url, // Cloudinary devuelve URLs absolutas
             alternativeText: image.alternativeText || ""
           });
         }
@@ -120,8 +118,7 @@ export const getFeaturedPets = defineAction({
         
         if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
           const image = pet.photos[0];
-          const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-          imageUrl = `${baseUrl}${image.url}`;
+          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
           alternativeText = image.alternativeText || "";
         }
 
@@ -175,8 +172,7 @@ export const getLatestAdoptions = defineAction({
         
         if (adoption.pet && adoption.pet.photos && Array.isArray(adoption.pet.photos) && adoption.pet.photos.length > 0) {
           const image = adoption.pet.photos[0];
-          const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-          imageUrl = `${baseUrl}${image.url}`;
+          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
           alternativeText = image.alternativeText || "";
         }
 
@@ -234,8 +230,7 @@ export const getPetsForAdoption = defineAction({
         
         if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
           const image = pet.photos[0];
-          const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-          imageUrl = `${baseUrl}${image.url}`;
+          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
           alternativeText = image.alternativeText || "";
         }
 
@@ -292,8 +287,7 @@ export const getPet = defineAction({
       
       if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
         const image = pet.photos[0];
-        const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-        imageUrl = `${baseUrl}${image.url}`;
+        imageUrl = image.url; // Cloudinary devuelve URLs absolutas
         alternativeText = image.alternativeText || "";
       }
 
@@ -372,22 +366,20 @@ export const getHistoriaData = defineAction({
       }
       const historiaData = response.data;
       
-      // Procesar las imágenes
-      const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-      
+      // Procesar las imágenes - Cloudinary devuelve URLs absolutas
       let imagenRefugio = "/images/shelter-dogs.jpg";
       if (historiaData.imagenRefugio && Array.isArray(historiaData.imagenRefugio) && historiaData.imagenRefugio.length > 0) {
-        imagenRefugio = `${baseUrl}${historiaData.imagenRefugio[0].url}`;
+        imagenRefugio = historiaData.imagenRefugio[0].url;
       }
       
       let imagenCentro = "/images/kid-dog.jpg";
       if (historiaData.imagenCentro && Array.isArray(historiaData.imagenCentro) && historiaData.imagenCentro.length > 0) {
-        imagenCentro = `${baseUrl}${historiaData.imagenCentro[0].url}`;
+        imagenCentro = historiaData.imagenCentro[0].url;
       }
       
       let imagenFundadora = "/images/founder.jpg";
       if (historiaData.imagenFundadora && Array.isArray(historiaData.imagenFundadora) && historiaData.imagenFundadora.length > 0) {
-        imagenFundadora = `${baseUrl}${historiaData.imagenFundadora[0].url}`;
+        imagenFundadora = historiaData.imagenFundadora[0].url;
       }
       
       return {
@@ -430,14 +422,12 @@ export const getTestimoniosData = defineAction({
       }
       const testimoniosData = response.data;
 
-      // Procesar las imágenes de los testimonios
-      const baseUrl = import.meta.env.STRAPI_URL || 'http://localhost:1337';
-      
+      // Procesar las imágenes de los testimonios - Cloudinary devuelve URLs absolutas
       const testimoniosProcesados = Array.isArray(testimoniosData.testimonios) ? 
         testimoniosData.testimonios.map(testimonio => {
           let imagenUrl = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80"; // imagen por defecto
           if (testimonio.imagen && testimonio.imagen.url) {
-            imagenUrl = `${baseUrl}${testimonio.imagen.url}`;
+            imagenUrl = testimonio.imagen.url;
           }
           return {
             nombre: testimonio.nombre,
