@@ -370,18 +370,30 @@ export const getHistoriaData = defineAction({
       
       // Procesar las imágenes - Cloudinary devuelve URLs absolutas
       let imagenRefugio = "/images/shelter-dogs.jpg";
-      if (historiaData.imagenRefugio && Array.isArray(historiaData.imagenRefugio) && historiaData.imagenRefugio.length > 0) {
-        imagenRefugio = historiaData.imagenRefugio[0].url;
+      if (historiaData.imagenRefugio) {
+        if (Array.isArray(historiaData.imagenRefugio) && historiaData.imagenRefugio.length > 0) {
+          imagenRefugio = historiaData.imagenRefugio[0].url;
+        } else if (typeof historiaData.imagenRefugio === 'object' && 'url' in historiaData.imagenRefugio) {
+          imagenRefugio = (historiaData.imagenRefugio as any).url;
+        }
       }
       
       let imagenCentro = "/images/kid-dog.jpg";
-      if (historiaData.imagenCentro && Array.isArray(historiaData.imagenCentro) && historiaData.imagenCentro.length > 0) {
-        imagenCentro = historiaData.imagenCentro[0].url;
+      if (historiaData.imagenCentro) {
+        if (Array.isArray(historiaData.imagenCentro) && historiaData.imagenCentro.length > 0) {
+          imagenCentro = historiaData.imagenCentro[0].url;
+        } else if (typeof historiaData.imagenCentro === 'object' && 'url' in historiaData.imagenCentro) {
+          imagenCentro = (historiaData.imagenCentro as any).url;
+        }
       }
       
       let imagenFundadora = "/images/founder.jpg";
-      if (historiaData.imagenFundadora && Array.isArray(historiaData.imagenFundadora) && historiaData.imagenFundadora.length > 0) {
-        imagenFundadora = historiaData.imagenFundadora[0].url;
+      if (historiaData.imagenFundadora) {
+        if (Array.isArray(historiaData.imagenFundadora) && historiaData.imagenFundadora.length > 0) {
+          imagenFundadora = historiaData.imagenFundadora[0].url;
+        } else if (typeof historiaData.imagenFundadora === 'object' && 'url' in historiaData.imagenFundadora) {
+          imagenFundadora = (historiaData.imagenFundadora as any).url;
+        }
       }
       
       return {
