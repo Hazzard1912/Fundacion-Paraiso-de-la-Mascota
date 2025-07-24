@@ -365,6 +365,8 @@ export const getHistoriaData = defineAction({
         };
       }
       const historiaData = response.data;
+
+      console.log("Datos de historia:", historiaData);
       
       // Procesar las imágenes - Cloudinary devuelve URLs absolutas
       let imagenRefugio = "/images/shelter-dogs.jpg";
