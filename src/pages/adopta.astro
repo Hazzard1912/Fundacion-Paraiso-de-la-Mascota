@@ -1,0 +1,208 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { actions } from "astro:actions";
+import PetListing from "../components/PetListing";
+export const prerender = false;
+
+// Get all pets regardless of filters - we'll filter on client side
+const { data, error } = await Astro.callAction(actions.getPetsForAdoption, {});
+
+if (error) {
+    console.error(error);
+}
+
+const pets = data?.data?.pets || [];
+
+const filters = {
+    especie: ["perro", "gato"],
+    tamaño: ["pequeño", "mediano", "grande"],
+    edad: ["cachorro", "joven", "adulto", "senior"],
+    sexo: ["macho", "hembra"],
+};
+---
+
+<Layout 
+	title="Mascotas en Adopción - Fundación Paraíso de la Mascota Cali"
+	description="Conoce a todos nuestros perros y gatos disponibles para adopción en Cali. Filtra por especie, tamaño, edad y encuentra a tu compañero perfecto. ¡Adopta y cambia una vida!"
+	keywords="mascotas adopción Cali, perros adopción, gatos adopción, adopción responsable Colombia, mascotas disponibles, refugio animal Cali, adopción mascotas"
+	ogTitle="Mascotas en Adopción - Fundación Paraíso de la Mascota"
+	ogDescription="Perros y gatos buscando hogar en Cali. ¡Encuentra a tu compañero perfecto!"
+>
+    <!-- Hero institucional y SEO -->
+    <section class="relative bg-gradient-to-br from-amber-900 to-amber-700 text-white py-24">
+        <div class="relative max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+                Adopta, Cambia una Vida y Transforma la Tuya
+            </h1>
+            <p class="text-xl text-amber-50 max-w-3xl mx-auto leading-relaxed mb-8">
+                En la <strong>Fundación Paraíso de la Mascota</strong> llevamos más de 20 años rescatando, rehabilitando y buscando hogares responsables para perros y gatos en situación de vulnerabilidad en Cali, Colombia. Aquí puedes conocer a todos nuestros peludos listos para adopción y darles una segunda oportunidad.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center mb-4">
+                <div class="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
+                    <span class="text-2xl font-bold">300+</span>
+                    <span class="text-amber-100 ml-2">Animales rescatados</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
+                    <span class="text-2xl font-bold">20+</span>
+                    <span class="text-amber-100 ml-2">Años de experiencia</span>
+                </div>
+            </div>
+            <p class="mt-6 text-amber-100 text-lg">
+                <a href="/#historia" class="underline hover:text-amber-300">Conoce nuestra historia</a> &nbsp;|&nbsp;
+                <a href="/apadrina" class="underline hover:text-amber-300">¿Prefieres apadrinar?</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Why Adopt Section -->
+    <section class="py-20 bg-gradient-to-b from-amber-50 to-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">
+                    ¿Por qué es tan importante adoptar?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    La adopción es un acto de amor que salva vidas y combate el abandono animal. Al adoptar, le das una segunda oportunidad a un animal que realmente lo necesita.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Salvas una Vida</h3>
+                    <p class="text-gray-600">
+                        Al adoptar, le das una segunda oportunidad a un animal que fue abandonado o maltratado, brindándole el hogar amoroso que merece.
+                    </p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Combates el Abandono</h3>
+                    <p class="text-gray-600">
+                        Cada adopción responsable ayuda a reducir la sobrepoblación de animales callejeros y desalienta la compra de mascotas.
+                    </p>
+                </div>
+
+                <div class="text-center group">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-200 transition-colors">
+                        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-amber-900 mb-3">Ganas un Compañero Leal</h3>
+                    <p class="text-gray-600">
+                        Los animales rescatados suelen ser especialmente agradecidos y leales, convirtiéndose en compañeros fieles de por vida.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-amber-900 mb-4">
+                    ¿Cómo funciona el proceso de adopción?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Un proceso responsable que garantiza el bienestar tanto del animal como de tu familia
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Elige tu compañero ideal</h3>
+                                <p class="text-gray-600">Conoce a nuestros peludos, lee sus historias y encuentra aquel que mejor se adapte a tu estilo de vida.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Completa la solicitud</h3>
+                                <p class="text-gray-600">Llena nuestro formulario de adopción con información sobre ti, tu hogar y experiencia con mascotas.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Entrevista y visita</h3>
+                                <p class="text-gray-600">Nuestro equipo realizará una entrevista y, si es necesario, una visita domiciliaria para garantizar un ambiente adecuado.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                                4
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">¡Bienvenido a casa!</h3>
+                                <p class="text-gray-600">Tras un periodo de adaptación exitoso, firmarás el contrato de adopción y tu nuevo compañero será oficialmente parte de tu familia.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-amber-100 to-amber-50 rounded-2xl p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-amber-900">Requisitos para adoptar</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Ser mayor de edad
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Tener un hogar estable y seguro
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Compromiso con el cuidado de por vida
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Recursos económicos para gastos veterinarios
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-6 bg-amber-200/50 p-4 rounded-lg border border-amber-300">
+                        <p class="italic text-amber-900 font-medium">
+                            "La adopción no es solo darle un hogar a un animal, es recibir amor incondicional que transformará tu vida para siempre."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listado de mascotas -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-amber-900 mb-8 text-center">Mascotas disponibles para adopción</h2>
+        <!-- React component for interactive filtering -->
+        <PetListing client:load initialPets={pets} filters={filters} />
+    </div>
+</Layout>

@@ -21,7 +21,7 @@ if (!data?.data?.pet || data.data.pet.length === 0) {
 const pet = data.data.pet[0];
 
 if (pet.isAdopted) {
-    return Astro.redirect(`/mascotas/${documentId}`);
+    return Astro.redirect(`/adopta/${documentId}`);
 }
 
 // SEO metadata específica para el formulario de adopción
@@ -68,7 +68,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                                     d="m1 9 4-4-4-4"></path>
                             </svg>
                             <a
-                                href="/mascotas"
+                                href="/adopta"
                                 class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
                             >
                                 Mascotas en adopción
@@ -92,7 +92,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                                     d="m1 9 4-4-4-4"></path>
                             </svg>
                             <a
-                                href={`/mascotas/${pet.documentId}`}
+                                href={`/adopta/${pet.documentId}`}
                                 class="ml-1 text-amber-800 hover:text-amber-600 transition-colors"
                             >
                                 {pet.name}
@@ -125,7 +125,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
 
             <div class="mb-10">
                 <a
-                    href={`/mascotas/${pet.documentId}`}
+                    href={`/adopta/${pet.documentId}`}
                     class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-600 transition-colors"
                 >
                     <svg

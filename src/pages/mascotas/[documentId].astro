@@ -14,12 +14,12 @@ if (error) {
 }
 
 if (data.data.pet[0].isAdopted) {
-    return Astro.redirect("/mascotas");
+    return Astro.redirect("/adopta");
 }
 
 const pet = data.data.pet[0] || {};
 const siteUrl = Astro.url.origin;
-const petUrl = `${siteUrl}/mascotas/${pet.documentId}`;
+const petUrl = `${siteUrl}/adopta/${pet.documentId}`;
 const shareTitle = `¡Adopta a ${pet.name}! | Fundación Paraíso de la mascota Cali`;
 const shareDescription = pet.description ? `${pet.name} está buscando una familia. ${pet.description.substring(0, 100)}...` : `¡Ayuda a ${pet.name} a encontrar un hogar!`;
 const shareImage = pet.imageUrl || `${siteUrl}/images/placeholder-pet.jpg`;
@@ -45,7 +45,7 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
         <div class="max-w-6xl mx-auto px-4 py-12">
             <!-- Botón Volver -->
             <a
-                href="/mascotas"
+                href="/adopta"
                 class="bg-white/90 backdrop-blur-sm text-amber-900 px-4 py-2 rounded-full shadow-lg hover:bg-amber-100 transition-colors flex items-center gap-2 w-max mb-8"
             >
                 <svg
@@ -127,7 +127,7 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
                         <!-- Botones de acción y compartir -->
                         <div class="flex flex-col sm:flex-row gap-4 items-center">
                             <a
-                                href={`/mascotas/${pet.documentId}/adoptar`}
+                                href={`/adopta/${pet.documentId}/adoptar`}
                                 class="bg-amber-600 text-white text-center py-3 px-6 rounded-xl font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2 flex-1"
                             >
                                 <svg
@@ -143,7 +143,7 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
                                 Adoptar a {pet.name}
                             </a>
                             <a
-                                href={`/mascotas/${pet.documentId}/apadrinar`}
+                                href={`/adopta/${pet.documentId}/apadrinar`}
                                 class="border-2 border-amber-600 text-amber-600 text-center py-3 px-6 rounded-xl font-semibold hover:bg-amber-50 transition-colors flex-1"
                             >
                                 Apadrinar a {pet.name}
