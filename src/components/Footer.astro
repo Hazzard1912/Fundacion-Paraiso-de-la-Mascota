@@ -27,14 +27,14 @@ const contactInfo = [
     },
     {
         type: "email",
-        value: "contacto@paraisomascota.org",
-        href: "mailto:contacto@paraisomascota.org",
+        value: "direcciongeneral@paraisodelamascota.org",
+        href: "mailto:direcciongeneral@paraisodelamascota.org",
         icon: "envelope",
     },
     {
         type: "address",
         value: "Calle 3 #  123-146, Parcelación Piedra Grande, Santiago de Cali, Colombia",
-        href: "https://maps.app.goo.gl/7EXogJccwjJ3CoBf7",
+        href: "https://maps.app.goo.gl/ZcBbfMsg24bN23AA9",
         icon: "map-marker-alt",
     },
 ];
@@ -85,9 +85,13 @@ const socialLinks = [
                                 class="flex items-center gap-3 hover:text-amber-300 transition-colors"
                                 target={item.type === "address" ? "_blank" : undefined}
                                 rel={item.type === "address" ? "noopener noreferrer" : undefined}
+                                style={item.type === "email" ? "word-break: break-all;" : undefined}
                             >
                                 <i class={`fas fa-${item.icon} w-5 text-amber-400`} />
-                                {item.value}
+                                {item.type === "email"
+                                    ? <span class="truncate md:max-w-[200px] block" title={item.value}>{item.value}</span>
+                                    : item.value
+                                }
                             </a>
                         ))
                     }
