@@ -341,7 +341,7 @@ export class StrapiService {
   }
 
   // Método para obtener todas las mascotas disponibles para adopción
-  async getAllPets(): Promise<StrapiResponse<{
+  async getAllPets(limit: number = 100): Promise<StrapiResponse<{
     id: number;
     documentId: string;
     createdAt: string;
@@ -362,7 +362,7 @@ export class StrapiService {
       alternativeText: string | null;
     }>;
   }[]>> {
-    const url = `${this.baseUrl}/api/pets?filters[isAdopted][$eq]=false&populate[photos][fields]=url,alternativeText&sort=publishedAt:desc`;
+    const url = `${this.baseUrl}/api/pets?filters[isAdopted][$eq]=false&populate[photos][fields]=url,alternativeText&sort=publishedAt:desc&pagination[limit]=${limit}`;
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
