@@ -115,6 +115,7 @@ export class StrapiService {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+    url?: string; // URL opcional para redirección
     image: Array<{
       id: number;
       documentId: string;
@@ -122,7 +123,7 @@ export class StrapiService {
       alternativeText: string | null;
     }>;
   }[]>> {
-    const url = `${this.baseUrl}/api/slides?populate[image][fields]=url,alternativeText`;
+    const url = `${this.baseUrl}/api/slides?populate[image][fields]=url,alternativeText&fields=url`;
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',

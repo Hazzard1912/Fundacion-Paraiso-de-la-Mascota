@@ -61,18 +61,19 @@ export const getSlidesData = defineAction({
         };
       }
 
-      // Procesar el array de imágenes del primer (y único) registro
+      // Procesar TODOS los registros de slides, no solo el primero
       const slides = [];
-      const slideRecord = response.data[0]; // Solo hay un registro
       
-      if (slideRecord && slideRecord.image && Array.isArray(slideRecord.image)) {
-
-        for (const image of slideRecord.image) {
-          slides.push({
-            id: image.id,
-            imageUrl: image.url, // Cloudinary devuelve URLs absolutas
-            alternativeText: image.alternativeText || ""
-          });
+      for (const slideRecord of response.data) {
+        if (slideRecord && slideRecord.image && Array.isArray(slideRecord.image)) {
+          for (const image of slideRecord.image) {
+            slides.push({
+              id: image.id,
+              imageUrl: image.url, // Cloudinary devuelve URLs absolutas
+              alternativeText: image.alternativeText || "",
+              url: slideRecord.url || null // URL de redirección del registro de slide
+            });
+          }
         }
       }
 
