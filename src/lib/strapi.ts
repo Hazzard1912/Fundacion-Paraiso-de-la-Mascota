@@ -115,7 +115,7 @@ export class StrapiService {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
-    url?: string; // URL opcional para redirección
+    url?: string;
     image: Array<{
       id: number;
       documentId: string;
@@ -124,6 +124,7 @@ export class StrapiService {
     }>;
   }[]>> {
     const url = `${this.baseUrl}/api/slides?populate[image][fields]=url,alternativeText&fields=url`;
+    console.log("Fetching slides from URL:", url);
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -138,10 +139,13 @@ export class StrapiService {
     });
 
     if (!response.ok) {
+      console.error(`Strapi API error: ${response.status} ${response.statusText}`);
       throw new Error(`Strapi API error: ${response.status} ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log("Raw Strapi response for slides:", data);
+    return data;
   }
 
   // Método para crear solicitudes de adopción
