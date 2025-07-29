@@ -88,7 +88,10 @@ const socialLinks = [
                                 style={item.type === "email" ? "word-break: break-all;" : undefined}
                             >
                                 <i class={`fas fa-${item.icon} w-5 text-amber-400`} />
-                                    {item.value}
+                                {item.type === "email"
+                                    ? <span class="truncate md:max-w-[200px] block" title={item.value}>{item.value}</span>
+                                    : item.value
+                                }
                             </a>
                         ))
                     }
