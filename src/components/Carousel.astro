@@ -17,17 +17,15 @@ let error = null;
 
 try {
     const result = await Astro.callAction(getSlidesData, {});
-    console.log("Result from getSlidesData:", result);
     
     if (result.error) {
         console.error("Error fetching slides:", result.error);
         error = result.error;
-    } else if (result.data && Array.isArray(result.data)) {
-        slides = result.data.filter((slide: any) => slide.imageUrl);
-        console.log("Slides cargados:", slides.length, slides);
+    } else if (result.data && result.data.success && Array.isArray(result.data.data)) {
+        slides = result.data.data.filter((slide: any) => slide.imageUrl);
+        console.log("Slides cargados:", slides.length);
     } else {
-        console.error("No data returned from getSlidesData, result:", result);
-        console.error("result.data:", result.data);
+        console.error("No data returned from getSlidesData");
         error = new Error("No data returned");
     }
 } catch (e) {

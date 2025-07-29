@@ -51,12 +51,9 @@ export const getHeroData = defineAction({
 export const getSlidesData = defineAction({
   async handler() {
     try {
-      console.log("Iniciando getSlidesData...");
       const response = await strapiService.getSlides();
-      console.log("Response from strapiService.getSlides():", response);
 
       if (!response.data || response.data.length === 0) {
-        console.log("No hay datos o array vacío");
         return {
           success: false,
           error: "No se encontraron slides",
@@ -65,28 +62,20 @@ export const getSlidesData = defineAction({
       }
 
       const slides = [];
-      console.log("Procesando", response.data.length, "registros de slides");
       
       for (const slideRecord of response.data) {
-        console.log("Procesando slideRecord:", slideRecord);
         if (slideRecord && slideRecord.image && Array.isArray(slideRecord.image)) {
-          console.log("Encontradas", slideRecord.image.length, "imágenes en el registro");
           for (const image of slideRecord.image) {
-            const slideData = {
+            slides.push({
               id: image.id,
               imageUrl: image.url,
               alternativeText: image.alternativeText || "",
               url: slideRecord.url || null
-            };
-            console.log("Agregando slide:", slideData);
-            slides.push(slideData);
+            });
           }
-        } else {
-          console.log("Registro sin imágenes válidas:", slideRecord);
         }
       }
 
-      console.log("Total slides procesados:", slides.length);
       return {
         success: true,
         data: slides,
