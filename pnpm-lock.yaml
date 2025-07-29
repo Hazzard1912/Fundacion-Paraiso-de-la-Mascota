@@ -23,6 +23,9 @@ importers:
       '@strapi/blocks-react-renderer':
         specifier: ^1.0.2
         version: 1.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@vercel/analytics':
+        specifier: ^1.5.0
+        version: 1.5.0(react@19.0.0)
       astro:
         specifier: ^5.1.5
         version: 5.1.5(jiti@1.21.7)(rollup@4.39.0)(typescript@5.7.3)(yaml@2.7.0)

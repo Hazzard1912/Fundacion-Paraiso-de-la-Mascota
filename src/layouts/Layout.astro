@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
 	title: string;
@@ -87,6 +88,7 @@ const siteName = "Fundación Paraíso de la Mascota Cali";
 		<ClientRouter />
 	</head>
 	<body class="min-h-screen bg-amber-50">
+		<Analytics />
 		<Navbar />
 		<main class="pt-12">
 			<slot />
