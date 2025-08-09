@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+// ❌ Ya no necesitas BlocksRenderer
+// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { actions } from "astro:actions";
 
 const { slug } = Astro.params;
@@ -35,8 +36,8 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
 >
   {noticia ? (
     <article class="min-h-screen">
-      <!-- Hero Section con imagen de cover -->
-      <section class="relative h-[60vh] min-h-[400px] max-h-[600px] overflow-hidden">
+      <!-- Hero Section más compacta -->
+      <section class="relative h-[40vh] min-h-[300px] max-h-[400px] overflow-hidden">
         {noticia.imagen?.url && (
           <img 
             src={noticia.imagen.url} 
@@ -44,23 +45,30 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
             class="w-full h-full object-cover"
           />
         )}
-        <!-- Overlay gradiente para mejor legibilidad -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         
-        <!-- Contenido superpuesto -->
+        <!-- Solo título y fecha en la imagen -->
         <div class="absolute inset-0 flex items-end">
-          <div class="max-w-4xl mx-auto px-4 pb-12 w-full">
+          <div class="max-w-4xl mx-auto px-4 pb-8 w-full">
             <div class="text-white">
               <span class="inline-block bg-amber-500 text-amber-900 px-3 py-1 rounded-full text-sm font-medium mb-4">
                 {formatDate(noticia.fecha)}
               </span>
-              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+              <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                 {noticia.titulo}
               </h1>
-              <p class="text-xl md:text-2xl text-gray-200 max-w-3xl leading-relaxed">
-                {noticia.resumen}
-              </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resumen en sección separada -->
+      <section class="bg-amber-50 py-12 border-b">
+        <div class="max-w-4xl mx-auto px-4">
+          <div class="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-amber-500">
+            <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
+              {noticia.resumen}
+            </p>
           </div>
         </div>
       </section>
@@ -72,12 +80,13 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
             <!-- Separador visual -->
             <div class="w-24 h-1 bg-amber-500 mb-12"></div>
             
-            <BlocksRenderer content={noticia.contenido} />
+            <!-- ✅ CAMBIO PRINCIPAL: Renderizar HTML directamente -->
+            <div set:html={noticia.contenido} class="contenido-noticia"></div>
           </div>
         </div>
       </section>
 
-      <!-- Sección de cierre opcional -->
+      <!-- Sección de cierre -->
       <section class="bg-amber-50 py-12">
         <div class="max-w-4xl mx-auto px-4 text-center">
           <div class="inline-flex items-center gap-2 text-amber-700">
@@ -98,3 +107,103 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
     </section>
   )}
 </Layout>
+
+<!-- ✅ ESTILOS ADICIONALES para el contenido CKEditor -->
+<style>
+  /* Asegurar que el contenido del editor se vea bien */
+  .contenido-noticia {
+    @apply text-gray-800 leading-relaxed;
+  }
+  
+  /* Estilos para elementos de CKEditor */
+  :global(.contenido-noticia h1) {
+    @apply text-3xl font-bold mt-8 mb-6 text-gray-900 leading-tight;
+  }
+  
+  :global(.contenido-noticia h2) {
+    @apply text-2xl font-bold mt-6 mb-4 text-gray-900 leading-tight;
+  }
+  
+  :global(.contenido-noticia h3) {
+    @apply text-xl font-bold mt-4 mb-3 text-gray-900 leading-tight;
+  }
+  
+  :global(.contenido-noticia p) {
+    @apply mb-4 text-lg leading-relaxed text-gray-700;
+  }
+  
+  :global(.contenido-noticia strong) {
+    @apply font-bold text-gray-900;
+  }
+  
+  :global(.contenido-noticia span) {
+    @apply inline;
+  }
+  
+  /* Estilos para listas */
+  :global(.contenido-noticia ul) {
+    @apply list-disc list-inside mb-6 ml-4 space-y-2;
+  }
+  
+  :global(.contenido-noticia ol) {
+    @apply list-decimal list-inside mb-6 ml-4 space-y-2;
+  }
+  
+  :global(.contenido-noticia li) {
+    @apply mb-2 text-lg leading-relaxed text-gray-700;
+  }
+  
+  :global(.contenido-noticia li span) {
+    @apply inline;
+  }
+  
+  /* Estilos para enlaces */
+  :global(.contenido-noticia a) {
+    @apply text-amber-600 hover:text-amber-800 underline transition-colors duration-200;
+  }
+  
+  /* Estilos para imágenes del editor */
+  :global(.contenido-noticia img) {
+    @apply max-w-full h-auto rounded-lg shadow-md my-8 mx-auto block;
+  }
+  
+  /* Espaciado para divs */
+  :global(.contenido-noticia div) {
+    @apply mb-4;
+  }
+  
+  /* Estilos para emojis en títulos */
+  :global(.contenido-noticia h1),
+  :global(.contenido-noticia h2) {
+    @apply flex items-center gap-2;
+  }
+  
+  /* Estilos para tablas */
+  :global(.contenido-noticia table) {
+    @apply w-full border-collapse border border-gray-300 my-6 rounded-lg overflow-hidden shadow-sm;
+  }
+  
+  :global(.contenido-noticia th),
+  :global(.contenido-noticia td) {
+    @apply border border-gray-300 px-4 py-2;
+  }
+  
+  :global(.contenido-noticia th) {
+    @apply bg-amber-50 font-bold text-gray-900;
+  }
+  
+  /* Estilos para citas */
+  :global(.contenido-noticia blockquote) {
+    @apply border-l-4 border-amber-500 pl-6 py-4 my-6 italic bg-amber-50 rounded-r-lg;
+  }
+  
+  /* Espaciado mejorado entre secciones */
+  :global(.contenido-noticia h2 + p) {
+    @apply mt-0;
+  }
+  
+  /* Estilos específicos para el contenido estructurado */
+  :global(.contenido-noticia h2:not(:first-child)) {
+    @apply mt-12 mb-4 pb-2 border-b border-amber-200;
+  }
+</style>
