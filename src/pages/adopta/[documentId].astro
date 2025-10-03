@@ -20,14 +20,14 @@ if (data.data.pet[0].isAdopted) {
 const pet = data.data.pet[0] || {};
 const siteUrl = Astro.url.origin;
 const petUrl = `${siteUrl}/adopta/${pet.documentId}`;
-const shareTitle = `¡Adopta a ${pet.name}! | Fundación Paraíso de la mascota Cali`;
-const shareDescription = pet.description ? `${pet.name} está buscando una familia. ${pet.description.substring(0, 100)}...` : `¡Ayuda a ${pet.name} a encontrar un hogar!`;
+const shareTitle = `Conoce a ${pet.name} y solicita contacto para su adopción | Fundación Paraíso de la Mascota Cali`;
+const shareDescription = pet.description ? `${pet.name} está buscando una familia. Comparte este perfil y ayuda a que más personas soliciten contacto para su adopción. ${pet.description.substring(0, 90)}...` : `Comparte el perfil de ${pet.name} y ayúdanos a encontrar personas interesadas en su adopción.`;
 const shareImage = pet.imageUrl || `${siteUrl}/images/placeholder-pet.jpg`;
 
 // SEO metadata específica para esta mascota
-const seoTitle = `${pet.name} - Adopción - Paraíso de la mascota Cali`;
-const seoDescription = `${pet.name} está buscando una familia amorosa. ${pet.species} ${pet.ageGroup} de tamaño ${pet.size}. ¡Conoce más sobre ${pet.name} y dale una segunda oportunidad!`;
-const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGroup}, ${pet.size}, adopción Cali, fundación mascotas, ${pet.species} en adopción`;
+const seoTitle = `${pet.name} - Perfil de adopción y solicitud de contacto - Paraíso de la Mascota Cali`;
+const seoDescription = `${pet.name} está buscando una familia amorosa. Conoce su historia y deja tus datos para que podamos contactarte y evaluar juntos el proceso de adopción.`;
+const seoKeywords = `adopción ${pet.species}, ${pet.name}, solicitud contacto adopción, ${pet.size}, adopción Cali, fundación mascotas, ${pet.species} en adopción`;
 ---
 
 <Layout
@@ -140,7 +140,7 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
                                         d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
                                     ></path>
                                 </svg>
-                                Adoptar a {pet.name}
+                                Solicitar contacto para adoptar a {pet.name}
                             </a>
                             <a
                                 href={`/adopta/${pet.documentId}/apadrinar`}
@@ -162,6 +162,9 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
                                 </div>
                             </div>
                         </div>
+                        <p class="text-sm text-gray-600 mt-4 text-center sm:text-left">
+                            Al enviar la solicitud estarás manifestando tu interés para que nuestro equipo te contacte y así evaluar juntos la adopción de {pet.name}.
+                        </p>
                         <script define:vars={{ shareTitle, shareDescription, petUrl }}>
                             document.addEventListener("astro:page-load", () => {
                                 const shareButton = document.getElementById("share-btn");
@@ -227,7 +230,7 @@ const seoKeywords = `adopción ${pet.species}, ${pet.name}, mascota ${pet.ageGro
             <!-- Sección de más información -->
             <div class="bg-white rounded-2xl p-8 shadow-lg">
                 <h2 class="text-2xl font-bold text-amber-900 mb-6">
-                    ¿Por qué adoptar a {pet.name}?
+                    ¿Por qué considerar la adopción de {pet.name}?
                 </h2>
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="flex flex-col items-center text-center p-4">

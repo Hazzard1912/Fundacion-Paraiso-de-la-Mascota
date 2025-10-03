@@ -35,7 +35,7 @@ const filters = {
                 Adopta, Cambia una Vida y Transforma la Tuya
             </h1>
             <p class="text-xl text-amber-50 max-w-3xl mx-auto leading-relaxed mb-8">
-                En la <strong>Fundación Paraíso de la Mascota</strong> llevamos más de 20 años rescatando, rehabilitando y buscando hogares responsables para perros y gatos en situación de vulnerabilidad en Cali, Colombia. Aquí puedes conocer a todos nuestros peludos listos para adopción y darles una segunda oportunidad.
+                En la <strong>Fundación Paraíso de la Mascota</strong> llevamos más de 20 años rescatando, rehabilitando y buscando hogares responsables para perros y gatos en situación de vulnerabilidad en Cali, Colombia. Aquí puedes conocer a todos nuestros peludos listos para adopción y dejarnos tus datos para que podamos contactarte y acompañarte en cada paso.
             </p>
             <div class="flex flex-wrap gap-4 justify-center mb-4">
                 <div class="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
@@ -136,8 +136,8 @@ const filters = {
                                 2
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Completa la solicitud</h3>
-                                <p class="text-gray-600">Llena nuestro formulario de adopción con información sobre ti, tu hogar y experiencia con mascotas.</p>
+                                <h3 class="text-xl font-semibold text-amber-900 mb-2">Completa la solicitud de contacto</h3>
+                                <p class="text-gray-600">Llena nuestro formulario de interés en adopción para que podamos contactarte, conocer tu hogar y tu experiencia con mascotas antes de avanzar.</p>
                             </div>
                         </div>
                         <div class="flex items-start">
@@ -155,7 +155,7 @@ const filters = {
                             </div>
                             <div>
                                 <h3 class="text-xl font-semibold text-amber-900 mb-2">¡Bienvenido a casa!</h3>
-                                <p class="text-gray-600">Tras un periodo de adaptación exitoso, firmarás el contrato de adopción y tu nuevo compañero será oficialmente parte de tu familia.</p>
+                                <p class="text-gray-600">Tras un periodo de adaptación exitoso y la firma del contrato de adopción, tu nuevo compañero será oficialmente parte de tu familia.</p>
                             </div>
                         </div>
                     </div>
@@ -202,7 +202,8 @@ const filters = {
 
     <!-- Listado de mascotas -->
     <div class="max-w-6xl mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-amber-900 mb-8 text-center">Mascotas disponibles para adopción</h2>
+    <h2 class="text-3xl font-bold text-amber-900 mb-4 text-center">Mascotas disponibles para adopción</h2>
+    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Cuando encuentres a tu compañero ideal, completa la solicitud de contacto para que nuestro equipo te llame y podamos iniciar juntos el proceso de adopción responsable.</p>
         <!-- React component for interactive filtering -->
         <PetListing client:load initialPets={pets} filters={filters} />
     </div>

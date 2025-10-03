@@ -22,7 +22,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                 class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
                 role="alert"
             >
-                <p class="font-bold">¡Solicitud enviada correctamente!</p>
+                <p class="font-bold">¡Solicitud de contacto enviada correctamente!</p>
                 <p>{result.data.message}</p>
             </div>
         )
@@ -33,7 +33,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                 class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
                 role="alert"
             >
-                <p class="font-bold">La solicitud no pudo completarse</p>
+                <p class="font-bold">La solicitud de contacto no pudo completarse</p>
                 <p>{result.data.message || "Por favor, inténtalo nuevamente."}</p>
             </div>
         )
@@ -46,7 +46,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                 class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
                 role="alert"
             >
-                <p class="font-bold">Error al enviar la solicitud</p>
+                <p class="font-bold">Error al enviar la solicitud de contacto</p>
                 <p>
                     {isInputError(result.error)
                         ? "Por favor revisa los campos del formulario."
@@ -87,7 +87,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
             <h3
                 class="text-2xl font-bold text-amber-900 mb-6 border-b pb-2 border-amber-200"
             >
-                Solicitud para adoptar a {pet.name}
+                Solicitud de contacto para iniciar la adopción de {pet.name}
             </h3>
 
             {
@@ -279,10 +279,10 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                                 </div>
                             </div>
 
-                            {/* Razón para adoptar */}
+                            {/* Razón para solicitar contacto */}
                             <div class="group">
                                 <label class="block text-sm font-medium text-amber-800 mb-1">
-                                    ¿Por qué quieres adoptar a {pet.name}?
+                                    ¿Por qué deseas que te contactemos para iniciar la adopción de {pet.name}?
                                 </label>
                                 <textarea
                                     rows="3"
@@ -293,7 +293,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                                             ? "border-red-300 focus:border-red-500 focus:ring-red-500"
                                             : "border-amber-200 focus:border-amber-500 focus:ring-amber-500",
                                     ]}
-                                    placeholder={`Cuéntanos por qué ${pet.name} sería perfecto para tu hogar...`}
+                                    placeholder={`Cuéntanos por qué ${pet.name} sería perfecto para tu hogar y cómo te podemos contactar...`}
                                 />
                                 {inputErrors.adoptionReason && (
                                     <p class="text-red-500 text-xs mt-1">
@@ -316,7 +316,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                                 >
                                     <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
                                 </svg>
-                                Enviar solicitud de adopción
+                                Enviar solicitud de contacto
                             </button>
                         </div>
                     </form>
@@ -339,11 +339,11 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
                             </svg>
                         </div>
                         <h4 class="text-xl font-semibold text-gray-800">
-                            ¡Tu solicitud ha sido enviada!
+                            ¡Tu solicitud de contacto ha sido enviada!
                         </h4>
                         <p class="text-gray-600">
-                            Nos pondremos en contacto contigo pronto para seguir
-                            con el proceso de adopción.
+                            Nos pondremos en contacto contigo pronto para continuar
+                            con los pasos del proceso de adopción.
                         </p>
                         <div class="pt-4">
                             <a

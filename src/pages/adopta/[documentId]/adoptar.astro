@@ -24,18 +24,18 @@ if (pet.isAdopted) {
     return Astro.redirect(`/adopta/${documentId}`);
 }
 
-// SEO metadata específica para el formulario de adopción
-const seoTitle = `Adoptar a ${pet.name} - Fundación Paraíso de la Mascota Cali`;
-const seoDescription = `Adopta a ${pet.name} y dale una segunda oportunidad. Completa el formulario de adopción y nos pondremos en contacto contigo. ¡Cambia dos vidas para siempre!`;
-const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario adopción, adopción responsable Cali, ${pet.name} adopción`;
+// SEO metadata específica para la solicitud de contacto de adopción
+const seoTitle = `Solicitar contacto para adoptar a ${pet.name} - Fundación Paraíso de la Mascota Cali`;
+const seoDescription = `Manifiesta tu interés para que nuestro equipo te contacte y puedas iniciar el proceso de adopción de ${pet.name}. Completa el formulario y te guiaremos en cada paso.`;
+const seoKeywords = `solicitud contacto adoptar ${pet.name}, adopción ${pet.species}, formulario contacto adopción, adopción responsable Cali, ${pet.name} adopción`;
 ---
 
 <Layout 
 	title={seoTitle}
 	description={seoDescription}
 	keywords={seoKeywords}
-	ogTitle={`Adoptar a ${pet.name} - Fundación Paraíso de la Mascota`}
-	ogDescription={`¡Adopta a ${pet.name} y cambia dos vidas para siempre!`}
+    ogTitle={`Solicitar contacto para adoptar a ${pet.name} - Fundación Paraíso de la Mascota`}
+    ogDescription={`Déjanos tus datos para que podamos ayudarte a iniciar la adopción de ${pet.name}.`}
 	ogImage={pet.imageUrl || "/images/placeholder-dog.jpg"}
 >
     <main class="bg-amber-50/50 min-h-screen py-16">
@@ -116,7 +116,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                                     d="m1 9 4-4-4-4"></path>
                             </svg>
                             <span class="ml-1 font-medium text-amber-900">
-                                Adoptar
+                                Solicitar contacto
                             </span>
                         </div>
                     </li>
@@ -145,13 +145,10 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
 
             <div class="mb-12 text-center">
                 <h1 class="text-4xl font-bold text-amber-900 mb-4">
-                    Adoptar a {pet.name}
+                    Solicitar contacto para adoptar a {pet.name}
                 </h1>
                 <p class="text-gray-600 max-w-3xl mx-auto">
-                    Estás a un paso de cambiar dos vidas para siempre: la de {
-                        pet.name
-                    } y la tuya. Completa este formulario y nos pondremos en contacto
-                    contigo a la brevedad.
+                    Comparte tus datos y tu motivación para que nuestro equipo pueda contactarte y juntos iniciar el proceso responsable de adopción de {pet.name}.
                 </p>
             </div>
 
@@ -159,7 +156,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
 
             <div class="mt-12 bg-white p-8 rounded-2xl shadow-lg">
                 <h3 class="text-2xl font-bold text-amber-900 mb-4">
-                    ¿Qué sigue después de enviar la solicitud?
+                    ¿Qué sigue después de solicitar el contacto?
                 </h3>
 
                 <ol class="space-y-6 mt-6">
@@ -176,9 +173,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                                 Revisión inicial
                             </h4>
                             <p class="text-gray-600">
-                                Nuestro equipo revisará tu solicitud y se pondrá
-                                en contacto contigo por teléfono o email en un
-                                máximo de 48 horas.
+                                Nuestro equipo revisará tu interés, validará la información y se pondrá en contacto contigo por teléfono o email en un máximo de 48 horas.
                             </p>
                         </div>
                     </li>
@@ -197,8 +192,8 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                             </h4>
                             <p class="text-gray-600">
                                 Programaremos una entrevista personal y, de ser
-                                necesario, una visita a tu hogar para
-                                asegurarnos que sea un ambiente adecuado.
+                                necesario, una visita a tu hogar para asegurarnos
+                                de que sea un ambiente adecuado antes de avanzar al siguiente paso.
                             </p>
                         </div>
                     </li>
@@ -216,9 +211,7 @@ const seoKeywords = `adoptar ${pet.name}, adopción ${pet.species}, formulario a
                                 Periodo de adaptación
                             </h4>
                             <p class="text-gray-600">
-                                Si todo va bien, podrás llevarte a {pet.name} a casa
-                                por un periodo de adaptación mientras se finalizan
-                                los trámites de adopción.
+                                Si todo avanza positivamente, podrás iniciar un periodo de adaptación con {pet.name} mientras completamos los trámites formales.
                             </p>
                         </div>
                     </li>

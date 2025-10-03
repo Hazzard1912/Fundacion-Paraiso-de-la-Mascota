@@ -184,7 +184,7 @@ export class StrapiService {
         adoptionReason: data.adoptionReason
       });
 
-      // 3. Crear la solicitud de adopción
+      // 3. Registrar la solicitud de contacto para adopción
       const requestResponse = await this.post('/adoption-requests', {
         pet: data.pet,
         adopter: adopterDocId,
@@ -194,10 +194,10 @@ export class StrapiService {
 
       return {
         success: true,
-        message: "¡Solicitud enviada con éxito! Nuestro equipo revisará tu solicitud y se pondrá en contacto contigo en un máximo de 48 horas."
+        message: "¡Solicitud de contacto enviada con éxito! Nuestro equipo revisará tu interés y se pondrá en contacto contigo en un máximo de 48 horas."
       };
     } catch (error) {
-      let message = "Ocurrió un error al procesar tu solicitud. Por favor intenta nuevamente.";
+      let message = "Ocurrió un error al procesar tu solicitud de contacto. Por favor intenta nuevamente.";
 
       if (error?.error?.message) {
         message = error.error.message;
