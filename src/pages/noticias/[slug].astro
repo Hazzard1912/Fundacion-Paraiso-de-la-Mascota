@@ -35,38 +35,55 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
 	canonicalUrl={Astro.url.href}
 >
   {noticia ? (
-    <article class="min-h-screen">
-      <!-- Hero Section más compacta -->
-      <section class="relative h-[40vh] min-h-[300px] max-h-[400px] overflow-hidden">
-        {noticia.imagen?.url && (
-          <img 
-            src={noticia.imagen.url} 
-            alt={noticia.imagen.alternativeText || noticia.titulo} 
-            class="w-full h-full object-cover"
-          />
-        )}
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-        
-        <!-- Solo título y fecha en la imagen -->
-        <div class="absolute inset-0 flex items-end">
-          <div class="max-w-4xl mx-auto px-4 pb-8 w-full">
-            <div class="text-white">
-              <span class="inline-block bg-amber-500 text-amber-900 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                {formatDate(noticia.fecha)}
-              </span>
-              <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                {noticia.titulo}
-              </h1>
-            </div>
+    <article class="min-h-screen bg-white">
+      <!-- Header Section -->
+      <header class="bg-gradient-to-b from-amber-50 to-white pt-12 md:pt-20 pb-8">
+        <div class="max-w-4xl mx-auto px-4">
+          <div class="flex flex-col items-center text-center">
+            <a 
+              href="/noticias" 
+              class="group mb-8 flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold transition-all"
+            >
+              <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              Volver a noticias
+            </a>
+
+            <span class="inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-sm font-bold mb-6 uppercase tracking-wider shadow-sm">
+              {formatDate(noticia.fecha)}
+            </span>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-[1.1] mb-8 tracking-tight">
+              {noticia.titulo}
+            </h1>
           </div>
+        </div>
+      </header>
+
+      <!-- Image Section - Adaptable -->
+      <section class="pb-12">
+        <div class="max-w-5xl mx-auto px-4">
+          {noticia.imagen?.url && (
+            <div class="relative group">
+              <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-gray-100 ring-1 ring-black/5">
+                <img 
+                  src={noticia.imagen.url} 
+                  alt={noticia.imagen.alternativeText || noticia.titulo} 
+                  class="w-full h-auto max-h-[75vh] object-contain mx-auto block"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      <!-- Resumen en sección separada -->
-      <section class="bg-amber-50 py-12 border-b">
+      <!-- Resumen / Lead -->
+      <section class="py-8">
         <div class="max-w-4xl mx-auto px-4">
-          <div class="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-amber-500">
-            <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
+          <div class="bg-amber-50/50 rounded-3xl p-8 md:p-10 border border-amber-100 shadow-sm">
+            <p class="text-xl md:text-2xl text-gray-800 leading-relaxed font-medium italic">
               {noticia.resumen}
             </p>
           </div>
@@ -74,38 +91,51 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
       </section>
 
       <!-- Contenido principal -->
-      <section class="bg-white py-16">
+      <section class="py-12 md:py-16">
         <div class="max-w-4xl mx-auto px-4">
-          <div class="prose prose-lg prose-amber max-w-none">
+          <div class="prose prose-lg md:prose-xl prose-amber max-w-none">
             <!-- Separador visual -->
-            <div class="w-24 h-1 bg-amber-500 mb-12"></div>
+            <div class="w-20 h-1.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-12"></div>
             
-            <!-- ✅ CAMBIO PRINCIPAL: Renderizar HTML directamente -->
+            <!-- ✅ Renderizar HTML directamente -->
             <div set:html={noticia.contenido} class="contenido-noticia"></div>
           </div>
         </div>
       </section>
 
       <!-- Sección de cierre -->
-      <section class="bg-amber-50 py-12">
+      <section class="bg-gradient-to-b from-white to-amber-50 py-20">
         <div class="max-w-4xl mx-auto px-4 text-center">
-          <!-- Botón de regreso a noticias -->
-          <div class="mb-6">
+          <div class="inline-flex items-center gap-3 mb-10">
+            <span class="h-px w-12 bg-amber-200"></span>
+            <div class="flex items-center gap-2 text-amber-700">
+              <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+              <span class="text-sm font-bold uppercase tracking-widest">Paraíso de la mascota Cali</span>
+              <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+            </div>
+            <span class="h-px w-12 bg-amber-200"></span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/noticias"
-              class="inline-flex items-center gap-2 bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-amber-700 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              class="group inline-flex items-center gap-3 bg-white text-amber-600 border-2 border-amber-600 px-8 py-4 rounded-2xl font-bold hover:bg-amber-600 hover:text-white transition-all duration-300 shadow-md hover:shadow-xl"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m7-7-7 7 7 7"></path>
               </svg>
               Ver todas las noticias
             </a>
-          </div>
-          
-          <div class="inline-flex items-center gap-2 text-amber-700">
-            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
-            <span class="text-sm font-medium">Paraíso de la mascota Cali</span>
-            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+            
+            <a
+              href="/adopta"
+              class="inline-flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-amber-700 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              ¡Quiero adoptar!
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            </a>
           </div>
         </div>
       </section>
@@ -130,19 +160,19 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
   
   /* Estilos para elementos de CKEditor */
   :global(.contenido-noticia h1) {
-    @apply text-3xl font-bold mt-8 mb-6 text-gray-900 leading-tight;
+    @apply text-3xl md:text-4xl font-black mt-12 mb-6 text-gray-900 leading-tight;
   }
   
   :global(.contenido-noticia h2) {
-    @apply text-2xl font-bold mt-6 mb-4 text-gray-900 leading-tight;
+    @apply text-2xl md:text-3xl font-bold mt-10 mb-5 text-gray-900 leading-tight;
   }
   
   :global(.contenido-noticia h3) {
-    @apply text-xl font-bold mt-4 mb-3 text-gray-900 leading-tight;
+    @apply text-xl md:text-2xl font-bold mt-8 mb-4 text-gray-900 leading-tight;
   }
   
   :global(.contenido-noticia p) {
-    @apply mb-4 text-lg leading-relaxed text-gray-700;
+    @apply mb-6 text-lg md:text-xl leading-relaxed text-gray-700;
   }
   
   :global(.contenido-noticia strong) {
@@ -155,15 +185,15 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
   
   /* Estilos para listas */
   :global(.contenido-noticia ul) {
-    @apply list-disc list-inside mb-6 ml-4 space-y-2;
+    @apply list-disc list-outside mb-8 ml-6 space-y-3 text-gray-700;
   }
   
   :global(.contenido-noticia ol) {
-    @apply list-decimal list-inside mb-6 ml-4 space-y-2;
+    @apply list-decimal list-outside mb-8 ml-6 space-y-3 text-gray-700;
   }
   
   :global(.contenido-noticia li) {
-    @apply mb-2 text-lg leading-relaxed text-gray-700;
+    @apply mb-2 text-lg md:text-xl leading-relaxed;
   }
   
   :global(.contenido-noticia li span) {
@@ -172,12 +202,12 @@ const ogImage = noticia?.imagen?.url || "/images/logo.png";
   
   /* Estilos para enlaces */
   :global(.contenido-noticia a) {
-    @apply text-amber-600 hover:text-amber-800 underline transition-colors duration-200;
+    @apply text-amber-600 hover:text-amber-700 font-semibold underline decoration-amber-200 decoration-2 underline-offset-4 transition-all duration-200;
   }
   
   /* Estilos para imágenes del editor */
   :global(.contenido-noticia img) {
-    @apply max-w-full h-auto rounded-lg shadow-md my-8 mx-auto block;
+    @apply max-w-full h-auto rounded-2xl shadow-xl my-12 mx-auto block ring-1 ring-black/5;
   }
   
   /* Espaciado para divs */
