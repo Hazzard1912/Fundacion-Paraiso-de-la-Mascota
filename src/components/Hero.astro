@@ -1,5 +1,9 @@
 ---
 import { getHeroData } from "../actions/cms.actions";
+import { Image } from "astro:assets";
+
+
+import heroBg from "../assets/images/stock/hero-bg.jpeg";
 
 // Obtener datos del hero desde Strapi
 let heroData = null;
@@ -23,7 +27,7 @@ try {
 const defaultData = {
     title: "Dale una Segunda Oportunidad",
     subtitle: "Cada mascota merece un hogar lleno de amor. Tu pequeño gesto puede cambiar una vida para siempre.",
-    backgroundImage: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&q=80",
+    backgroundImage: heroBg,
     alternativeText: "Imagen de fondo del hero",
 };
 
@@ -37,10 +41,13 @@ const finalData = (heroData && heroData.success && heroData.data) ? heroData.dat
 >
     <!-- Background Image -->
     <div class="absolute inset-0 -z-10">
-        <img
+        <Image
             src={finalData.backgroundImage}
             alt={finalData.alternativeText || "Hero background"}
+            width={1920}
+            height={1080}
             class="w-full h-full object-cover"
+            loading="eager"
         />
     </div>
 

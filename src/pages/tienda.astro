@@ -3,38 +3,48 @@ import Layout from "../layouts/Layout.astro";
 
 import { Image } from "astro:assets";
 
+// Importación de imágenes
+import calendario2026 from "../assets/tienda/calendario-2026.jpeg";
+import camiseta from "../assets/tienda/camiseta.jpg";
+import mug from "../assets/tienda/mug.jpg";
+import libroGallinas from "../assets/tienda/libro-gallinas.jpg";
+
 // Productos de la tienda
 const productos = [
     {
-        id: "calendario-2025",
-        nombre: "Calendario 2025",
+        id: "calendario-2026",
+        nombre: "Calendario 2026",
         precio: 25000,
-        imagen: "/images/tienda/calendario-2025.jpg", // Reemplazar con la imagen real
-        descripcion: "Calendario Planeador 2025 protagonizado por peluditos de nuestra fundación que están esperando un hogar.",
+        imagen: calendario2026,
+        descripcion:
+            "¡Llegó el Calendario Planeador 2026! Protagonizado por perritos y gatitos de la fundación, perfecto para organizar tu año.",
         destacado: true,
     },
     {
         id: "camiseta",
         nombre: "Camiseta Paraíso",
         precio: 20000,
-        imagen: "/images/tienda/camiseta.jpg",
-        descripcion: "Camiseta 100% algodón con estampado de la fundación. Disponible en varias tallas.",
+        imagen: camiseta,
+        descripcion:
+            "Camiseta 100% algodón con estampado de la fundación. Disponible en varias tallas.",
         destacado: false,
     },
     {
         id: "mug",
         nombre: "Mug Paraíso",
         precio: 20000,
-        imagen: "/images/tienda/mug.jpg",
-        descripcion: "Mug de cerámica con diseños de nuestros peludos. Ideal para tus bebidas favoritas.",
+        imagen: mug,
+        descripcion:
+            "Mug de cerámica con diseños de nuestros peludos. Ideal para tus bebidas favoritas.",
         destacado: false,
     },
     {
         id: "libro-gallinas",
         nombre: "¡Las gallinas no hacen miau! - Libro Bilingüe",
         precio: 69900,
-        imagen: "/images/tienda/libro-gallinas.jpg",
-        descripcion: "Este libro ilustrado fue creado con el objetivo de contar esta inspiradora historia, amplificar su mensaje y demostrar a la juventud que podemos utilizar el poder de las redes sociales para lograr un impacto positivo en nuestra comunidad.",
+        imagen: libroGallinas,
+        descripcion:
+            "Este libro ilustrado fue creado con el objetivo de contar esta inspiradora historia, amplificar su mensaje y demostrar a la juventud que podemos utilizar el poder de las redes sociales para lograr un impacto positivo en nuestra comunidad.",
         destacado: false,
     },
 ];
@@ -53,130 +63,222 @@ const puntosVenta = [
     },
     {
         nombre: "Centro de Adopción",
-        direccion: "Calle 3 # 123-146, Parcelación Piedra Grande",
+        direccion: "Contáctanos para más información",
         horario: "L-D: 9:00 - 16:00",
     },
 ];
 ---
 
-<Layout 
-	title="Tienda - Fundación Paraíso de la Mascota Cali"
-	description="Compra productos de nuestra tienda y apoya a la fundación. Camisetas, tazas, calendarios y más. Cada compra ayuda a seguir rescatando y cuidando mascotas en Cali."
-	keywords="tienda fundación mascotas, productos animal, camisetas mascotas, tazas mascotas, calendario mascotas, compra solidaria Cali"
-	ogTitle="Tienda - Fundación Paraíso de la Mascota"
-	ogDescription="Compra productos solidarios y apoya nuestra misión. ¡Cada compra ayuda a las mascotas!"
-	ogImage="/images/tienda/calendario-2025.png"
+<Layout
+    title="Tienda - Fundación Paraíso de la Mascota Cali"
+    description="Compra productos de nuestra tienda y apoya a la fundación. Camisetas, tazas, calendarios y más. Cada compra ayuda a seguir rescatando y cuidando mascotas en Cali."
+    keywords="tienda fundación mascotas, productos animal, camisetas mascotas, tazas mascotas, calendario mascotas, compra solidaria Cali"
+    ogTitle="Tienda - Fundación Paraíso de la Mascota"
+    ogDescription="Compra productos solidarios y apoya nuestra misión. ¡Cada compra ayuda a las mascotas!"
+    ogImage={calendario2026.src}
 >
     <!-- Hero section con fondo y mensaje motivador -->
     <section class="relative bg-amber-800 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-amber-900 to-amber-700 opacity-90 z-0"></div>
-        <div class="relative z-10 max-w-6xl mx-auto px-4 py-20 md:py-24 text-center">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-amber-900 to-amber-700 opacity-90 z-0"
+        >
+        </div>
+        <div
+            class="relative z-10 max-w-6xl mx-auto px-4 py-20 md:py-24 text-center"
+        >
+            <h1
+                class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in"
+            >
                 Tienda Solidaria
             </h1>
-            <p class="text-xl md:text-2xl text-amber-100 max-w-3xl mx-auto mb-6 animate-fade-in animation-delay-200">
+            <p
+                class="text-xl md:text-2xl text-amber-100 max-w-3xl mx-auto mb-6 animate-fade-in animation-delay-200"
+            >
                 ¡Regala con amor, regala con el corazón!
             </p>
             <div class="w-24 h-1 bg-amber-500 mx-auto mb-8"></div>
-            <p class="text-lg text-white/90 max-w-2xl mx-auto animate-fade-in animation-delay-400">
-                Cada compra en nuestra tienda ayuda directamente a los peluditos que rescatamos y cuidamos hasta encontrarles un hogar.
+            <p
+                class="text-lg text-white/90 max-w-2xl mx-auto animate-fade-in animation-delay-400"
+            >
+                Cada compra en nuestra tienda ayuda directamente a los peluditos
+                que rescatamos y cuidamos hasta encontrarles un hogar.
             </p>
         </div>
     </section>
-    
+
     <!-- Producto destacado: Calendario 2025 -->
     <section class="py-16 px-4 bg-gradient-to-b from-amber-50 to-white">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="inline-block text-3xl md:text-4xl font-bold text-amber-900 mb-2 relative">
-                    Calendario 2025
-                    <span class="absolute -top-4 -right-8 bg-amber-500 text-white text-sm px-3 py-1 rounded-full transform rotate-12">¡Nuevo!</span>
+                <h2
+                    class="inline-block text-3xl md:text-4xl font-bold text-amber-900 mb-2 relative"
+                >
+                    Calendario 2026
+                    <span
+                        class="absolute -top-4 -right-8 bg-amber-500 text-white text-sm px-3 py-1 rounded-full transform rotate-12"
+                        >¡Nuevo!</span
+                    >
                 </h2>
-                <p class="text-xl text-gray-600">¡Ya está aquí nuestro Calendario Planeador 2025!</p>
+                <p class="text-xl text-gray-600">
+                    ¡Ya está aquí nuestro Calendario Planeador 2026!
+                </p>
             </div>
-            
+
             <div class="grid md:grid-cols-2 gap-10 items-center">
                 <!-- Imagen del calendario -->
                 <div class="relative group">
                     <div class="overflow-hidden rounded-xl shadow-xl">
                         <!-- Imagen de perro de ejemplo -->
-                        <img 
-                            src="/images/tienda/calendario-2025.png"
-                            alt="Calendario 2025" 
+                        <Image
+                            src={calendario2026}
+                            alt="Calendario 2026"
                             class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                     </div>
-                    <div class="absolute top-4 right-4 bg-amber-500 text-white text-lg font-bold px-4 py-2 rounded-lg shadow-lg transform rotate-3">
+                    <div
+                        class="absolute top-4 right-4 bg-amber-500 text-white text-lg font-bold px-4 py-2 rounded-lg shadow-lg transform rotate-3"
+                    >
                         $25.000
                     </div>
                 </div>
-                
+
                 <!-- Información del calendario -->
                 <div>
-                    <h3 class="text-2xl font-bold text-amber-900 mb-4">Calendario Planeador 2025</h3>
+                    <h3 class="text-2xl font-bold text-amber-900 mb-4">
+                        Calendario Planeador 2026
+                    </h3>
                     <div class="prose prose-amber prose-lg mb-6">
                         <p>
-                            Hecho con mucho amor y cariño, protagonizado como siempre por peluditos de nuestra fundación que están esperando un hogar.
+                            ¡Ya llegó nuestro Calendario Planeador 2026!
+                            Protagonizado por perritos 🐶 y gatitos 😻 de
+                            nuestra Fundación quienes están esperando por un
+                            hogar 🏠.
                         </p>
                         <p>
-                            Con esta contribución estás apoyando nuestra causa para salvar más perros y gatos.
+                            Está diseñado para tener todos los detalles de tu
+                            año, ¡Perfecto para agendar citas, llamadas, correos
+                            y hasta tu tiempo con tus amigos! Nada como tener
+                            tus días planeados y tus notas en un solo lugar 🤓.
                         </p>
                     </div>
-                    
+
                     <div class="bg-amber-50 p-6 rounded-xl mb-6">
-                        <h4 class="font-semibold text-amber-800 mb-3 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        <h4
+                            class="font-semibold text-amber-800 mb-3 flex items-center"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 mr-2"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                    clip-rule="evenodd"></path>
                             </svg>
                             Puntos de venta:
                         </h4>
                         <ul class="space-y-2 text-gray-700">
-                            {puntosVenta.map(punto => (
-                                <li class="flex items-start gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span>{punto.nombre}: <span class="text-gray-600">{punto.direccion}</span></span>
-                                </li>
-                            ))}
+                            {
+                                puntosVenta.map((punto) => (
+                                    <li class="flex items-start gap-2">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                        <span>
+                                            {punto.nombre}:{" "}
+                                            <span class="text-gray-600">
+                                                {punto.direccion}
+                                            </span>
+                                        </span>
+                                    </li>
+                                ))
+                            }
                         </ul>
-                        <div class="mt-4 p-3 bg-amber-100/50 rounded-lg text-amber-800 border border-amber-200">
-                            <p class="flex items-center text-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <div
+                            class="mt-4 p-3 bg-amber-100/50 rounded-lg text-amber-800 border border-amber-200"
+                        >
+                            <p class="flex items-start text-sm">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 mr-2 text-amber-600 flex-shrink-0 mt-0.5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
                                 </svg>
-                                También contamos con servicio a domicilio por $6.000 adicionales.
+                                <span>
+                                    Domicilio por $6.000 adicionales (Cali).
+                                    Para otras ciudades, despacho por mensajería
+                                    (costo asumido por el comprador).
+                                </span>
                             </p>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-wrap gap-4">
-                        <a 
-                            href="https://wa.me/573152698780?text=Hola,%20me%20gustaría%20comprar%20un%20Calendario%202025" 
+
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <a
+                            href="https://wa.me/573152698780?text=Hola,%20me%20gustaría%20comprar%20el%20Calendario%202026"
                             target="_blank"
                             class="flex items-center justify-center gap-2 bg-amber-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-700 transition-colors duration-300 shadow-md hover:shadow-lg"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                                ></path>
                             </svg>
                             ¡Comprar por WhatsApp!
                         </a>
-                        <a 
-                            href="mailto:paraisodelamascota@hotmail.com?subject=Compra%20Calendario%202025&body=Hola,%20me%20gustaría%20adquirir%20el%20Calendario%202025." 
+                        <a
+                            href="mailto:paraisodelamascota@hotmail.com?subject=Compra%20Calendario%202026&body=Hola,%20me%20gustaría%20adquirir%20el%20Calendario%202026."
                             class="flex items-center justify-center gap-2 border-2 border-amber-600 text-amber-600 px-8 py-3 rounded-xl font-bold hover:bg-amber-50 transition-colors duration-300"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                                ></path>
+                                <path
+                                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                                ></path>
                             </svg>
                             Consultar por email
                         </a>
                     </div>
+                    <p class="text-sm text-gray-500 italic">
+                        ¡También nos ayudas mucho compartiendo para que podamos
+                        llegar a más personas! 🐾
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Catálogo de productos -->
     <section class="py-16 px-4 bg-white">
         <div class="max-w-6xl mx-auto">
@@ -185,49 +287,65 @@ const puntosVenta = [
                     Más Productos Solidarios
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Cada artículo que adquieres ayuda a financiar nuestras actividades de rescate y cuidado animal.
+                    Cada artículo que adquieres ayuda a financiar nuestras
+                    actividades de rescate y cuidado animal.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {productos.filter(p => !p.destacado).map(producto => (
-                    <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
-                        <div class="h-64 overflow-hidden relative">
-                            <img
-                                src={producto.imagen} 
-                                alt={producto.nombre} 
-                                class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
-                            />
-                        </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-gray-800 pr-2">{producto.nombre}</h3>
-                                <span class="bg-amber-100 text-amber-800 text-lg font-bold px-3 py-1 rounded-md whitespace-nowrap">
-                                    ${producto.precio.toLocaleString('es-CO')}
-                                </span>
+                {
+                    productos
+                        .filter((p) => !p.destacado)
+                        .map((producto) => (
+                            <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
+                                <div class="h-64 overflow-hidden relative">
+                                    <Image
+                                        src={producto.imagen}
+                                        alt={producto.nombre}
+                                        class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                </div>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <h3 class="text-xl font-bold text-gray-800 pr-2">
+                                            {producto.nombre}
+                                        </h3>
+                                        <span class="bg-amber-100 text-amber-800 text-lg font-bold px-3 py-1 rounded-md whitespace-nowrap">
+                                            $
+                                            {producto.precio.toLocaleString(
+                                                "es-CO",
+                                            )}
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600 mb-6 text-sm flex-grow">
+                                        {producto.descripcion}
+                                    </p>
+                                    <a
+                                        href={`https://wa.me/573152698780?text=Hola,%20me%20interesa%20comprar%20${encodeURIComponent(producto.nombre)}`}
+                                        target="_blank"
+                                        class="mt-auto inline-flex items-center justify-center gap-2 bg-amber-600 text-white w-full py-2.5 rounded-lg font-semibold hover:bg-amber-700 transition-colors transform hover:scale-105"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                                        </svg>
+                                        Comprar
+                                    </a>
+                                </div>
                             </div>
-                            <p class="text-gray-600 mb-6 text-sm flex-grow">
-                                {producto.descripcion}
-                            </p>
-                            <a 
-                                href={`https://wa.me/573152698780?text=Hola,%20me%20interesa%20comprar%20${encodeURIComponent(producto.nombre)}`}
-                                target="_blank"
-                                class="mt-auto inline-flex items-center justify-center gap-2 bg-amber-600 text-white w-full py-2.5 rounded-lg font-semibold hover:bg-amber-700 transition-colors transform hover:scale-105"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                                </svg>
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                ))}
+                        ))
+                }
             </div>
-            
+
             <div class="mt-12 bg-amber-50 p-6 rounded-xl text-center">
                 <p class="text-amber-800">
-                    <span class="font-semibold">Importante:</span> Los productos pueden variar en disponibilidad. 
-                    Contáctanos para confirmar existencias y consultar por otros artículos no mostrados en la web.
+                    <span class="font-semibold">Importante:</span> Los productos pueden
+                    variar en disponibilidad. Contáctanos para confirmar existencias
+                    y consultar por otros artículos no mostrados en la web.
                 </p>
             </div>
         </div>
@@ -239,15 +357,15 @@ const puntosVenta = [
         animation: fadeIn 0.8s ease-out forwards;
         opacity: 0;
     }
-    
+
     .animation-delay-200 {
         animation-delay: 0.2s;
     }
-    
+
     .animation-delay-400 {
         animation-delay: 0.4s;
     }
-    
+
     @keyframes fadeIn {
         from {
             opacity: 0;

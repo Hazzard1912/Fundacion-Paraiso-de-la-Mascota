@@ -1,6 +1,7 @@
 ---
 import { getTestimoniosData } from "../actions/cms.actions";
 import { Swiper } from "swiper/bundle";
+import { Image } from "astro:assets";
 
 let testimoniosData = null;
 let error = null;
@@ -28,24 +29,28 @@ const defaultData = {
         {
             nombre: "Ana María Rodríguez",
             rol: "Madre adoptiva de Luna",
+            // URL original: https://images.unsplash.com/photo-1438761681033-6461ffad8d80
             imagen: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
             texto: "Adoptar a Luna fue la mejor decisión que pudimos tomar como familia. El proceso fue transparente y el equipo nos apoyó en todo momento. Ahora no podemos imaginar nuestra vida sin ella.",
         },
         {
             nombre: "Carlos Mendoza",
             rol: "Voluntario y padrino",
+            // URL original: https://images.unsplash.com/photo-1500648767791-00dcc994a43e
             imagen: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
             texto: "Ser voluntario en la fundación me ha permitido ver de primera mano el amor y dedicación que ponen en cada animal. Es increíble ver cómo transforman vidas todos los días.",
         },
         {
             nombre: "Isabella Martínez",
             rol: "Adoptante de Max",
+            // URL original: https://images.unsplash.com/photo-1494790108377-be9c29b29330
             imagen: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
             texto: "La fundación hace un trabajo excepcional. No solo encontré a mi compañero perfecto, sino que también recibí todo el asesoramiento necesario para darle el mejor hogar posible.",
         },
         {
             nombre: "Javier Pérez",
             rol: "Padre adoptivo de Milo",
+            // URL original: https://images.unsplash.com/photo-1500648767791-00dcc994a43e
             imagen: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
             texto: "Adoptar a Milo fue una experiencia maravillosa. El equipo de la fundación nos ayudó a encontrar al gato perfecto para nuestra familia. ¡Gracias por todo!",
         },
@@ -77,9 +82,11 @@ const finalData = (testimoniosData && testimoniosData.success && testimoniosData
                         <div class="swiper-slide">
                             <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 mx-4">
                                 <div class="flex items-center gap-4 mb-6">
-                                    <img
+                                    <Image
                                         src={testimonial.imagen}
                                         alt={testimonial.nombre}
+                                        width={64}
+                                        height={64}
                                         class="w-16 h-16 rounded-full object-cover"
                                     />
                                     <div>

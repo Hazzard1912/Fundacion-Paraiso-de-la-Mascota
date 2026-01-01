@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+import vetService from "../assets/images/stock/vet-service.jpeg";
+import esterilizacionService from "../assets/images/stock/esterilizacion-service.jpeg";
 ---
 
 <Layout 
@@ -34,9 +38,11 @@ import Layout from "../layouts/Layout.astro";
                     id="veterinaria"
                 >
                     <div class="h-64 overflow-hidden">
-                        <img
-                            src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def"
+                        <Image
+                            src={vetService}
                             alt="Servicio Veterinario"
+                            width={800}
+                            height={600}
                             class="w-full h-full object-cover"
                         />
                     </div>
@@ -151,9 +157,11 @@ import Layout from "../layouts/Layout.astro";
                     id="esterilizacion"
                 >
                     <div class="h-64 overflow-hidden">
-                        <img
-                            src="https://images.unsplash.com/photo-1654895716780-b4664497420d"
+                        <Image
+                            src={esterilizacionService}
                             alt="Servicio de Esterilización"
+                            width={800}
+                            height={600}
                             class="w-full h-full object-cover"
                         />
                     </div>

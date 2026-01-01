@@ -439,6 +439,7 @@ export const getTestimoniosData = defineAction({
       // Procesar las imágenes de los testimonios - Cloudinary devuelve URLs absolutas
       const testimoniosProcesados = Array.isArray(testimoniosData.testimonios) ? 
         testimoniosData.testimonios.map(testimonio => {
+          // URL original: https://images.unsplash.com/photo-1438761681033-6461ffad8d80
           let imagenUrl = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80"; // imagen por defecto
           if (testimonio.imagen && testimonio.imagen.url) {
             imagenUrl = testimonio.imagen.url;

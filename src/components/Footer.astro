@@ -1,6 +1,9 @@
 ---
 const currentYear = new Date().getFullYear();
 
+import { Image } from "astro:assets";
+import logoPng from "../assets/images/logo.png";
+
 const footerSections = {
     "Enlaces": [
         { name: "Nuestra Historia", href: "/#historia" },
@@ -31,12 +34,6 @@ const contactInfo = [
         href: "mailto:paraisodelamascota@hotmail.com",
         icon: "envelope",
     },
-    {
-        type: "address",
-        value: "Calle 3 #  123-146, Parcelación Piedra Grande, Santiago de Cali, Colombia",
-        href: "https://maps.app.goo.gl/ZcBbfMsg24bN23AA9",
-        icon: "map-marker-alt",
-    },
 ];
 
 const socialLinks = [
@@ -60,8 +57,8 @@ const socialLinks = [
             <!-- Brand & Info Column -->
             <div>
                 <div class="bg-white p-3 rounded-lg inline-block mb-4">
-                    <img
-                        src="/images/logo.png"
+                    <Image
+                        src={logoPng}
                         alt="Fundación Logo"
                         class="h-20 w-auto"
                     />

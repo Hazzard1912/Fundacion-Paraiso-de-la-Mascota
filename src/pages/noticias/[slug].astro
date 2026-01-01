@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-// ❌ Ya no necesitas BlocksRenderer
-// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { actions } from "astro:actions";
+
+export const prerender = false;
 
 const { slug } = Astro.params;
 const { data, error } = await Astro.callAction(actions.getNoticiaBySlugData, { slug });
