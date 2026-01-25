@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions";
 import { strapiService } from "../lib/strapi";
+import { optimizeCloudinaryImage } from "../lib/cloudinary";
 
 // Action para obtener datos del hero desde Strapi
 export const getHeroData = defineAction({
@@ -23,7 +24,7 @@ export const getHeroData = defineAction({
         
         if (heroData.backgroundImage && Array.isArray(heroData.backgroundImage) && heroData.backgroundImage.length > 0) {
           const image = heroData.backgroundImage[0];
-          backgroundImageUrl = image.url; // Cloudinary devuelve URLs absolutas
+          backgroundImageUrl = optimizeCloudinaryImage(image.url); // Cloudinary devuelve URLs absolutas
           alternativeText = image.alternativeText || "";
         }
         
@@ -68,7 +69,7 @@ export const getSlidesData = defineAction({
           for (const image of slideRecord.image) {
             slides.push({
               id: image.id,
-              imageUrl: image.url,
+              imageUrl: optimizeCloudinaryImage(image.url),
               alternativeText: image.alternativeText || "",
               url: slideRecord.url || null
             });
@@ -118,7 +119,7 @@ export const getFeaturedPets = defineAction({
         
         if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
           const image = pet.photos[0];
-          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
+          imageUrl = optimizeCloudinaryImage(image.url, 500); // Cloudinary devuelve URLs absolutas, resize to 500px width
           alternativeText = image.alternativeText || "";
         }
 
@@ -172,7 +173,7 @@ export const getLatestAdoptions = defineAction({
         
         if (adoption.pet && adoption.pet.photos && Array.isArray(adoption.pet.photos) && adoption.pet.photos.length > 0) {
           const image = adoption.pet.photos[0];
-          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
+          imageUrl = optimizeCloudinaryImage(image.url, 400); // Cloudinary devuelve URLs absolutas, resize to 400px
           alternativeText = image.alternativeText || "";
         }
 
@@ -230,7 +231,7 @@ export const getPetsForAdoption = defineAction({
         
         if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
           const image = pet.photos[0];
-          imageUrl = image.url; // Cloudinary devuelve URLs absolutas
+          imageUrl = optimizeCloudinaryImage(image.url, 500); // Cloudinary devuelve URLs absolutas, resize for list view
           alternativeText = image.alternativeText || "";
         }
 
@@ -287,7 +288,7 @@ export const getPet = defineAction({
       
       if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
         const image = pet.photos[0];
-        imageUrl = image.url; // Cloudinary devuelve URLs absolutas
+        imageUrl = optimizeCloudinaryImage(image.url); // Cloudinary devuelve URLs absolutas, full size for detail page
         alternativeText = image.alternativeText || "";
       }
 
@@ -372,27 +373,27 @@ export const getHistoriaData = defineAction({
       let imagenRefugio = "/images/shelter-dogs.jpg";
       if (historiaData.imagenRefugio) {
         if (Array.isArray(historiaData.imagenRefugio) && historiaData.imagenRefugio.length > 0) {
-          imagenRefugio = historiaData.imagenRefugio[0].url;
+          imagenRefugio = optimizeCloudinaryImage(historiaData.imagenRefugio[0].url);
         } else if (typeof historiaData.imagenRefugio === 'object' && 'url' in historiaData.imagenRefugio) {
-          imagenRefugio = (historiaData.imagenRefugio as any).url;
+          imagenRefugio = optimizeCloudinaryImage((historiaData.imagenRefugio as any).url);
         }
       }
       
       let imagenCentro = "/images/kid-dog.jpg";
       if (historiaData.imagenCentro) {
         if (Array.isArray(historiaData.imagenCentro) && historiaData.imagenCentro.length > 0) {
-          imagenCentro = historiaData.imagenCentro[0].url;
+          imagenCentro = optimizeCloudinaryImage(historiaData.imagenCentro[0].url);
         } else if (typeof historiaData.imagenCentro === 'object' && 'url' in historiaData.imagenCentro) {
-          imagenCentro = (historiaData.imagenCentro as any).url;
+          imagenCentro = optimizeCloudinaryImage((historiaData.imagenCentro as any).url);
         }
       }
       
       let imagenFundadora = "/images/founder.jpg";
       if (historiaData.imagenFundadora) {
         if (Array.isArray(historiaData.imagenFundadora) && historiaData.imagenFundadora.length > 0) {
-          imagenFundadora = historiaData.imagenFundadora[0].url;
+          imagenFundadora = optimizeCloudinaryImage(historiaData.imagenFundadora[0].url);
         } else if (typeof historiaData.imagenFundadora === 'object' && 'url' in historiaData.imagenFundadora) {
-          imagenFundadora = (historiaData.imagenFundadora as any).url;
+          imagenFundadora = optimizeCloudinaryImage((historiaData.imagenFundadora as any).url);
         }
       }
       
@@ -442,7 +443,7 @@ export const getTestimoniosData = defineAction({
           // URL original: https://images.unsplash.com/photo-1438761681033-6461ffad8d80
           let imagenUrl = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80"; // imagen por defecto
           if (testimonio.imagen && testimonio.imagen.url) {
-            imagenUrl = testimonio.imagen.url;
+            imagenUrl = optimizeCloudinaryImage(testimonio.imagen.url, 100); // Resize avatar
           }
           return {
             nombre: testimonio.nombre,

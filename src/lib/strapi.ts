@@ -1,3 +1,5 @@
+import { optimizeCloudinaryImage } from "./cloudinary";
+
 interface StrapiResponse<T> {
   data: T;
   meta: {
@@ -526,14 +528,14 @@ export class StrapiService {
     } | null;
     fecha: string;
   }>; meta: any; }> {
-    const response = await this.fetch('/noticias?populate=imagen&fields=titulo,slug,resumen,contenido,fecha');
+      const response = await this.fetch('/noticias?populate=imagen&fields=titulo,slug,resumen,contenido,fecha');
     return {
       data: Array.isArray(response.data) ? response.data.map((item: any) => ({
         id: item.id,
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: item.imagen.url, // Cloudinary devuelve URLs absolutas
+              url: optimizeCloudinaryImage(item.imagen.url), // Cloudinary devuelve URLs absolutas
               alternativeText: item.imagen.alternativeText || ''
             }
           : null
@@ -561,7 +563,7 @@ export class StrapiService {
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: item.imagen.url, // Cloudinary devuelve URLs absolutas
+              url: optimizeCloudinaryImage(item.imagen.url), // Cloudinary devuelve URLs absolutas
               alternativeText: item.imagen.alternativeText || ''
             }
           : null
@@ -571,4 +573,4 @@ export class StrapiService {
   }
 }
 
-export const strapiService = new StrapiService(); 
+export const strapiService = new StrapiService();
