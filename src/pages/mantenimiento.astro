@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import logoPng from "../assets/images/logo.png";
+
+const socialLinks = [
+    {
+        name: "WhatsApp",
+        href: "https://wa.me/573152698780",
+        icon: "fa-whatsapp",
+        color: "bg-green-500 hover:bg-green-600",
+        label: "Escríbenos por WhatsApp"
+    },
+    {
+        name: "Facebook",
+        href: "https://www.facebook.com/ParaisodelaMascotaCali",
+        icon: "fa-facebook-f",
+        color: "bg-blue-600 hover:bg-blue-700",
+        label: "Visítanos en Facebook"
+    },
+    {
+        name: "Instagram",
+        href: "https://www.instagram.com/paraisocali/",
+        icon: "fa-instagram",
+        color: "bg-pink-600 hover:bg-pink-700",
+        label: "Síguenos en Instagram"
+    },
+];
+
+export const prerender = false;
+---
+
+<Layout 
+    title="Mantenimiento - Fundación Paraíso de la Mascota Cali"
+    description="Estamos realizando mejoras técnicas en nuestra página web. Volveremos pronto."
+    keywords="mantenimiento, fundación paraiso de la mascota"
+    ogTitle="Mantenimiento - Fundación Paraíso de la Mascota"
+    ogDescription="Estamos realizando mejoras en nuestra web. ¡Contáctanos por WhatsApp!"
+>
+    <div class="min-h-screen bg-amber-50 flex flex-col items-center justify-center px-4 py-12 text-center">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl max-w-2xl w-full border border-amber-100">
+            <div class="mb-8 flex justify-center">
+                <Image
+                    src={logoPng}
+                    alt="Fundación Paraíso de la Mascota"
+                    class="h-32 w-auto animate-pulse"
+                />
+            </div>
+            
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+                ¡Volveremos pronto!
+            </h1>
+            
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                Estamos realizando mejoras técnicas importantes en nuestra plataforma para brindarte una mejor experiencia de adopción.
+                <br/><br/>
+                <span class="font-semibold text-amber-800">
+                    ¡Seguimos atendiendo adopciones y consultas normalmente a través de nuestros canales oficiales!
+                </span>
+            </p>
+
+            <div class="grid gap-4 md:grid-cols-1 max-w-sm mx-auto">
+                {socialLinks.map((social) => (
+                    <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={`flex items-center justify-center gap-3 px-6 py-4 rounded-xl text-white font-semibold transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg ${social.color}`}
+                    >
+                        <i class={`fab ${social.icon} text-xl`}></i>
+                        <span>{social.label}</span>
+                    </a>
+                ))}
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-gray-100 text-sm text-gray-500">
+                <p>También puedes llamarnos al:</p>
+                <a href="tel:+573152698780" class="text-amber-600 font-bold text-lg hover:underline">
+                    +57 315 269 8780
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+</Layout>
