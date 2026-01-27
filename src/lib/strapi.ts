@@ -535,7 +535,7 @@ export class StrapiService {
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: optimizeCloudinaryImage(item.imagen.url), // Cloudinary devuelve URLs absolutas
+              url: optimizeCloudinaryImage(item.imagen.url, 600), // Cloudinary devuelve URLs absolutas, 600px for list cards
               alternativeText: item.imagen.alternativeText || ''
             }
           : null
@@ -563,7 +563,7 @@ export class StrapiService {
         ...item,
         imagen: item.imagen && item.imagen.url
           ? {
-              url: optimizeCloudinaryImage(item.imagen.url), // Cloudinary devuelve URLs absolutas
+              url: optimizeCloudinaryImage(item.imagen.url, 1200), // Cloudinary devuelve URLs absolutas, 1200px for detail view
               alternativeText: item.imagen.alternativeText || ''
             }
           : null

@@ -24,7 +24,7 @@ export const getHeroData = defineAction({
         
         if (heroData.backgroundImage && Array.isArray(heroData.backgroundImage) && heroData.backgroundImage.length > 0) {
           const image = heroData.backgroundImage[0];
-          backgroundImageUrl = optimizeCloudinaryImage(image.url); // Cloudinary devuelve URLs absolutas
+          backgroundImageUrl = optimizeCloudinaryImage(image.url, 1920); // Cloudinary devuelve URLs absolutas, 1920px for hero background
           alternativeText = image.alternativeText || "";
         }
         
@@ -69,7 +69,7 @@ export const getSlidesData = defineAction({
           for (const image of slideRecord.image) {
             slides.push({
               id: image.id,
-              imageUrl: optimizeCloudinaryImage(image.url),
+              imageUrl: optimizeCloudinaryImage(image.url, 1200), // 1200px for carousel slides
               alternativeText: image.alternativeText || "",
               url: slideRecord.url || null
             });
@@ -288,7 +288,7 @@ export const getPet = defineAction({
       
       if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
         const image = pet.photos[0];
-        imageUrl = optimizeCloudinaryImage(image.url); // Cloudinary devuelve URLs absolutas, full size for detail page
+        imageUrl = optimizeCloudinaryImage(image.url, 800); // Cloudinary devuelve URLs absolutas, 800px for detail page
         alternativeText = image.alternativeText || "";
       }
 
@@ -373,27 +373,27 @@ export const getHistoriaData = defineAction({
       let imagenRefugio = "/images/shelter-dogs.jpg";
       if (historiaData.imagenRefugio) {
         if (Array.isArray(historiaData.imagenRefugio) && historiaData.imagenRefugio.length > 0) {
-          imagenRefugio = optimizeCloudinaryImage(historiaData.imagenRefugio[0].url);
+          imagenRefugio = optimizeCloudinaryImage(historiaData.imagenRefugio[0].url, 800);
         } else if (typeof historiaData.imagenRefugio === 'object' && 'url' in historiaData.imagenRefugio) {
-          imagenRefugio = optimizeCloudinaryImage((historiaData.imagenRefugio as any).url);
+          imagenRefugio = optimizeCloudinaryImage((historiaData.imagenRefugio as any).url, 800);
         }
       }
       
       let imagenCentro = "/images/kid-dog.jpg";
       if (historiaData.imagenCentro) {
         if (Array.isArray(historiaData.imagenCentro) && historiaData.imagenCentro.length > 0) {
-          imagenCentro = optimizeCloudinaryImage(historiaData.imagenCentro[0].url);
+          imagenCentro = optimizeCloudinaryImage(historiaData.imagenCentro[0].url, 800);
         } else if (typeof historiaData.imagenCentro === 'object' && 'url' in historiaData.imagenCentro) {
-          imagenCentro = optimizeCloudinaryImage((historiaData.imagenCentro as any).url);
+          imagenCentro = optimizeCloudinaryImage((historiaData.imagenCentro as any).url, 800);
         }
       }
       
       let imagenFundadora = "/images/founder.jpg";
       if (historiaData.imagenFundadora) {
         if (Array.isArray(historiaData.imagenFundadora) && historiaData.imagenFundadora.length > 0) {
-          imagenFundadora = optimizeCloudinaryImage(historiaData.imagenFundadora[0].url);
+          imagenFundadora = optimizeCloudinaryImage(historiaData.imagenFundadora[0].url, 800);
         } else if (typeof historiaData.imagenFundadora === 'object' && 'url' in historiaData.imagenFundadora) {
-          imagenFundadora = optimizeCloudinaryImage((historiaData.imagenFundadora as any).url);
+          imagenFundadora = optimizeCloudinaryImage((historiaData.imagenFundadora as any).url, 800);
         }
       }
       
