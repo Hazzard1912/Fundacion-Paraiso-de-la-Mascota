@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import Mision from "../components/Mision.astro";
@@ -9,6 +11,10 @@ import Carousel from "../components/Carousel.astro";
 import Historia from "../components/Historia.astro";
 import FAQ from "../components/FAQ.astro";
 import UltimaNoticia from "../components/UltimaNoticia.astro";
+
+// Establecer caché en el borde (Edge) por 10 minutos (600s)
+// y permitir servir contenido "viejo" mientras se revalida en 30s
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=30');
 ---
 
 <Layout 

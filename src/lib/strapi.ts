@@ -41,6 +41,7 @@ export class StrapiService {
 
     const response = await fetch(url, {
       headers,
+      cache: 'no-store'
     });
 
     if (!response.ok) {
@@ -63,6 +64,7 @@ export class StrapiService {
 
     const response = await fetch(url, {
       headers,
+      cache: 'no-store'
     });
 
     if (!response.ok) {
