@@ -2,7 +2,6 @@
 const currentYear = new Date().getFullYear();
 
 import { Image } from "astro:assets";
-import logoPng from "../assets/images/logo.png";
 
 const footerSections = {
     "Enlaces": [
@@ -57,8 +56,8 @@ const socialLinks = [
             <!-- Brand & Info Column -->
             <div>
                 <div class="bg-white p-3 rounded-lg inline-block mb-4">
-                    <Image
-                        src={logoPng}
+                    <img
+                        src="/images/logo.png"
                         alt="Fundación Logo"
                         class="h-20 w-auto"
                     />
