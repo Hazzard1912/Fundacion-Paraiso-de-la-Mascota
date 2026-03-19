@@ -1,16 +1,17 @@
 ---
-import { getLatestAdoptions } from "../actions/cms.actions";
+import { getHappyEndings } from "../actions/cms.actions";
 
-const { data, error } = await Astro.callAction(getLatestAdoptions, {});
+const { data, error } = await Astro.callAction(getHappyEndings, {});
 
 if (error) {
-    console.error("Error fetching latest adoptions:", error);
+    console.error("Error fetching happy endings:", error);
 }
 
 const adoptions = data?.data?.adoptions || [];
 
 // Función para formatear la fecha en español
 function formatDate(dateString: string) {
+    if (!dateString) return "";
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("es-ES", {
         year: "numeric",
@@ -20,132 +21,96 @@ function formatDate(dateString: string) {
 }
 ---
 
-<section class="py-32 bg-amber-50 text-amber-900">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold mb-6 tracking-tight">
-                Historias con Final Feliz
+<section class="py-32 bg-amber-50 text-amber-900 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 relative">
+        <!-- Elementos decorativos -->
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+        <div class="text-center mb-20 relative">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-amber-900">
+                Historias con Final Feliz 🐾
             </h2>
-            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-                Cada adopción es un nuevo comienzo lleno de esperanza. Estas
-                mascotas encontraron a sus familias para siempre y ahora
-                disfrutan de una vida plena de amor y cuidados.
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto font-light leading-relaxed italic">
+                "Estas mascotas han encontrado su hogar gracias al apoyo de nuestra comunidad y al amor de familias valientes que deciden marcar la diferencia. Cada ladrido o ronroneo en una casa nueva es un testimonio de esperanza."
             </p>
+            <div class="w-24 h-1.5 bg-amber-500 mx-auto mt-8 rounded-full"></div>
         </div>
 
         {
             adoptions.length > 0 ? (
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 gap-y-14">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                     {adoptions.map((adoption) => (
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100">
-                            <div class="relative aspect-square flex items-center justify-center bg-white">
+                        <div class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-amber-100/50">
+                            
+                            <div class="relative aspect-[4/5] overflow-hidden">
                                 <img
-                                    src={adoption.pet.imageUrl}
-                                    alt={`${adoption.pet.name} adoptado`}
-                                    class="w-full h-full object-cover rounded-t-2xl"
+                                    src={adoption.imageUrl}
+                                    alt={`${adoption.name} adoptado`}
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                <div class="absolute top-4 right-4">
-                                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow">
-                                        Adoptado
+                                <div class="absolute top-5 left-5 z-20">
+                                    <span class="bg-white/90 backdrop-blur-sm text-amber-800 px-4 py-1.5 rounded-2xl text-xs font-bold shadow-sm uppercase tracking-wider">
+                                        Familia Encontrada
                                     </span>
                                 </div>
                             </div>
-                            <div class="p-6">
-                                <h3 class="text-2xl font-bold mb-2 text-amber-800">
-                                    {adoption.pet.name}
-                                </h3>
-                                <p class="text-gray-600 mb-4 text-sm">
-                                    <span class="flex items-center">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-4 w-4 mr-1"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fill-rule="evenodd"
-                                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                clip-rule="evenodd"
-                                            />
+
+                            <div class="p-8 relative">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-3xl font-bold text-amber-900">
+                                        {adoption.name}
+                                    </h3>
+                                    <span class="text-2xl">❤️</span>
+                                </div>
+                                {adoption.adoptionDate && (
+                                    <p class="text-amber-600 font-semibold text-sm flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
-                                        Adoptado el{" "}
-                                        {formatDate(adoption.adoptionDate)}
-                                    </span>
-                                </p>
-                                <p class="text-gray-600 mb-4 text-sm">
-                                    <span class="flex items-center">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-4 w-4 mr-1"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fill-rule="evenodd"
-                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                                clip-rule="evenodd"
-                                            />
-                                        </svg>
-                                        Por {adoption.adopter.name}
-                                    </span>
-                                </p>
-                                <p class="text-gray-600 mb-6 text-sm line-clamp-2">
-                                    {adoption.pet.description}
-                                </p>
+                                        Adoptado(a) el {formatDate(adoption.adoptionDate)}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}
                 </div>
             ) : (
-                <div class="text-center py-12 bg-white/80 rounded-xl shadow-md">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-12 w-12 mx-auto text-amber-500 mb-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                        />
-                    </svg>
-                    <p class="text-lg text-gray-700">
-                        Pronto compartiremos historias de adopciones exitosas.
+                <div class="text-center py-24 bg-white/40 backdrop-blur-md rounded-[3rem] border-4 border-dashed border-amber-200/60 max-w-4xl mx-auto shadow-inner">
+                    <div class="text-6xl mb-6 animate-bounce">🐶🐱</div>
+                    <p class="text-2xl text-amber-800/60 font-medium italic">
+                        Pronto aquí, nuevas historias que calientan el alma...
                     </p>
                 </div>
             )
         }
 
-        <div class="mt-20 text-center">
-            <div
-                class="bg-white p-10 rounded-2xl max-w-3xl mx-auto shadow-lg border border-amber-100"
+        <div class="mt-20 text-center scale-up-center">
+            <a 
+                href="/adopta" 
+                class="inline-flex items-center px-10 py-5 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-3xl transition-all shadow-[0_10px_30px_-10px_rgba(217,119,6,0.5)] hover:shadow-orange-200/80 text-xl group transform hover:scale-105"
             >
-                <h3 class="text-2xl font-bold mb-4 text-amber-800">
-                    Tú puedes ser parte del cambio
-                </h3>
-                <p class="text-xl font-light mb-8 text-gray-600">
-                    Cada adopción transforma dos vidas: la de la mascota y la
-                    tuya. Hay un amigo esperando para llenar tu hogar de alegría
-                    y lealtad incondicional.
-                </p>
-                <a
-                    href="/adopta"
-                    class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-10 rounded-xl transition-colors shadow-lg hover:shadow-amber-200/60"
-                >
-                    Conoce a tu futuro amigo
-                </a>
-            </div>
+                <span class="mr-3 text-2xl">✨</span>
+                ¡Encuentra a tu nuevo mejor amigo!
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
         </div>
     </div>
 </section>
 
 <style>
-    @media (max-width: 640px) {
-        .aspect-square {
-            min-height: 220px;
-        }
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
     }
 </style>

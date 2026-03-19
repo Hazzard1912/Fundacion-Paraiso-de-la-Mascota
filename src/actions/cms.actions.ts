@@ -152,6 +152,76 @@ export const getFeaturedPets = defineAction({
   }
 });
 
+// Action para obtener las mascotas con final feliz (adoptadas recientemente)
+export const getHappyEndings = defineAction({
+  async handler() {
+    try {
+      const response = await strapiService.getHappyEndings(6);
+
+      if (!response.data || response.data.length === 0) {
+        return {
+          success: false,
+          error: "No se encontraron finales felices",
+          data: { adoptions: [] }
+        };
+      }
+
+      const processedAdoptions = response.data.map(pet => {
+        // Obtener la URL de la imagen de la mascota
+        let imageUrl = "/images/shelter-dogs.jpg"; // imagen por defecto
+        let alternativeText = "";
+
+        if (pet.photos && Array.isArray(pet.photos) && pet.photos.length > 0) {
+          const image = pet.photos[0];
+          imageUrl = optimizeCloudinaryImage(image.url, 400); 
+          alternativeText = image.alternativeText || "";
+        }
+
+        return {
+          id: pet.id,
+          name: pet.name,
+          description: pet.description,
+          adoptionDate: pet.adoptedDated,
+          imageUrl: imageUrl,
+          alternativeText: alternativeText,
+        };
+      });
+
+      return {
+        success: true,
+        data: { adoptions: processedAdoptions },
+        error: null
+      };
+    } catch (error) {
+      console.error("Error al obtener finales felices:", error);
+      return {
+        success: false,
+        error: "Error al obtener finales felices",
+        data: { adoptions: [] }
+      };
+    }
+  }
+});
+
+// Action ligera: solo la última mascota adoptada (para badge en Hero)
+export const getLastAdoptedPet = defineAction({
+  async handler() {
+    try {
+      const response = await strapiService.getHappyEndings(1);
+      if (!response.data || response.data.length === 0) {
+        return { success: false, data: null };
+      }
+      const pet = response.data[0];
+      return {
+        success: true,
+        data: { name: pet.name, adoptionDate: pet.adoptedDated }
+      };
+    } catch {
+      return { success: false, data: null };
+    }
+  }
+});
+
 // Action para obtener las últimas adopciones
 export const getLatestAdoptions = defineAction({
   async handler() {

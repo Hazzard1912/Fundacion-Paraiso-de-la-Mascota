@@ -295,6 +295,43 @@ export class StrapiService {
 
     const response = await fetch(url, {
       headers,
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`Strapi API error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  // Método para obtener mascotas adoptadas (Finales Felices) ordenadas por fecha de adopción
+  async getHappyEndings(limit: number = 3): Promise<StrapiResponse<{
+    id: number;
+    documentId: string;
+    name: string;
+    description: string;
+    adoptedDated: string | null;
+    photos: Array<{
+      id: number;
+      url: string;
+      alternativeText: string | null;
+    }>;
+  }[]>> {
+    // Filtramos por isAdopted=true y adoptedDated no nulo, ordenado por esa fecha desc
+    const url = `${this.baseUrl}/api/pets?filters[isAdopted][$eq]=true&filters[adoptedDated][$notNull]=true&populate[photos][fields]=url,alternativeText&sort=adoptedDated:desc&pagination[limit]=${limit}`;
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (this.readToken) {
+      headers['Authorization'] = `Bearer ${this.readToken}`;
+    }
+
+    const response = await fetch(url, {
+      headers,
+      cache: 'no-store'
     });
 
     if (!response.ok) {

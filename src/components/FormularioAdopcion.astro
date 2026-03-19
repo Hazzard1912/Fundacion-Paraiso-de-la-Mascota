@@ -93,6 +93,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
             {
                 !result?.data?.success ? (
                     <form
+                        id="adoption-form"
                         class="space-y-6"
                         method="POST"
                         action={actions.createAdoptionRequest}
@@ -305,7 +306,8 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 
                         <div class="pt-4">
                             <button
-                                type="submit"
+                                id="open-modal-btn"
+                                type="button"
                                 class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                             >
                                 <svg
@@ -359,3 +361,135 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         </div>
     </div>
 </div>
+
+{/* Modal de confirmación del proceso de adopción */}
+<div
+    id="adoption-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+>
+    {/* Backdrop */}
+    <div
+        id="modal-backdrop"
+        class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+    ></div>
+
+    {/* Panel */}
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        {/* Banner de advertencia */}
+        <div class="bg-amber-500 rounded-t-2xl px-6 py-4 flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+            </svg>
+            <div>
+                <h2 id="modal-title" class="text-white font-bold text-lg leading-tight">
+                    Antes de continuar, ten en cuenta...
+                </h2>
+                <p class="text-amber-100 text-sm mt-1">
+                    Enviar este formulario <strong class="text-white">NO significa que la mascota ya es tuya.</strong>
+                </p>
+            </div>
+        </div>
+
+        {/* Cuerpo */}
+        <div class="px-6 py-5">
+            <p class="text-gray-700 mb-5">
+                Este formulario es una <strong>solicitud de contacto</strong>. Al enviarlo, nuestro equipo se comunicará contigo para iniciar un proceso de evaluación. La adopción se completa únicamente después de seguir todos los pasos:
+            </p>
+
+            <ol class="space-y-4">
+                <li class="flex gap-3 items-start">
+                    <span class="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold text-sm">1</span>
+                    <div>
+                        <p class="font-semibold text-amber-900 text-sm">Revisión inicial</p>
+                        <p class="text-gray-600 text-sm">Validamos tu información y te contactamos en máximo 48 horas.</p>
+                    </div>
+                </li>
+                <li class="flex gap-3 items-start">
+                    <span class="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold text-sm">2</span>
+                    <div>
+                        <p class="font-semibold text-amber-900 text-sm">Entrevista y visita al hogar</p>
+                        <p class="text-gray-600 text-sm">Evaluamos que el ambiente sea adecuado para la mascota.</p>
+                    </div>
+                </li>
+                <li class="flex gap-3 items-start">
+                    <span class="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold text-sm">3</span>
+                    <div>
+                        <p class="font-semibold text-amber-900 text-sm">Período de adaptación</p>
+                        <p class="text-gray-600 text-sm">Si todo avanza bien, inicias un período de convivencia mientras se completan los trámites.</p>
+                    </div>
+                </li>
+                <li class="flex gap-3 items-start">
+                    <span class="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-800 font-bold text-sm">4</span>
+                    <div>
+                        <p class="font-semibold text-amber-900 text-sm">Adopción oficial</p>
+                        <p class="text-gray-600 text-sm">Firmamos el contrato de adopción y la mascota pasa oficialmente a tu familia.</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        {/* Acciones */}
+        <div class="px-6 pb-6 flex flex-col sm:flex-row gap-3 justify-end">
+            <button
+                id="modal-cancel-btn"
+                type="button"
+                class="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+            >
+                Cancelar
+            </button>
+            <button
+                id="modal-confirm-btn"
+                type="button"
+                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold hover:from-amber-700 hover:to-amber-800 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Entiendo, enviar mi solicitud
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('adoption-modal') as HTMLElement;
+    const form = document.getElementById('adoption-form') as HTMLFormElement;
+    const openBtn = document.getElementById('open-modal-btn') as HTMLButtonElement;
+    const cancelBtn = document.getElementById('modal-cancel-btn') as HTMLButtonElement;
+    const confirmBtn = document.getElementById('modal-confirm-btn') as HTMLButtonElement;
+    const backdrop = document.getElementById('modal-backdrop') as HTMLElement;
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    openBtn?.addEventListener('click', () => {
+        if (!form.reportValidity()) return;
+        openModal();
+    });
+
+    cancelBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+
+    confirmBtn?.addEventListener('click', () => {
+        closeModal();
+        form.requestSubmit();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+</script>
