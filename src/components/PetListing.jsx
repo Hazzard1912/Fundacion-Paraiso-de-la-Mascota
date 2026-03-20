@@ -122,7 +122,7 @@ export default function PetListing({ initialPets, filters }) {
             className="group transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative overflow-hidden">
                 <img
                   src={pet.imageUrl}
                   alt={pet.name}
