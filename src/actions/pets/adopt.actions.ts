@@ -49,7 +49,7 @@ export const createAdoptionRequest = defineAction({
                                 adopterEmail: email,
                                 adopterPhone: phone,
                                 adopterAddress: address,
-                                adopterHasPets: hasPets === 'yes' ? 'Sí' : 'No',
+                                adopterHasPets: hasPets,
                                 adoptionReason: adoptionReason,
                                 petName: petName || 'Mascota',
                                 petImage: petImage
