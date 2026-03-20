@@ -91,6 +91,8 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
             action={actions.createSponsorRequest}
         >
             <input type="hidden" name="pet" value={pet.documentId} />
+            <input type="hidden" name="petName" value={pet.name} />
+            <input type="hidden" name="petImage" value={pet.imageUrl} />
             <div class="space-y-4">
                 <div class="group">
                     <label
