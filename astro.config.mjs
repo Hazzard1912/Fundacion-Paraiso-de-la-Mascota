@@ -11,6 +11,10 @@ export default defineConfig({
   adapter: vercel(),
   output: 'static',
   trailingSlash: 'never',
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover',
+  },
   integrations: [
     tailwind(), 
     sitemap(), 

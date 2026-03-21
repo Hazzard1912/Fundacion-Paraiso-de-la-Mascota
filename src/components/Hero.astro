@@ -5,21 +5,30 @@ import { Image } from "astro:assets";
 
 import heroBg from "../assets/images/stock/hero-bg.jpeg";
 
-// Obtener datos del hero desde Strapi
-let heroData = null;
+interface Props {
+    heroData?: any;
+    lastAdoptedData?: any;
+}
+
+const { heroData: heroDataProp, lastAdoptedData: lastAdoptedProp } = Astro.props;
+
+// Obtener datos del hero desde Strapi (solo si no se pasaron como prop)
+let heroData = heroDataProp ?? null;
 let error = null;
 
-try {
-    const result = await Astro.callAction(getHeroData, {});
-    if (result.error) {
-        console.error("Error fetching hero data:", result.error);
-        error = result.error;
-    } else if (result.data) {
-        heroData = result.data;
+if (!heroData) {
+    try {
+        const result = await Astro.callAction(getHeroData, {});
+        if (result.error) {
+            console.error("Error fetching hero data:", result.error);
+            error = result.error;
+        } else if (result.data) {
+            heroData = result.data;
+        }
+    } catch (e) {
+        console.error("Exception fetching hero data:", e);
+        error = e;
     }
-} catch (e) {
-    console.error("Exception fetching hero data:", e);
-    error = e;
 }
 
 // Datos por defecto en caso de error
@@ -36,10 +45,14 @@ const finalData = (heroData && heroData.success && heroData.data) ? heroData.dat
 
 // Última mascota adoptada (badge de prueba social)
 let lastAdopted: { name: string; adoptionDate: string | null } | null = null;
-try {
-    const r = await Astro.callAction(getLastAdoptedPet, {});
-    if (r.data?.success && r.data?.data) lastAdopted = r.data.data;
-} catch {}
+if (lastAdoptedProp) {
+    if (lastAdoptedProp.success && lastAdoptedProp.data) lastAdopted = lastAdoptedProp.data;
+} else {
+    try {
+        const r = await Astro.callAction(getLastAdoptedPet, {});
+        if (r.data?.success && r.data?.data) lastAdopted = r.data.data;
+    } catch {}
+}
 
 function daysAgo(dateStr: string): string {
     const diff = Date.now() - new Date(dateStr).getTime();

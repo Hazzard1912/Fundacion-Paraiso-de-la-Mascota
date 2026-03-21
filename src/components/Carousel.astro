@@ -12,18 +12,29 @@ interface Slide {
     url?: string | null; // URL opcional para redirección
 }
 
+interface Props {
+    slidesData?: any;
+}
+
+const { slidesData: slidesDataProp } = Astro.props;
+
 let slides: Slide[] = [];
 
-try {
-    const result = await Astro.callAction(getSlidesData, {});
-    
-    if (result.data && result.data.success && Array.isArray(result.data.data)) {
-        slides = result.data.data.filter((slide: any) => slide.imageUrl);
+if (slidesDataProp) {
+    // Datos ya pasados desde el padre (paralelizado)
+    if (slidesDataProp.success && Array.isArray(slidesDataProp.data)) {
+        slides = slidesDataProp.data.filter((slide: any) => slide.imageUrl);
     }
-    // Si no hay slides o hay error, simplemente slides queda como array vacío
-} catch (e) {
-    // En caso de error, slides queda como array vacío y no se renderiza nada
-    console.warn("No se pudieron cargar los slides del carousel:", e);
+} else {
+    try {
+        const result = await Astro.callAction(getSlidesData, {});
+        
+        if (result.data && result.data.success && Array.isArray(result.data.data)) {
+            slides = result.data.data.filter((slide: any) => slide.imageUrl);
+        }
+    } catch (e) {
+        console.warn("No se pudieron cargar los slides del carousel:", e);
+    }
 }
 ---
 

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 
-export default function PetListing({ initialPets, filters }) {
+export default function PetListing({ pets, filters, type = "adoption" }) {
+  // Use 'pets' prop consistently
+  const initialPets = pets || [];
+  
   // Get initial URL parameters without React Router
   const getInitialParams = () => {
     if (typeof window === 'undefined') return { especie: '', tamaño: '', edad: '', sexo: '' };
@@ -115,36 +118,43 @@ export default function PetListing({ initialPets, filters }) {
 
       {/* Pets grid with transition animations */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPets.map((pet) => (
-          <a
-            key={pet.documentId}
-            href={`/adopta/${pet.documentId}`}
-            className="group transition-all duration-300 transform hover:-translate-y-1"
-          >
-            <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-              <div className="relative overflow-hidden">
-                <img
-                  src={pet.imageUrl}
-                  alt={pet.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                  <h3 className="text-white text-xl font-semibold">{pet.name}</h3>
-                  <p className="text-amber-200 text-sm">{pet.ageGroup} · {pet.species}</p>
+        {filteredPets.map((pet) => {
+          const href = type === 'sponsor' 
+            ? `/adopta/${pet.documentId}/apadrinar` 
+            : `/adopta/${pet.documentId}`;
+          const buttonText = type === 'sponsor' ? 'Apadrinar →' : 'Ver detalles →';
+          
+          return (
+            <a
+              key={pet.documentId}
+              href={href}
+              className="group transition-all duration-300 transform hover:-translate-y-1"
+            >
+              <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={pet.imageUrl}
+                    alt={pet.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h3 className="text-white text-xl font-semibold">{pet.name}</h3>
+                    <p className="text-amber-200 text-sm">{pet.ageGroup} · {pet.species}</p>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <p className="text-gray-600 line-clamp-2">{pet.description || "Sin descripción"}</p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {pet.size}
+                    </span>
+                    <span className="text-amber-600 font-medium text-sm">{buttonText}</span>
+                  </div>
                 </div>
               </div>
-              <div className="p-4">
-                <p className="text-gray-600 line-clamp-2">{pet.description || "Sin descripción"}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {pet.size}
-                  </span>
-                  <span className="text-amber-600 font-medium text-sm">Ver detalles →</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </div>
 
       {filteredPets.length === 0 && (

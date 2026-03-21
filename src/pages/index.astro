@@ -11,10 +11,19 @@ import Carousel from "../components/Carousel.astro";
 import Historia from "../components/Historia.astro";
 import FAQ from "../components/FAQ.astro";
 import UltimaNoticia from "../components/UltimaNoticia.astro";
+import { getHeroData, getLastAdoptedPet, getSlidesData, getMisionData, getHistoriaData, getFAQData } from "../actions/cms.actions";
+import { actions } from "astro:actions";
 
-// Establecer caché en el borde (Edge) por 10 minutos (600s)
-// y permitir servir contenido "viejo" mientras se revalida en 30s
-Astro.response.headers.set('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=30');
+// Paralelizar todas las llamadas a Strapi
+const [heroResult, lastAdoptedResult, slidesResult, noticiasResult, misionResult, historiaResult, faqResult] = await Promise.all([
+	Astro.callAction(getHeroData, {}),
+	Astro.callAction(getLastAdoptedPet, {}),
+	Astro.callAction(getSlidesData, {}),
+	Astro.callAction(actions.getNoticiasData, {}),
+	Astro.callAction(getMisionData, {}),
+	Astro.callAction(getHistoriaData, {}),
+	Astro.callAction(getFAQData, {}),
+]);
 ---
 
 <Layout 
@@ -24,13 +33,13 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=600, stale-while-r
 	ogTitle="Fundación Paraíso de la Mascota Cali - Adopción Responsable"
 	ogDescription="Más de 20 años rescatando y rehabilitando mascotas en Cali. ¡Adopta y cambia una vida para siempre!"
 >
-	<Hero />
-	<Carousel />
-	<UltimaNoticia />
-	<Mision />
-	<Historia />
+	<Hero heroData={heroResult.data} lastAdoptedData={lastAdoptedResult.data} />
+	<Carousel slidesData={slidesResult.data} />
+	<UltimaNoticia noticiasData={noticiasResult.data} />
+	<Mision misionData={misionResult.data} />
+	<Historia historiaData={historiaResult.data} />
 	<FeaturedPets server:defer />
 	<LatestAdoptions server:defer />
 	<CallToAction />
-	<FAQ />
+	<FAQ faqData={faqResult.data} />
 </Layout>

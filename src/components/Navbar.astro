@@ -1,8 +1,6 @@
 ---
 // Get current path for active link highlighting
 const { pathname } = Astro.url;
-
-import { Image } from "astro:assets";
 ---
 
 <header
@@ -21,13 +19,13 @@ import { Image } from "astro:assets";
             </div>
 
             <div class="hidden md:flex md:items-center md:gap-8">
-                <a href="/adopta" class="nav-link">Adopta</a>
-                <a href="/apadrina" class="nav-link">Apadrina</a>
-                <a href="/ayudanos" class="nav-link">Ayúdanos</a>
-                <a href="/servicios" class="nav-link">Servicios</a>
-                <a href="/tienda" class="nav-link">Tienda</a>
-                <a href="/noticias" class="nav-link">Noticias</a>
-                <a href="/contacto" class="nav-link">Contacto</a>
+                <a href="/adopta#listado-mascotas" class="nav-link" data-astro-prefetch>Adopta</a>
+                <a href="/apadrina#listado-mascotas" class="nav-link" data-astro-prefetch>Apadrina</a>
+                <a href="/ayudanos" class="nav-link" data-astro-prefetch>Ayúdanos</a>
+                <a href="/servicios" class="nav-link" data-astro-prefetch>Servicios</a>
+                <a href="/tienda" class="nav-link" data-astro-prefetch>Tienda</a>
+                <a href="/noticias" class="nav-link" data-astro-prefetch>Noticias</a>
+                <a href="/contacto" class="nav-link" data-astro-prefetch>Contacto</a>
             </div>
 
             <!-- Botón móvil mejorado -->
@@ -105,8 +103,8 @@ import { Image } from "astro:assets";
                 {
                     [
                         { href: "/", text: "Inicio" },
-                        { href: "/adopta", text: "Adopta" },
-                        { href: "/apadrina", text: "Apadrina" },
+                        { href: "/adopta#listado-mascotas", text: "Adopta" },
+                        { href: "/apadrina#listado-mascotas", text: "Apadrina" },
                         { href: "/ayudanos", text: "Ayúdanos" },
                         { href: "/tienda", text: "Tienda" },
                         { href: "/servicios", text: "Servicios" },
@@ -119,6 +117,7 @@ import { Image } from "astro:assets";
                         return (
                             <a
                                 href={link.href}
+                                data-astro-prefetch
                                 class={`mobile-menu-link block px-4 py-4 text-base font-medium rounded-xl transition-all duration-200 border-l-4
                                       ${
                                           isActive

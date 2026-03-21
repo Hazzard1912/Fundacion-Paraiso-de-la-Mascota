@@ -1,20 +1,28 @@
 ---
 import { getMisionData } from "../actions/cms.actions";
 
-let misionData = null;
+interface Props {
+    misionData?: any;
+}
+
+const { misionData: misionDataProp } = Astro.props;
+
+let misionData = misionDataProp ?? null;
 let error = null;
 
-try {
-    const result = await Astro.callAction(getMisionData, {});
-    if (result.error) {
-        console.error("Error fetching mision data:", result.error);
-        error = result.error;
-    } else if (result.data) {
-        misionData = result.data;
+if (!misionData) {
+    try {
+        const result = await Astro.callAction(getMisionData, {});
+        if (result.error) {
+            console.error("Error fetching mision data:", result.error);
+            error = result.error;
+        } else if (result.data) {
+            misionData = result.data;
+        }
+    } catch (e) {
+        console.error("Exception fetching mision data:", e);
+        error = e;
     }
-} catch (e) {
-    console.error("Exception fetching mision data:", e);
-    error = e;
 }
 
 const defaultData = {

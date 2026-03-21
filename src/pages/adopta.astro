@@ -201,10 +201,10 @@ const filters = {
     </section>
 
     <!-- Listado de mascotas -->
-    <div class="max-w-6xl mx-auto px-4 py-16">
+    <div class="max-w-6xl mx-auto px-4 py-16" id="listado-mascotas">
     <h2 class="text-3xl font-bold text-amber-900 mb-4 text-center">Mascotas disponibles para adopción</h2>
     <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Cuando encuentres a tu compañero ideal, completa la solicitud de contacto para que nuestro equipo te llame y podamos iniciar juntos el proceso de adopción responsable.</p>
         <!-- React component for interactive filtering -->
-        <PetListing client:load initialPets={pets} filters={filters} />
+        <PetListing client:load pets={pets} filters={filters} type="adoption" />
     </div>
 </Layout>

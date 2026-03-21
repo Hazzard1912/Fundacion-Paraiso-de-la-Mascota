@@ -1,8 +1,20 @@
 ---
 import { actions } from "astro:actions";
 
-const { data, error } = await Astro.callAction(actions.getNoticiasData, {});
-const noticias = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
+interface Props {
+  noticiasData?: any;
+}
+
+const { noticiasData: noticiasDataProp } = Astro.props;
+
+let rawData: any = noticiasDataProp ?? null;
+
+if (!rawData) {
+  const { data, error } = await Astro.callAction(actions.getNoticiasData, {});
+  rawData = data;
+}
+
+const noticias = Array.isArray(rawData) ? rawData : Array.isArray(rawData?.data) ? rawData.data : [];
 const ultimaNoticia = noticias.length > 0 ? noticias.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0] : null;
 
 function formatDate(dateString: string) {

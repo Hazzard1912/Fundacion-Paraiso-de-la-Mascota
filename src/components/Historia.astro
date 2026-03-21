@@ -1,20 +1,28 @@
 ---
 import { getHistoriaData } from "../actions/cms.actions";
 
-let historiaData = null;
+interface Props {
+    historiaData?: any;
+}
+
+const { historiaData: historiaDataProp } = Astro.props;
+
+let historiaData = historiaDataProp ?? null;
 let error = null;
 
-try {
-    const result = await Astro.callAction(getHistoriaData, {});
-    if (result.error) {
-        console.error("Error fetching historia data:", result.error);
-        error = result.error;
-    } else if (result.data) {
-        historiaData = result.data;
+if (!historiaData) {
+    try {
+        const result = await Astro.callAction(getHistoriaData, {});
+        if (result.error) {
+            console.error("Error fetching historia data:", result.error);
+            error = result.error;
+        } else if (result.data) {
+            historiaData = result.data;
+        }
+    } catch (e) {
+        console.error("Exception fetching historia data:", e);
+        error = e;
     }
-} catch (e) {
-    console.error("Exception fetching historia data:", e);
-    error = e;
 }
 
 const defaultData = {

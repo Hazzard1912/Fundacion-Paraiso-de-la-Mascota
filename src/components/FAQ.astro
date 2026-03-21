@@ -1,20 +1,28 @@
 ---
 import { getFAQData } from "../actions/cms.actions";
 
-let faqData = null;
+interface Props {
+    faqData?: any;
+}
+
+const { faqData: faqDataProp } = Astro.props;
+
+let faqData = faqDataProp ?? null;
 let error = null;
 
-try {
-    const result = await Astro.callAction(getFAQData, {});
-    if (result.error) {
-        console.error("Error fetching FAQ data:", result.error);
-        error = result.error;
-    } else if (result.data) {
-        faqData = result.data;
+if (!faqData) {
+    try {
+        const result = await Astro.callAction(getFAQData, {});
+        if (result.error) {
+            console.error("Error fetching FAQ data:", result.error);
+            error = result.error;
+        } else if (result.data) {
+            faqData = result.data;
+        }
+    } catch (e) {
+        console.error("Exception fetching FAQ data:", e);
+        error = e;
     }
-} catch (e) {
-    console.error("Exception fetching FAQ data:", e);
-    error = e;
 }
 
 const defaultData = {

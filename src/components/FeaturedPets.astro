@@ -25,7 +25,6 @@ interface Pet {
 // Procesar las mascotas para usar la imagen de cada una
 const featuredPets: Pet[] = (data?.data?.pets || []).map((pet: any) => {
     // Usar la imagen del pet o una imagen por defecto
-    console.log("Pet", pet);
     const imageUrl = pet.imageUrl || "/images/shelter-dogs.jpg";
     
     return {
@@ -42,12 +41,6 @@ const featuredPets: Pet[] = (data?.data?.pets || []).map((pet: any) => {
             alternativeText: pet.alternativeText || pet.name
         }]
     };
-});
-
-console.log("featuredPets: ", featuredPets);
-
-featuredPets.forEach((pet) => {
-    console.log(pet);
 });
 ---
 
@@ -74,6 +67,7 @@ featuredPets.forEach((pet) => {
                 <a
                     href={`/adopta/${pet.documentId}`}
                     class="group bg-amber-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100"
+                    data-astro-prefetch
                 >
                     <div class="aspect-square overflow-hidden flex items-center justify-center bg-white">
                         <img
@@ -124,8 +118,9 @@ featuredPets.forEach((pet) => {
         <!-- Call to action button -->
         <div class="text-center mt-16 scale-up-center">
             <a
-                href="/adopta"
+                href="/adopta#listado-mascotas"
                 class="inline-flex items-center px-10 py-5 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-3xl transition-all shadow-[0_10px_30px_-10px_rgba(217,119,6,0.5)] hover:shadow-orange-200/80 text-xl group transform hover:scale-105"
+                data-astro-prefetch
             >
                 Ver todas las mascotas
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

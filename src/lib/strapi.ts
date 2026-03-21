@@ -41,7 +41,8 @@ export class StrapiService {
 
     const response = await fetch(url, {
       headers,
-      cache: 'no-store'
+      // @ts-expect-error -- Vercel runtime extends RequestInit with `next`
+      next: { revalidate: 60 }
     });
 
     if (!response.ok) {
@@ -64,7 +65,8 @@ export class StrapiService {
 
     const response = await fetch(url, {
       headers,
-      cache: 'no-store'
+      // @ts-expect-error -- Vercel runtime extends RequestInit with `next`
+      next: { revalidate: 60 }
     });
 
     if (!response.ok) {
