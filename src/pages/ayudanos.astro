@@ -65,24 +65,40 @@ import vetTeam from "../assets/images/stock/vet-team.jpeg";
         <div class="max-w-6xl mx-auto">
             <!-- Sección destacada de Donación en Línea -->
             <div class="mb-16 rounded-2xl overflow-hidden shadow-lg">
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-12 md:p-16">
-                    <div class="max-w-3xl mx-auto text-center">
-                        <h3 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+                <div class="bg-gradient-to-br from-amber-700 to-amber-900 p-12 md:p-16 relative">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_60%)]"></div>
+                    <div class="relative max-w-3xl mx-auto text-center">
+                        <span class="inline-block px-4 py-2 bg-amber-500/20 text-amber-100 rounded-full text-sm font-medium mb-6">
+                            La forma más rápida de ayudar
+                        </span>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">
                             Donación Segura en Línea
                         </h3>
-                        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-                            La forma más rápida y segura de apoyar nuestra misión. Con un solo clic puedes contribuir al rescate y cuidado de nuestros peludos.
+                        <p class="text-lg text-amber-100/90 mb-8 leading-relaxed">
+                            Con un solo clic puedes contribuir al rescate y cuidado de nuestros peludos. Tu aporte hace la diferencia.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                             <a
                                 href="https://afrus.org/business/dejatuhuellaenparaiso/"
                                 target="_blank"
-                                class="bg-blue-600 text-white px-12 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                                class="group inline-flex items-center justify-center bg-amber-400 text-amber-900 px-10 py-4 rounded-full font-semibold text-lg hover:bg-amber-300 transition-all duration-300 shadow-xl hover:shadow-amber-400/30 transform hover:-translate-y-0.5"
                             >
-                                Donar Ahora
+                                Donar ahora
+                                <svg
+                                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
                             </a>
-                            <div class="text-left text-sm text-gray-600">
-                                <p class="font-medium text-gray-700">Transferencia Segura</p>
+                            <div class="text-left text-sm text-amber-100/80">
+                                <p class="font-medium text-amber-100">Transferencia segura</p>
                                 <p>Certificado fiscal disponible</p>
                             </div>
                         </div>
@@ -96,7 +112,7 @@ import vetTeam from "../assets/images/stock/vet-team.jpeg";
             >
                 <!-- Donaciones en especie -->
                 <div
-                    class="bg-amber-50 rounded-2xl p-8 shadow-md hover:shadow-lg transition-all"
+                    class="bg-amber-50 rounded-2xl p-8 shadow-md hover:shadow-lg transition-all border border-amber-100 flex flex-col"
                 >
                     <div
                         class="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mb-6"
