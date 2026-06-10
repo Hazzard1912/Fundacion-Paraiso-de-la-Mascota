@@ -1,6 +1,15 @@
 ---
 import { getHappyEndings } from "../actions/cms.actions";
 
+interface Props {
+    title?: string;
+    description?: string;
+    showCta?: boolean;
+    bgColor?: string;
+}
+
+const { title, description, showCta = true, bgColor = "bg-amber-50" } = Astro.props;
+
 const { data, error } = await Astro.callAction(getHappyEndings, {});
 
 if (error) {
@@ -21,7 +30,7 @@ function formatDate(dateString: string) {
 }
 ---
 
-<section class="py-32 bg-amber-50 text-amber-900 overflow-hidden">
+<section class={`py-32 ${bgColor} text-amber-900 overflow-hidden`}>
     <div class="max-w-6xl mx-auto px-4 relative">
         <!-- Elementos decorativos -->
         <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
@@ -29,10 +38,10 @@ function formatDate(dateString: string) {
 
         <div class="text-center mb-20 relative">
             <h2 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-amber-900">
-                Historias con Final Feliz 🐾
+                {title || "Historias con Final Feliz 🐾"}
             </h2>
             <p class="text-xl text-gray-700 max-w-3xl mx-auto font-light leading-relaxed italic">
-                "Estas mascotas han encontrado su hogar gracias al apoyo de nuestra comunidad y al amor de familias valientes que deciden marcar la diferencia. Cada ladrido o ronroneo en una casa nueva es un testimonio de esperanza."
+                {description || "Estas mascotas han encontrado su hogar gracias al apoyo de nuestra comunidad y al amor de familias valientes que deciden marcar la diferencia. Cada ladrido o ronroneo en una casa nueva es un testimonio de esperanza."}
             </p>
             <div class="w-24 h-1.5 bg-amber-500 mx-auto mt-8 rounded-full"></div>
         </div>
@@ -85,18 +94,20 @@ function formatDate(dateString: string) {
             )
         }
 
-        <div class="mt-20 text-center scale-up-center">
-            <a 
-                href="/adopta#listado-mascotas"
-                class="inline-flex items-center px-10 py-5 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-3xl transition-all shadow-[0_10px_30px_-10px_rgba(217,119,6,0.5)] hover:shadow-orange-200/80 text-xl group transform hover:scale-105"
-            >
-                <span class="mr-3 text-2xl">✨</span>
-                ¡Encuentra a tu nuevo mejor amigo!
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-            </a>
-        </div>
+        {showCta && (
+            <div class="mt-20 text-center scale-up-center">
+                <a 
+                    href="/adopta#listado-mascotas"
+                    class="inline-flex items-center px-10 py-5 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-3xl transition-all shadow-[0_10px_30px_-10px_rgba(217,119,6,0.5)] hover:shadow-orange-200/80 text-xl group transform hover:scale-105"
+                >
+                    <span class="mr-3 text-2xl">✨</span>
+                    ¡Encuentra a tu nuevo mejor amigo!
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
+            </div>
+        )}
     </div>
 </section>
 

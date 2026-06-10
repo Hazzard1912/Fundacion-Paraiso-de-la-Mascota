@@ -1,0 +1,260 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import ctaBg from "../assets/images/stock/cta-bg.jpeg";
+import heroBg from "../assets/images/stock/hero-bg.jpeg";
+import LatestAdoptions from "../components/LatestAdoptions.astro";
+import SocialShare from "../components/SocialShare.astro";
+
+const shareUrl = new URL("/ayudanos", Astro.url.origin).href;
+---
+
+<Layout
+	title="¡Gracias por tu donación! - Fundación Paraíso de la Mascota Cali"
+	description="Gracias por tu generosidad. Tu donación ayuda a seguir rescatando y cuidando mascotas en Cali."
+	ogTitle="¡Gracias por tu donación!"
+	ogDescription="Tu generosidad transforma vidas. Gracias a ti, más mascotas tendrán una segunda oportunidad."
+	ogImage="/images/logo.png"
+	robots="noindex, nofollow"
+	hideNavbar
+>
+	<!-- Hero: Celebración con animación -->
+	<section class="relative overflow-hidden bg-gradient-to-br from-amber-50 via-white to-amber-100">
+		<!-- Decorative shapes -->
+		<div class="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+		<div class="absolute bottom-0 left-0 w-80 h-80 bg-amber-300/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+		<div class="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-amber-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+		<div class="relative max-w-6xl mx-auto px-4 py-20 md:py-28">
+			<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+				<!-- Texto -->
+				<div class="flex-1 text-center lg:text-left animate-fade-in-up">
+					<div class="inline-flex items-center gap-2 px-5 py-2.5 bg-green-50 text-green-700 rounded-full text-sm font-semibold shadow-sm border border-green-200 mb-8 animate-bounce-soft">
+						<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+						Donación exitosa
+					</div>
+
+					<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-amber-900 mb-6 leading-[1.1]">
+						¡Gracias por tu <span class="text-amber-500">generosidad!</span>
+					</h1>
+
+					<p class="text-xl text-gray-700 mb-6 leading-relaxed max-w-xl">
+						Tu donación transforma vidas. Gracias a ti, más mascotas tendrán una segunda oportunidad.
+					</p>
+
+					<!-- Impacto inmediato visual -->
+					<div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 mb-8 inline-flex items-center gap-3 max-w-lg">
+						<span class="text-3xl">🐾</span>
+						<p class="text-gray-700 text-sm font-medium">
+							Tu apoyo equivale a aproximadamente <strong class="text-amber-700">5 días de alimento y cuidado</strong> para una mascota rescatada.
+						</p>
+					</div>
+
+					<div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+						<a
+							href="/"
+							onclick="event.preventDefault(); window.location.replace('/');"
+							class="group inline-flex items-center gap-3 bg-amber-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-600 transition-all duration-300 shadow-lg hover:shadow-amber-500/30 transform hover:-translate-y-1"
+						>
+							<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+							</svg>
+							Volver al inicio
+						</a>
+						<a
+							href="/ayudanos#donar-en-linea"
+							onclick="event.preventDefault(); window.location.replace('/ayudanos#donar-en-linea');"
+							class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 font-semibold transition-colors"
+						>
+							Hacer otra donación
+							<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+							</svg>
+						</a>
+					</div>
+				</div>
+
+				<!-- Imagen decorativa -->
+				<div class="flex-1 w-full max-w-lg mx-auto lg:max-w-none animate-fade-in-up" style="animation-delay: 0.2s;">
+					<div class="relative group">
+						<div class="absolute -inset-3 bg-gradient-to-br from-amber-200 to-amber-300 rounded-[2rem] blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+						<div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+							<Image
+								src={ctaBg}
+								alt="Perro feliz rescatado"
+								width={600}
+								height={600}
+								class="w-full h-[28rem] md:h-[32rem] object-cover group-hover:scale-105 transition-transform duration-700"
+							/>
+						</div>
+						<!-- Badge flotante -->
+						<div class="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-2 border border-amber-100">
+							<div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+								<svg class="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+								</svg>
+							</div>
+							<span class="text-sm font-semibold text-gray-800">Donación recibida</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Métricas de impacto: tarjetas con alto contraste -->
+	<section class="bg-white relative overflow-hidden">
+		<div class="absolute top-0 left-1/2 w-px h-20 bg-gradient-to-b from-amber-200 to-transparent"></div>
+		<div class="max-w-5xl mx-auto px-4 py-24">
+			<div class="text-center mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+					Tu contribución marca la diferencia
+				</h2>
+				<p class="text-gray-600 max-w-lg mx-auto">
+					Cada donación se traduce en acciones concretas que transforman vidas.
+				</p>
+			</div>
+
+			<div class="grid md:grid-cols-3 gap-6">
+				<div class="group bg-gradient-to-br from-amber-50 to-white rounded-3xl p-10 text-center border border-amber-100 hover:shadow-xl hover:shadow-amber-100/50 transition-all duration-300 hover:-translate-y-1">
+					<div class="text-4xl font-bold text-amber-600 mb-2">2000+</div>
+					<div class="text-gray-700 font-semibold">Mascotas Adoptadas</div>
+					<div class="text-gray-600 text-sm mt-2">Gracias al apoyo de personas como tú</div>
+				</div>
+
+				<div class="group bg-gradient-to-br from-amber-50 to-white rounded-3xl p-10 text-center border border-amber-100 hover:shadow-xl hover:shadow-amber-100/50 transition-all duration-300 hover:-translate-y-1">
+					<div class="text-4xl font-bold text-amber-600 mb-2">22</div>
+					<div class="text-gray-700 font-semibold">Años de Experiencia</div>
+					<div class="text-gray-600 text-sm mt-2">Rescatando vidas desde 2003</div>
+				</div>
+
+				<div class="group bg-gradient-to-br from-amber-50 to-white rounded-3xl p-10 text-center border border-amber-100 hover:shadow-xl hover:shadow-amber-100/50 transition-all duration-300 hover:-translate-y-1">
+					<div class="text-4xl font-bold text-amber-600 mb-2">100%</div>
+					<div class="text-gray-700 font-semibold">Amor y Dedicación</div>
+					<div class="text-gray-600 text-sm mt-2">Cada peso se invierte en las mascotas</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Finales felices gracias a donaciones -->
+	<section class="bg-white">
+		<div class="max-w-6xl mx-auto px-4 pt-20 pb-8">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+					Gracias a ti, estas historias son posibles
+				</h2>
+				<p class="text-gray-600 max-w-2xl mx-auto">
+					Cada donación ayuda a que más peluditos encuentren su hogar definitivo. Estos son algunos de los finales feliz que haces posibles.
+				</p>
+			</div>
+		</div>
+		<LatestAdoptions
+			title="Historias que tú haces posible"
+			description="Estas mascotas encontraron su hogar gracias al apoyo de nuestra comunidad de donantes."
+			showCta={false}
+			bgColor="bg-white"
+		/>
+	</section>
+
+	<!-- Mensaje emotivo: banner con imagen de fondo y overlay -->
+	<section class="relative overflow-hidden">
+		<div class="absolute inset-0">
+			<Image
+				src={heroBg}
+				alt="Fondo de mascotas"
+				width={1920}
+				height={1080}
+				class="w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 bg-gradient-to-br from-amber-900/95 to-amber-800/90 mix-blend-multiply"></div>
+		</div>
+		<div class="relative max-w-4xl mx-auto px-4 py-24 text-center">
+			<div class="w-16 h-16 mx-auto mb-6 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10">
+				<svg class="h-8 w-8 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+				</svg>
+			</div>
+			<h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+				Siente el cambio
+			</h2>
+			<p class="text-lg md:text-xl text-amber-100/90 leading-relaxed max-w-2xl mx-auto">
+				Lo que hiciste hoy late fuerte: diste calor, alimento y una segunda oportunidad.
+				Gracias a ti, un peludito será rescatado, atendido y preparado para encontrar
+				un hogar amoroso.
+			</p>
+		</div>
+	</section>
+
+	<!-- Comparte tu apoyo -->
+	<section class="bg-amber-50 py-24">
+		<div class="max-w-3xl mx-auto px-4 text-center">
+			<h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+				Comparte tu apoyo
+			</h2>
+			<p class="text-gray-600 mb-10 text-lg">
+				Inspira a otros a unirse. Tu gesto puede motivar a más personas a ayudar.
+			</p>
+
+			<div class="flex justify-center">
+				<SocialShare
+					title="¡Acabo de donar a Fundación Paraíso de la Mascota!"
+					description="Únete a mí y ayudemos juntos a más mascotas en Cali."
+					url={shareUrl}
+					buttons={true}
+				/>
+			</div>
+
+			<div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+				<a
+					href="/"
+					onclick="event.preventDefault(); window.location.replace('/');"
+					class="inline-flex items-center gap-3 bg-amber-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-600 transition-all duration-300 shadow-lg hover:shadow-amber-500/30"
+				>
+					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+					</svg>
+					Volver al inicio
+				</a>
+				<a
+					href="/ayudanos#donar-en-linea"
+					onclick="event.preventDefault(); window.location.replace('/ayudanos#donar-en-linea');"
+					class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 font-semibold text-lg transition-colors"
+				>
+					Seguir ayudando
+					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<style>
+		.animate-fade-in-up {
+			animation: fadeInUp 0.8s ease-out forwards;
+			opacity: 0;
+		}
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		.animate-bounce-soft {
+			animation: bounceSoft 2s ease-in-out infinite;
+		}
+		@keyframes bounceSoft {
+			0%, 100% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateY(-5px);
+			}
+		}
+	</style>
+</Layout>

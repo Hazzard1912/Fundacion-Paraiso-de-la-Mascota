@@ -33,8 +33,7 @@ import vetTeam from "../assets/images/stock/vet-team.jpeg";
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <a
-                        href="https://afrus.org/business/dejatuhuellaenparaiso/"
-                        target="_blank"
+                        href="#donar-en-linea"
                         class="bg-white text-amber-900 px-8 py-3 rounded-full font-medium hover:bg-amber-100 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
                         Realizar una donación
@@ -64,43 +63,22 @@ import vetTeam from "../assets/images/stock/vet-team.jpeg";
 
         <div class="max-w-6xl mx-auto">
             <!-- Sección destacada de Donación en Línea -->
-            <div class="mb-16 rounded-2xl overflow-hidden shadow-lg">
-                <div class="bg-gradient-to-br from-amber-700 to-amber-900 p-12 md:p-16 relative">
+            <div id="donar-en-linea" class="mb-16 rounded-2xl overflow-hidden shadow-lg">
+                <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200 shadow-lg p-12 md:p-16 relative">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_60%)]"></div>
                     <div class="relative max-w-3xl mx-auto text-center">
-                        <span class="inline-block px-4 py-2 bg-amber-500/20 text-amber-100 rounded-full text-sm font-medium mb-6">
+                        <span class="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-6">
                             La forma más rápida de ayudar
                         </span>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h3 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
                             Donación Segura en Línea
                         </h3>
-                        <p class="text-lg text-amber-100/90 mb-8 leading-relaxed">
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
                             Con un solo clic puedes contribuir al rescate y cuidado de nuestros peludos. Tu aporte hace la diferencia.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                            <a
-                                href="https://afrus.org/business/dejatuhuellaenparaiso/"
-                                target="_blank"
-                                class="group inline-flex items-center justify-center bg-amber-400 text-amber-900 px-10 py-4 rounded-full font-semibold text-lg hover:bg-amber-300 transition-all duration-300 shadow-xl hover:shadow-amber-400/30 transform hover:-translate-y-0.5"
-                            >
-                                Donar ahora
-                                <svg
-                                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
-                            </a>
-                            <div class="text-left text-sm text-amber-100/80">
-                                <p class="font-medium text-amber-100">Transferencia segura</p>
-                                <p>Certificado fiscal disponible</p>
-                            </div>
+                        <div class="afrus-widget-container w-full h-auto flex items-center justify-center my-8">
+                            <afrus-form form-id="14eb9b82-d92c-4b01-acb1-509b48da39fe" preview="false">
+                            </afrus-form>
                         </div>
                     </div>
                 </div>
@@ -713,4 +691,7 @@ import vetTeam from "../assets/images/stock/vet-team.jpeg";
             </div>
         </div>
     </section>
+
+    <script type="module" src="https://afrus-frontend-assets.s3.eu-central-1.amazonaws.com/Widget-prod/webcomponents.es.js">
+    </script>
 </Layout>
