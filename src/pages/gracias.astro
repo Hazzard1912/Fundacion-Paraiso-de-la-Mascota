@@ -1,8 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import ctaBg from "../assets/images/stock/cta-bg.jpeg";
 import heroBg from "../assets/images/stock/hero-bg.jpeg";
+import perrosFelices from "../assets/images/agradecimiento/perros_felices.jpeg";
+import tresPerros from "../assets/images/agradecimiento/tres_perros.jpeg";
+import dosCriollos from "../assets/images/agradecimiento/dos_criollos.jpeg";
 import LatestAdoptions from "../components/LatestAdoptions.astro";
 import SocialShare from "../components/SocialShare.astro";
 
@@ -80,10 +82,10 @@ const shareUrl = new URL("/ayudanos", Astro.url.origin).href;
 						<div class="absolute -inset-3 bg-gradient-to-br from-amber-200 to-amber-300 rounded-[2rem] blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
 						<div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
 							<Image
-								src={ctaBg}
-								alt="Perro feliz rescatado"
+								src={perrosFelices}
+								alt="Perros felices rescatados"
 								width={600}
-								height={600}
+								height={800}
 								class="w-full h-[28rem] md:h-[32rem] object-cover group-hover:scale-105 transition-transform duration-700"
 							/>
 						</div>
@@ -132,6 +134,44 @@ const shareUrl = new URL("/ayudanos", Astro.url.origin).href;
 					<div class="text-4xl font-bold text-amber-600 mb-2">100%</div>
 					<div class="text-gray-700 font-semibold">Amor y Dedicación</div>
 					<div class="text-gray-600 text-sm mt-2">Cada peso se invierte en las mascotas</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Galería de gratitud -->
+	<section class="bg-amber-50/50 py-20">
+		<div class="max-w-6xl mx-auto px-4">
+			<div class="text-center mb-12">
+				<h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+					Gracias a ti, sonríen
+				</h2>
+				<p class="text-gray-600 max-w-lg mx-auto">
+					Estas mascotas disfrutan de una vida mejor gracias a tu generosidad.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				<!-- tres_perros: grande, horizontal -->
+				<div class="md:col-span-2 rounded-2xl overflow-hidden shadow-xl border-4 border-white h-80">
+					<Image
+						src={tresPerros}
+						alt="Tres perros felices en la fundación"
+						width={800}
+						height={500}
+						class="w-full h-full object-cover"
+					/>
+				</div>
+
+				<!-- dos_criollos: pequeño, tamaño reducido para ocultar baja resolución -->
+				<div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white h-64 md:h-80">
+					<Image
+						src={dosCriollos}
+						alt="Dos perros criollos rescatados"
+						width={400}
+						height={300}
+						class="w-full h-full object-cover"
+					/>
 				</div>
 			</div>
 		</div>
